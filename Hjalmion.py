@@ -1,6 +1,6 @@
 #Nick Mills
 """Hjalmion: The Rise of Fencor"""
-import time, random, sys, os #Imports libraries for use
+import time, random #Imports libraries for use
 import chance, enemies, items, player, save, load #Imports other modules used to run the game
 
 #Create the Player object and all of the Enemies *Most Common to Least Common*
@@ -178,7 +178,7 @@ def meadow():
         battle(player, snake)
 
     choice = 7
-    while(choice != "y" and choice != "n" and not rock_inventory and not gameOver):
+    while(choice != "y" and choice != "n" and not rock_inventory):
         choice = input("\n\tDo you want to pick up the rock?(Y/N)").lower()
         if (choice == "y"):
             print("\nYou pick up the rock")
@@ -186,7 +186,7 @@ def meadow():
         elif (choice == "n"):
             print("\nYou do not pick up the rock")
     choice = 7
-    while(choice != "n" and choice != "nw" and choice != "e" and choice != "w" and choice != "s" and not gameOver):
+    while(choice != "n" and choice != "nw" and choice != "e" and choice != "w" and choice != "s"):
         choice = input("\nWill you go (N)orth, (N)orth (W)est, (W)est, (E)ast, or (S)outh?").lower()
         if (choice == "n"):
             cliffside()
@@ -241,7 +241,7 @@ def great_oak():
     global random_gold
     global greatOak_counter
     global gameOver
-    if (greatOakKey_inventory == True and not gameOver):
+    if (greatOakKey_inventory):
         print("\nYou walk up to the Great Oak. It hums with energy.")
         time.sleep(2)
         print("\nYou notice a small, key shaped hole that you did not notice before. You go up to it and slide the key into the hole.")
@@ -252,7 +252,7 @@ def great_oak():
         time.sleep(2)
         print("\nOn the pedestal is the legendary TriForce!")
         choice = 7
-        while (choice != "y" and choice != "n" and not gameOver):
+        while (choice != "y" and choice != "n"):
             choice = input("\n\tDo you want to pick up the TriForce?(Y/N)").lower()
             if (choice == "y"):
                 print("\nYou pick up the TriForce and leave the Great Oak. The tree closes behind you and everything returns to normal.")
@@ -277,39 +277,41 @@ def great_oak():
         elif(chance.chance(40)):
             print("\nA bird flies down and attacks you!")
             battle(player, bird)
-
-    choice = 7
-    while(choice != "e" and not gameOver):
-        choice = input("\nWill you go to the (E)ast?").lower()
-        if (choice == "e"):
-            meadow()
-        elif (choice == "i"):
-            view_inventory()
-        elif (choice == "p"):
-            usePotion()
-        elif (choice == "lp"):
-            useLifePotion()
-        elif (choice == "help"):
-            help()
-        elif (choice == "fp"):
-            useFullPotion()
-        elif (choice == "look" and note_inventory):
-            print("\nYou look around and see a shiny object in the birds nest. You go up to it and find a jewel encrested egg.")
+        if(gameOver):
+            raise SystemExit
+        elif(not gameOver):  
             choice = 7
-            while (choice != "y" and choice != "n" and not gameOver):
-                choice = input("\nWill you take the egg?(Y/N)").lower()
-                if (choice == "y"):
-                    print("\nYou take the egg.")
-                    jewelEgg_inventory = True
-                elif (choice == "n"):
-                    print("\nYou do not take the egg.")
+            while(choice != "e"):
+                choice = input("\nWill you go to the (E)ast?").lower()
+                if (choice == "e"):
+                    meadow()
+                elif (choice == "i"):
+                    view_inventory()
+                elif (choice == "p"):
+                    usePotion()
+                elif (choice == "lp"):
+                    useLifePotion()
+                elif (choice == "help"):
+                    help()
+                elif (choice == "fp"):
+                    useFullPotion()
+                elif (choice == "look" and note_inventory):
+                    print("\nYou look around and see a shiny object in the birds nest. You go up to it and find a jewel encrested egg.")
+                    choice = 7
+                    while (choice != "y" and choice != "n"):
+                        choice = input("\nWill you take the egg?(Y/N)").lower()
+                        if (choice == "y"):
+                            print("\nYou take the egg.")
+                            jewelEgg_inventory = True
+                        elif (choice == "n"):
+                            print("\nYou do not take the egg.")
+                        else:
+                            print("\nPlease enter a valid input!")
+                elif (choice == "look"and greatOak_counter == 0):
+                    print("You look around...")
+                    find_potion()
                 else:
                     print("\nPlease enter a valid input!")
-        elif (choice == "look"and greatOak_counter == 0):
-            print("You look around...")
-            find_potion()
-        else:
-            print("\nPlease enter a valid input!")
 
 def house():
     global player_gold
@@ -345,80 +347,83 @@ def house():
                 flag1 = False
             elif(choice == "n"):
                 print("\nNot sure why, but you do not pick up the gold!")
-                if(chance.chance(50)):
-                    print("\nA rat skitters across the floor and attacks you!")
-                    battle(player, rat)
-                elif(chance.chance(40)):
-                    print("\nA spider crawls from it's web and attacks you!")
-                    battle(player, spider)
-                choice = 7
-                while(choice != "e" and choice != "s" and not gameOver):
-                    choice = input("\nWill you go (E)ast or (S)outh?").lower()
-                    if (choice == "e"):
-                        cellar()
-                    elif (choice == "s"):
-                        meadow()
-                    elif (choice == "p"):
-                        usePotion()
-                    elif (choice == "lp"):
-                        useLifePotion()
-                    elif (choice == "help"):
-                        help()
-                    elif (choice == "fp"):
-                        useFullPotion()
-                    elif (choice == "i"):
-                        view_inventory()
-                    elif (choice == "look"):
-                        if (dagger_inventory == False):
-                            print("\nYou look around the house and find a dagger.")
-                            choice = 7
-                            while(dagger_inventory == False and choice != "y" and choice != "n"):
-                                choice = input("\n\tDo you want to pick up the dagger?(Y/N)").lower()
-                                if (choice == "y"):
-                                    print("\nYou pick up the dagger.")
-                                    dagger_inventory = True
-                                elif (choice == "n"):
-                                    print("\nYou do not pick up the dagger.")
-                            choice = 7
-                            while(choice != "y" and choice != "n"):
-                                choice = input("\n\tDo you want to keep looking around?(Y/N)").lower()
-                                if (choice == "y" and cellarKey_inventory == False):
-                                    print("\nYou continue looking around. You see a wooden table in the middle of the room that is falling apart. You look in the cupboards and see something shiny.")
-                                    choice = 7
-                                    while(cellarKey_inventory == False and choice != "y" and choice != "n"):
-                                        choice = input("\n\tDo you want to pick up the shiny object?(Y/N)").lower()
-                                        if (choice == "y"):
-                                            print("\nYou pick up the shiny object and you notice it is a key. It says {} on it.".format(cellarKey.name))
-                                            cellarKey_inventory = True
-                                        elif (choice == "n"):
-                                            print("\nYou do not pick up the shiny object. You go back to the middle of the room.")
-                                            house()
-                                elif (choice == "y" and cellarKey_inventory == True):
-                                    print("\nYou already found the Cellar Key. There is no need for another one (though you wont find another one!)")
-                                    house()
-                                elif (choice == "n"):
-                                    print("\nYou go back to the middle of the room")
-                                    house()
-                        elif (dagger_inventory == True and cellarKey_inventory == True):
-                            print("\nYou already found the dagger AND the key! Why are you still looking around?")
-                        elif (dagger_inventory == True and cellarKey_inventory == False):
-                            print("\nYoulook around. You see a wooden table in the middle of the room that is falling apart. You look in the cupboards and see something shiny.")
-                            choice = 7
-                            while(cellarKey_inventory == False and choice != "y" and choice != "n"):
-                                choice = input("\n\tDo you want to pick up the shiny object?(Y/N)").lower()
-                                if (choice == "y"):
-                                    print("\nYou pick up the shiny object and you notice it is a key. It says {} on it.".format(cellarKey.name))
-                                elif (choice == "n"):
-                                    print("\nYou do not pick up the shiny object. You go back to the middle of the room.")
-                                    house()
-                        elif (choice == "y" and cellarKey_inventory == True):
-                            print("\nYou already found the Cellar Key. There is no need for another one (though you wont find another one!)")
-                            house()
-                        elif (choice == "n"):
-                            print("\nYou go back to the middle of the room")
-                            house()
-                    else:
-                        print("\nPlease enter a valid input!")
+        if(chance.chance(50)):
+            print("\nA rat skitters across the floor and attacks you!")
+            battle(player, rat)
+        elif(chance.chance(40)):
+            print("\nA spider crawls from it's web and attacks you!")
+            battle(player, spider)
+        if(gameOver):
+            raise SystemExit
+        elif(not gameOver):                    
+            choice = 7
+            while(choice != "e" and choice != "s"):
+                choice = input("\nWill you go (E)ast or (S)outh?").lower()
+                if (choice == "e"):
+                    cellar()
+                elif (choice == "s"):
+                    meadow()
+                elif (choice == "p"):
+                    usePotion()
+                elif (choice == "lp"):
+                    useLifePotion()
+                elif (choice == "help"):
+                    help()
+                elif (choice == "fp"):
+                    useFullPotion()
+                elif (choice == "i"):
+                    view_inventory()
+                elif (choice == "look"):
+                    if (not dagger_inventory):
+                        print("\nYou look around the house and find a dagger.")
+                        choice = 7
+                        while(not dagger_inventory and choice != "y" and choice != "n"):
+                            choice = input("\n\tDo you want to pick up the dagger?(Y/N)").lower()
+                            if (choice == "y"):
+                                print("\nYou pick up the dagger.")
+                                dagger_inventory = True
+                            elif (choice == "n"):
+                                print("\nYou do not pick up the dagger.")
+                        choice = 7
+                        while(choice != "y" and choice != "n"):
+                            choice = input("\n\tDo you want to keep looking around?(Y/N)").lower()
+                            if (choice == "y" and not cellarKey_inventory):
+                                print("\nYou continue looking around. You see a wooden table in the middle of the room that is falling apart. You look in the cupboards and see something shiny.")
+                                choice = 7
+                                while(not cellarKey_inventory and choice != "y" and choice != "n"):
+                                    choice = input("\n\tDo you want to pick up the shiny object?(Y/N)").lower()
+                                    if (choice == "y"):
+                                        print("\nYou pick up the shiny object and you notice it is a key. It says {} on it.".format(cellarKey.name))
+                                        cellarKey_inventory = True
+                                    elif (choice == "n"):
+                                        print("\nYou do not pick up the shiny object. You go back to the middle of the room.")
+                                        house()
+                            elif (choice == "y" and cellarKey_inventory):
+                                print("\nYou already found the Cellar Key. There is no need for another one (though you wont find another one!)")
+                                house()
+                            elif (choice == "n"):
+                                print("\nYou go back to the middle of the room")
+                                house()
+                    elif (dagger_inventory and cellarKey_inventory):
+                        print("\nYou already found the dagger AND the key! Why are you still looking around?")
+                    elif (dagger_inventory and not cellarKey_inventory):
+                        print("\nYoulook around. You see a wooden table in the middle of the room that is falling apart. You look in the cupboards and see something shiny.")
+                        choice = 7
+                        while(not cellarKey_inventory and choice != "y" and choice != "n"):
+                            choice = input("\n\tDo you want to pick up the shiny object?(Y/N)").lower()
+                            if (choice == "y"):
+                                print("\nYou pick up the shiny object and you notice it is a key. It says {} on it.".format(cellarKey.name))
+                            elif (choice == "n"):
+                                print("\nYou do not pick up the shiny object. You go back to the middle of the room.")
+                                house()
+                    elif (choice == "y" and cellarKey_inventory):
+                        print("\nYou already found the Cellar Key. There is no need for another one (though you wont find another one!)")
+                        house()
+                    elif (choice == "n"):
+                        print("\nYou go back to the middle of the room")
+                        house()
+                else:
+                    print("\nPlease enter a valid input!")
     else:
         print("\nYou enter a small house. It is falling apart. You look around and see a small hatch to the East. You assume it leads to a cellar. There is a meadow to the South.")
     if(chance.chance(50)):
@@ -427,72 +432,75 @@ def house():
     elif(chance.chance(40)):
         print("\nA spider crawls from it's web and attacks you!")
         battle(player, spider)
-    choice = 7
-    while(choice != "e" and choice != "s" and not gameOver):
-        choice = input("\nWill you go (E)ast or (S)outh?").lower()
-        if (choice == "e"):
-            cellar()
-        elif (choice == "s"):
-            meadow()
-        elif (choice == "p"):
-            usePotion()
-        elif (choice == "lp"):
-            useLifePotion()
-        elif (choice == "help"):
-            help()
-        elif (choice == "i"):
-            view_inventory()
-        elif (choice == "fp"):
-            useFullPotion()
-        elif (choice == "look"):
-            if (dagger_inventory == False):
-                print("\nYou look around the house and find a dagger.")
-                choice = 7
-                while(dagger_inventory == False and choice != "y" and choice != "n"):
-                    choice = input("\n\tDo you want to pick up the dagger?(Y/N)").lower()
-                    if (choice == "y"):
-                        print("\nYou pick up the dagger.")
-                        dagger_inventory = True
-                    elif (choice == "n"):
-                        print("\nYou do not pick up the dagger.")
-                choice = 7
-                while(choice != "y" and choice != "n"):
-                    choice = input("\nDo you want to keep looking around?(Y/N)").lower()
-                    if (choice == "y" and cellarKey_inventory == False):
-                        print("\nYou continue looking around. You see a wooden table in the middle of the room that is falling apart. You look in the cupboards and see something shiny.")
-                        choice = 7
-                        while(cellarKey_inventory == False and choice != "y" and choice != "n"):
-                            choice = input("\n\tDo you want to pick up the shiny object?(Y/N)").lower()
-                            if (choice == "y"):
-                                print("\nYou pick up the shiny object and you notice it is a key. It says {} on it.".format(cellarKey.name))
-                                cellarKey_inventory = True
-                            elif (choice == "n"):
-                                print("\nYou do not pick up the shiny object. You go back to the middle of the room.")
-                                house()
-                    elif (choice == "y" and cellarKey_inventory == True):
-                        print("\nYou already found the Cellar Key. There is no need for another one (though you wont find another one!)")
-                        house()
-                    elif (choice == "n"):
-                        print("\nYou go back to the middle of the room")
-                        house()
-            elif (dagger_inventory == True and cellarKey_inventory == True):
-                print("\nYou already found the dagger AND the key! Why are you still looking around?")
-            elif (dagger_inventory == True and cellarKey_inventory == False):
-                print("\nYoulook around. You see a wooden table in the middle of the room that is falling apart. You look in the cupboards and see something shiny.")
-                choice = 7
-                while(cellarKey_inventory == False and choice != "y" and choice != "n"):
-                    choice = input("\n\tDo you want to pick up the shiny object?(Y/N)").lower()
-                    if (choice == "y"):
-                        print("\n\tYou pick up the shiny object and you notice it is a key. It says {} on it.".format(cellarKey.name))
-                    elif (choice == "n"):
-                        print("\nYou do not pick up the shiny object. You go back to the middle of the room.")
-                        house()
-            elif (choice == "y" and cellarKey_inventory == True):
-                print("\nYou already found the Cellar Key. There is no need for another one (though you wont find another one!)")
-                house()
-            elif (choice == "n"):
-                print("\nYou go back to the middle of the room")
-                house()
+    if(gameOver):
+        raise SystemExit
+    elif(not gameOver):        
+        choice = 7
+        while(choice != "e" and choice != "s"):
+            choice = input("\nWill you go (E)ast or (S)outh?").lower()
+            if (choice == "e"):
+                cellar()
+            elif (choice == "s"):
+                meadow()
+            elif (choice == "p"):
+                usePotion()
+            elif (choice == "lp"):
+                useLifePotion()
+            elif (choice == "help"):
+                help()
+            elif (choice == "i"):
+                view_inventory()
+            elif (choice == "fp"):
+                useFullPotion()
+            elif (choice == "look"):
+                if (not dagger_inventory):
+                    print("\nYou look around the house and find a dagger.")
+                    choice = 7
+                    while(not dagger_inventory and choice != "y" and choice != "n"):
+                        choice = input("\n\tDo you want to pick up the dagger?(Y/N)").lower()
+                        if (choice == "y"):
+                            print("\nYou pick up the dagger.")
+                            dagger_inventory = True
+                        elif (choice == "n"):
+                            print("\nYou do not pick up the dagger.")
+                    choice = 7
+                    while(choice != "y" and choice != "n"):
+                        choice = input("\nDo you want to keep looking around?(Y/N)").lower()
+                        if (choice == "y" and cellarKey_inventory == False):
+                            print("\nYou continue looking around. You see a wooden table in the middle of the room that is falling apart. You look in the cupboards and see something shiny.")
+                            choice = 7
+                            while(not cellarKey_inventory and choice != "y" and choice != "n"):
+                                choice = input("\n\tDo you want to pick up the shiny object?(Y/N)").lower()
+                                if (choice == "y"):
+                                    print("\nYou pick up the shiny object and you notice it is a key. It says {} on it.".format(cellarKey.name))
+                                    cellarKey_inventory = True
+                                elif (choice == "n"):
+                                    print("\nYou do not pick up the shiny object. You go back to the middle of the room.")
+                                    house()
+                        elif (choice == "y" and cellarKey_inventory):
+                            print("\nYou already found the Cellar Key. There is no need for another one (though you wont find another one!)")
+                            house()
+                        elif (choice == "n"):
+                            print("\nYou go back to the middle of the room")
+                            house()
+                elif (dagger_inventory and cellarKey_inventory):
+                    print("\nYou already found the dagger AND the key! Why are you still looking around?")
+                elif (dagger_inventory and not cellarKey_inventory):
+                    print("\nYoulook around. You see a wooden table in the middle of the room that is falling apart. You look in the cupboards and see something shiny.")
+                    choice = 7
+                    while(not cellarKey_inventory and choice != "y" and choice != "n"):
+                        choice = input("\n\tDo you want to pick up the shiny object?(Y/N)").lower()
+                        if (choice == "y"):
+                            print("\n\tYou pick up the shiny object and you notice it is a key. It says {} on it.".format(cellarKey.name))
+                        elif (choice == "n"):
+                            print("\nYou do not pick up the shiny object. You go back to the middle of the room.")
+                            house()
+                elif (choice == "y" and cellarKey_inventory):
+                    print("\nYou already found the Cellar Key. There is no need for another one (though you wont find another one!)")
+                    house()
+                elif (choice == "n"):
+                    print("\nYou go back to the middle of the room")
+                    house()
 
 def cellar():
     global player_gold
@@ -517,7 +525,7 @@ def cellar():
     global triforce_inventory
     global cellar_counter
     global gameOver
-    if (cellarKey_inventory == True):
+    if (cellarKey_inventory):
         print("\nYou enter a small dark room. You cannot see much. There are some stairs to the West leading up. You see a hole to the South East. It is big enough to climb through.")
     else:
         print("\nYou go up to the cellar, but it is locked. You will need to look around for a key.")
@@ -531,31 +539,34 @@ def cellar():
     elif(chance.chance(60)):
         print("\nA rat skitters across the floor and attacks you!")
         battle(player, rat)
-    choice = 7
-    while(choice != "w" and choice != "se" and not gameOver):
-        choice = input("\nWill you go (W)est or (S)outh (E)ast?").lower()
-        if (choice == "w"):
-            house()
-        elif (choice == "se"):
-            dungeon()
-        elif (choice == "p"):
-            usePotion()
-        elif (choice == "lp"):
-            useLifePotion()
-        elif (choice == "help"):
-            help()
-        elif (choice == "fp"):
-            useFullPotion()
-        elif (choice == "look" and cellar_counter == 0):
-            print("You look around...")
-            find_potion()
-            cellar_counter += 1
-        elif (choice == "look" and cellar_counter > 0):
-            print("You look around but find nothing.")
-        elif (choice == "i"):
-            view_inventory()
-        else:
-            print("\nPlease enter a valid input!")
+    if(gameOver):
+        raise SystemExit
+    elif(not gameOver):        
+        choice = 7
+        while(choice != "w" and choice != "se"):
+            choice = input("\nWill you go (W)est or (S)outh (E)ast?").lower()
+            if (choice == "w"):
+                house()
+            elif (choice == "se"):
+                dungeon()
+            elif (choice == "p"):
+                usePotion()
+            elif (choice == "lp"):
+                useLifePotion()
+            elif (choice == "help"):
+                help()
+            elif (choice == "fp"):
+                useFullPotion()
+            elif (choice == "look" and cellar_counter == 0):
+                print("You look around...")
+                find_potion()
+                cellar_counter += 1
+            elif (choice == "look" and cellar_counter > 0):
+                print("You look around but find nothing.")
+            elif (choice == "i"):
+                view_inventory()
+            else:
+                print("\nPlease enter a valid input!")
 
 def dungeon():
     global player_gold
@@ -592,31 +603,34 @@ def dungeon():
         print("\nAn arrow whizzes past your head. A skeleton archer attacks you!")
         time.sleep(1)
         battle(player, skeleton_archer)
-    choice = 7
-    while(choice != "n" and choice != "nw" and not gameOver):
-        choice = input("\nWill you go (N)orth (W)est or (N)orth?").lower()
-        if (choice == "nw"):
-            cellar()
-        elif (choice == "n"):
-            skeleton_cave()
-        elif (choice == "p"):
-            usePotion()
-        elif (choice == "lp"):
-            useLifePotion()
-        elif (choice == "fp"):
-            useFullPotion()
-        elif (choice == "help"):
-            help()
-        elif (choice == "look" and dungeon_counter == 0):
-            print("You look around and find {} gold!".format(random_gold))
-            player_gold += random_gold
-            dungeon_counter += 1
-        elif (choice == "look" and dungeon_counter > 0):
-            print("You look around but find nothing.")
-        elif (choice == "i"):
-            view_inventory()
-        else:
-            print("\nPlease enter a valid input!")
+    if(gameOver):
+        raise SystemExit
+    elif(not gameOver):    
+        choice = 7
+        while(choice != "n" and choice != "nw"):
+            choice = input("\nWill you go (N)orth (W)est or (N)orth?").lower()
+            if (choice == "nw"):
+                cellar()
+            elif (choice == "n"):
+                skeleton_cave()
+            elif (choice == "p"):
+                usePotion()
+            elif (choice == "lp"):
+                useLifePotion()
+            elif (choice == "fp"):
+                useFullPotion()
+            elif (choice == "help"):
+                help()
+            elif (choice == "look" and dungeon_counter == 0):
+                print("You look around and find {} gold!".format(random_gold))
+                player_gold += random_gold
+                dungeon_counter += 1
+            elif (choice == "look" and dungeon_counter > 0):
+                print("You look around but find nothing.")
+            elif (choice == "i"):
+                view_inventory()
+            else:
+                print("\nPlease enter a valid input!")
 
 def skeleton_cave():
     global player_gold
@@ -644,76 +658,78 @@ def skeleton_cave():
     global gameOver
     skeletonCaveRoom_active = True
     print("\nYou walk in and see a throne straight ahead on the opposite of the room. It is filled with the Skeleton King. Skeleton soldiers are lined facing the middle of the room. They notice you. There is a hatch to the South.")
-
-    choice = 7
-    while(choice != "s" and not gameOver):
-        if(skeletonKing_death):
-            choice = input("\nWill you go (S)outh?").lower()
-            if (choice == "s"):
-                dungeon()
-            elif (choice == "p"):
-                usePotion()
-            elif (choice == "lp"):
-                useLifePotion()
-            elif (choice == "fp"):
-                useFullPotion()
-            elif (choice == "help"):
-                help()
-            elif(choice == "look" and skeletonCave_counter == 0 or skeletonCave_counter == 3 or skeletonCave_counter == 1 and not skeletonCave_counter > 3):
-                print("\nYou look around and see some items on the ground.")
-                choice = 7
-                while(choice != "y" and choice != "n"):
-                    choice = input("\n\tYou see a handcannon on the ground. Will you pick it up?").lower()
-                    if(choice == "y" and skeletonCave_counter == 0 or skeletonCave_counter == 3):
-                        print("\nYou pick up the handcannon.")
-                        handcannon_inventory = True
-                        skeletonCave_counter += 1
-                    elif(choice == "n"):
-                        print("\nYou do not pick up the handcannon.")
-                choice = 7
-                while(choice != "y" and choice != "n"):
-                    choice = input("\n\tYou see some gold on the ground. Will you pick it up?").lower()
-                    if(choice == "y" and skeletonCave_counter == 0 or skeletonCave_counter == 1):
-                        print("\nYou pick up the 50 Gold!")
-                        player_gold += 50
-                        skeleton_counter += 3
-                    elif(choice == "n"):
-                        print("\nNot sure why but you do not pick up the gold!")
-        elif(not skeletonKing_death):
-            choice = input("\nWill you go (S)outh or go (N)orth and face the Skeleton King?").lower()
-            if (choice == "s"):
-                dungeon()
-            elif (choice == "p"):
-                usePotion()
-            elif (choice == "lp"):
-                useLifePotion()
-            elif (choice == "fp"):
-                useFullPotion()
-            elif (choice == "help"):
-                help()
-            elif (choice == "n"):
-                print("\n\"So, you think you can face me?\" The Skeleton King says. \"Well first you must prove yourself a worthy opponent!\"")
-                time.sleep(4)
-                print("\n\"First you must defeat my minions!\" the Skeleton King says.")
-                time.sleep(3)
-                battle(player, skeleton)
-                print("\n\"That was my weakest minion adventurer! Let's see how you face against my archers!\"")
-                time.sleep(4)
-                battle(player, skeleton_archer)
-                print("\n\"They are still nothing compared to my next minions!")
-                time.sleep(3)
-                battle(player, skeleton_knight)
-                print("\n\"Adventurer, you have crossed a line. Let's see how you fare against me! The Skeleton King!!\"")
-                time.sleep(3)
-                battle(player, skeleton_king)
-                print("\n\"Ugh!\" The Skeleton King says. \"How are you so strong! I thought I could defeat you as I am the most powerful skeleton in all of the land. Alas, you have bested me. Here, take this book. You will need it on your adventure.\"The Skeleton King says as he lies on the ground and dies.")
-                time.sleep(3)
-                skeletonKing_death = True
-                book_inventory = True
-        elif (choice == "i"):
-            view_inventory()
-        else:
-            print("\nPlease enter a valid input!")
+    if(gameOver):
+        raise SystemExit
+    elif(not gameOver):
+        choice = 7
+        while(choice != "s"):
+            if(skeletonKing_death):
+                choice = input("\nWill you go (S)outh?").lower()
+                if (choice == "s"):
+                    dungeon()
+                elif (choice == "p"):
+                    usePotion()
+                elif (choice == "lp"):
+                    useLifePotion()
+                elif (choice == "fp"):
+                    useFullPotion()
+                elif (choice == "help"):
+                    help()
+                elif(choice == "look" and skeletonCave_counter == 0 or skeletonCave_counter == 3 or skeletonCave_counter == 1 and not skeletonCave_counter > 3):
+                    print("\nYou look around and see some items on the ground.")
+                    choice = 7
+                    while(choice != "y" and choice != "n"):
+                        choice = input("\n\tYou see a handcannon on the ground. Will you pick it up?").lower()
+                        if(choice == "y" and skeletonCave_counter == 0 or skeletonCave_counter == 3):
+                            print("\nYou pick up the handcannon.")
+                            handcannon_inventory = True
+                            skeletonCave_counter += 1
+                        elif(choice == "n"):
+                            print("\nYou do not pick up the handcannon.")
+                    choice = 7
+                    while(choice != "y" and choice != "n"):
+                        choice = input("\n\tYou see some gold on the ground. Will you pick it up?").lower()
+                        if(choice == "y" and skeletonCave_counter == 0 or skeletonCave_counter == 1):
+                            print("\nYou pick up the 50 Gold!")
+                            player_gold += 50
+                            skeleton_counter += 3
+                        elif(choice == "n"):
+                            print("\nNot sure why but you do not pick up the gold!")
+    elif(not skeletonKing_death):
+        choice = input("\nWill you go (S)outh or go (N)orth and face the Skeleton King?").lower()
+        if (choice == "s"):
+            dungeon()
+        elif (choice == "p"):
+            usePotion()
+        elif (choice == "lp"):
+            useLifePotion()
+        elif (choice == "fp"):
+            useFullPotion()
+        elif (choice == "help"):
+            help()
+        elif (choice == "n"):
+            print("\n\"So, you think you can face me?\" The Skeleton King says. \"Well first you must prove yourself a worthy opponent!\"")
+            time.sleep(4)
+            print("\n\"First you must defeat my minions!\" the Skeleton King says.")
+            time.sleep(3)
+            battle(player, skeleton)
+            print("\n\"That was my weakest minion adventurer! Let's see how you face against my archers!\"")
+            time.sleep(4)
+            battle(player, skeleton_archer)
+            print("\n\"They are still nothing compared to my next minions!")
+            time.sleep(3)
+            battle(player, skeleton_knight)
+            print("\n\"Adventurer, you have crossed a line. Let's see how you fare against me! The Skeleton King!!\"")
+            time.sleep(3)
+            battle(player, skeleton_king)
+            print("\n\"Ugh!\" The Skeleton King says. \"How are you so strong! I thought I could defeat you as I am the most powerful skeleton in all of the land. Alas, you have bested me. Here, take this book. You will need it on your adventure.\"The Skeleton King says as he lies on the ground and dies.")
+            time.sleep(3)
+            skeletonKing_death = True
+            book_inventory = True
+    elif (choice == "i"):
+        view_inventory()
+    else:
+        print("\nPlease enter a valid input!")
 
 def cliffside():
     global player_gold
@@ -746,32 +762,34 @@ def cliffside():
     elif (chance.chance(50)):
         print("\nA bird flies down and attacks you!")
         battle(player, bird)
-
-    choice = 7
-    while(choice != "w" and choice != "s" and gameOver):
-        choice = input("\nWill you go (W)est or (S)outh?").lower()
-        if (choice == "w"):
-            dead_end_valley()
-        elif (choice == "s"):
-            meadow()
-        elif (choice == "p"):
-            usePotion()
-        elif (choice == "lp"):
-            useLifePotion()
-        elif (choice == "fp"):
-            useFullPotion()
-        elif (choice == "help"):
-            help()
-        elif (choice == "look" and cliffside_counter == 0):
-            print("You look around...")
-            find_potion()
-            cliffside_counter += 1
-        elif (choice == "look" and cliffside_counter > 0):
-            print("You look around but find nothing.")
-        elif (choice == "i"):
-            view_inventory()
-        else:
-            print("\nPlease enter a valid input!")
+    if(gameOver):
+        raise SystemExit
+    elif(not gameOver):
+        choice = 7
+        while(choice != "w" and choice != "s"):
+            choice = input("\nWill you go (W)est or (S)outh?").lower()
+            if (choice == "w"):
+                dead_end_valley()
+            elif (choice == "s"):
+                meadow()
+            elif (choice == "p"):
+                usePotion()
+            elif (choice == "lp"):
+                useLifePotion()
+            elif (choice == "fp"):
+                useFullPotion()
+            elif (choice == "help"):
+                help()
+            elif (choice == "look" and cliffside_counter == 0):
+                print("You look around...")
+                find_potion()
+                cliffside_counter += 1
+            elif (choice == "look" and cliffside_counter > 0):
+                print("You look around but find nothing.")
+            elif (choice == "i"):
+                view_inventory()
+            else:
+                print("\nPlease enter a valid input!")
 
 def dead_end_valley():
     global player_gold
@@ -849,31 +867,34 @@ def dead_end_valley():
     if (chance.chance(45)):
         print("\nA giant spider leaps out and attacks you!.")
         battle(player, giant_spider)
-    choice = 7
-    while(choice != "e" and not gameOver):
-        choice = input("\nWill you go (E)ast?").lower()
-        if (choice == "e"):
-            cliffside()
-        elif (choice == "p"):
-            usePotion()
-        elif (choice == "lp"):
-            useLifePotion()
-        elif (choice == "fp"):
-            useFullPotion()
-        elif (choice == "fp"):
-            useFullPotion()
-        elif (choice == "help"):
-            help()
-        elif (choice == "look" and deadEndValley_counter == 0):
-            print("You look around...")
-            find_potion()
-            deadEndValley_counter += 1
-        elif (choice == "look" and deadEndValley_counter > 0):
-            print("You look around but find nothing.")
-        elif (choice == "i"):
-            view_inventory()
-        else:
-            print("Please enter a valid input!")
+    if(gameOver):
+        raise SystemExit
+    elif(not gameOver):        
+        choice = 7
+        while(choice != "e"):
+            choice = input("\nWill you go (E)ast?").lower()
+            if (choice == "e"):
+                cliffside()
+            elif (choice == "p"):
+                usePotion()
+            elif (choice == "lp"):
+                useLifePotion()
+            elif (choice == "fp"):
+                useFullPotion()
+            elif (choice == "fp"):
+                useFullPotion()
+            elif (choice == "help"):
+                help()
+            elif (choice == "look" and deadEndValley_counter == 0):
+                print("You look around...")
+                find_potion()
+                deadEndValley_counter += 1
+            elif (choice == "look" and deadEndValley_counter > 0):
+                print("You look around but find nothing.")
+            elif (choice == "i"):
+                view_inventory()
+            else:
+                print("Please enter a valid input!")
 
 def forest():
     global player_gold
@@ -918,31 +939,34 @@ def forest():
     elif(chance.chance(50)):
         print("\nA spider crawls down a tree and attacks you!")
         battle(player, spider)
-    choice = 7
-    while(choice != "n" and choice != "w" and not gameOver):
-        choice = input("\nWill you go (N)orth or (W)est?").lower()
-        if (choice == "n"):
-            meadow()
-        elif (choice == "w"):
-            cave()
-        elif (choice == "p"):
-            usePotion()
-        elif (choice == "lp"):
-            useLifePotion()
-        elif (choice == "fp"):
-            useFullPotion()
-        elif (choice == "help"):
-            help()
-        elif (choice == "look" and forest_counter == 0):
-            print("You look around...")
-            find_potion()
-            forest_counter += 1
-        elif(choice == "look" and forest_counter > 0):
-            print("You look around but find nothing.")
-        elif (choice == "i"):
-            view_inventory()
-        else:
-            print("\nPlease enter a valid input!")
+    if(gameOver):
+        raise SystemExit
+    elif(not gameOver):        
+        choice = 7
+        while(choice != "n" and choice != "w"):
+            choice = input("\nWill you go (N)orth or (W)est?").lower()
+            if (choice == "n"):
+                meadow()
+            elif (choice == "w"):
+                cave()
+            elif (choice == "p"):
+                usePotion()
+            elif (choice == "lp"):
+                useLifePotion()
+            elif (choice == "fp"):
+                useFullPotion()
+            elif (choice == "help"):
+                help()
+            elif (choice == "look" and forest_counter == 0):
+                print("You look around...")
+                find_potion()
+                forest_counter += 1
+            elif(choice == "look" and forest_counter > 0):
+                print("You look around but find nothing.")
+            elif (choice == "i"):
+                view_inventory()
+            else:
+                print("\nPlease enter a valid input!")
 
 def cave():
     global player_gold
@@ -987,29 +1011,32 @@ def cave():
         elif(chance.chance(49)):
             print("\nA rat scurries up and attacks you!")
             battle(player, rat)
-    choice = 7
-    while(choice != "e" and not gameOver):
-        choice = input("\nWill you go(E)ast?").lower()
-        if (choice == "e"):
-            forest()
-        elif (choice == "p"):
-            usePotion()
-        elif (choice == "lp"):
-            useLifePotion()
-        elif (choice == "fp"):
-            useFullPotion()
-        elif (choice == "help"):
-            help()
-        elif (choice == "look" and cave_counter == 0):
-            print("You look around and find {} gold!".format(random_gold))
-            player_gold += random_gold
-            cave_counter += 1
-        elif (choice == "look" and cave_counter > 0):
-            print("You look around but find nothing.")
-        elif (choice == "i"):
-            view_inventory()
-        else:
-            print("\nPlease enter a valid input!")
+        if(gameOver):
+            raise SystemExit
+        elif(not gameOver):            
+            choice = 7
+            while(choice != "e"):
+                choice = input("\nWill you go(E)ast?").lower()
+                if (choice == "e"):
+                    forest()
+                elif (choice == "p"):
+                    usePotion()
+                elif (choice == "lp"):
+                    useLifePotion()
+                elif (choice == "fp"):
+                    useFullPotion()
+                elif (choice == "help"):
+                    help()
+                elif (choice == "look" and cave_counter == 0):
+                    print("You look around and find {} gold!".format(random_gold))
+                    player_gold += random_gold
+                    cave_counter += 1
+                elif (choice == "look" and cave_counter > 0):
+                    print("You look around but find nothing.")
+                elif (choice == "i"):
+                    view_inventory()
+                else:
+                    print("\nPlease enter a valid input!")
     if(flag2 and book_inventory):
         print("\nYou enter a large cave. You see spider webs in the corners. Bats fly over your head. Stagalimites cover the ceiling. There is the forest is to the East and the secret passage is to the South, You see some gold on the ground!")
         choice = 7
@@ -1030,41 +1057,15 @@ def cave():
         elif(chance.chance(49)):
             print("\nA rat scurries up and attacks you!")
             battle(player, rat)
-        choice = 7
-        while(choice != "s" and choice != "e" and not gameOver):
-            choice = input("\nWill you go(S)outh or (E)ast?").lower()
-            if (choice == "s"):
-                secret_passage()
-            elif (choice == "e"):
-                forest()
-            elif (choice == "p"):
-                usePotion()
-            elif (choice == "lp"):
-                useLifePotion()
-            elif (choice == "fp"):
-                useFullPotion()
-            elif (choice == "help"):
-                help()
-            elif (choice == "i"):
-                view_inventory()
-            else:
-                print("\nPlease enter a valid input!")
-        if(chance.chance(50)):
-            print("\nA spider leaps out and attacks you!")
-            battle(player, spider)
-        elif(chance.chance(40)):
-            print("\nA snake slithers up and attacks you!")
-            battle(player, snake)
-        elif(chance.chance(49)):
-            print("\nA rat scurries up and attacks you!")
-            battle(player, rat)
-
-        elif(not flag2 and not book_inventory):
-            print("\nYou enter a large cave. You see spider webs in the corners. Bats fly over your head. Stagalimites cover the ceiling. There is the forest is to the East.")
+        if(gameOver):
+            raise SystemExit
+        elif(not gameOver):            
             choice = 7
-            while(choice != "e" and not gameOver):
-                choice = input("\nWill you go(E)ast?").lower()
-                if (choice == "e"):
+            while(choice != "s" and choice != "e"):
+                choice = input("\nWill you go(S)outh or (E)ast?").lower()
+                if (choice == "s"):
+                    secret_passage()
+                elif (choice == "e"):
                     forest()
                 elif (choice == "p"):
                     usePotion()
@@ -1078,6 +1079,29 @@ def cave():
                     view_inventory()
                 else:
                     print("\nPlease enter a valid input!")
+
+        elif(not flag2 and not book_inventory):
+            print("\nYou enter a large cave. You see spider webs in the corners. Bats fly over your head. Stagalimites cover the ceiling. There is the forest is to the East.")
+            if(gameOver):
+                raise SystemExit
+            elif(not gameOver):            
+                choice = 7
+                while(choice != "e"):
+                    choice = input("\nWill you go(E)ast?").lower()
+                    if (choice == "e"):
+                        forest()
+                    elif (choice == "p"):
+                        usePotion()
+                    elif (choice == "lp"):
+                        useLifePotion()
+                    elif (choice == "fp"):
+                        useFullPotion()
+                    elif (choice == "help"):
+                        help()
+                    elif (choice == "i"):
+                        view_inventory()
+                    else:
+                        print("\nPlease enter a valid input!")
 def secret_passage():
     global player_gold
     global umari_inventory
@@ -1105,31 +1129,34 @@ def secret_passage():
     else:
         print("\nYou do not see anything here.")
         cave()
-    choice = 7
-    while(choice != "n" and choice != "s" and not gameOver):
-        choice = input("\nWill you go (N)orth or (S)outh?").lower()
-        if (choice == "n"):
-            cave()
-        elif (choice == "s"):
-            dragons_lair()
-        elif (choice == "p"):
-            usePotion()
-        elif (choice == "lp"):
-            useLifePotion()
-        elif (choice == "fp"):
-            useFullPotion()
-        elif (choice == "help"):
-            help()
-        elif (choice == "look" and secretPassage_counter == 0):
-            print("You look around and find {} gold!".format(random_gold))
-            player_gold += random_gold
-            secretPassage_counter += 1
-        elif (choice == "look" and secretPassage_counter > 0):
-            print("You look around but find nothing.")
-        elif (choice == "i"):
-            view_inventory()
-        else:
-            print("\nPlease enter a valid input!")
+    if(gameOver):
+        raise SystemExit
+    elif(not gameOver):        
+        choice = 7
+        while(choice != "n" and choice != "s"):
+            choice = input("\nWill you go (N)orth or (S)outh?").lower()
+            if (choice == "n"):
+                cave()
+            elif (choice == "s"):
+                dragons_lair()
+            elif (choice == "p"):
+                usePotion()
+            elif (choice == "lp"):
+                useLifePotion()
+            elif (choice == "fp"):
+                useFullPotion()
+            elif (choice == "help"):
+                help()
+            elif (choice == "look" and secretPassage_counter == 0):
+                print("You look around and find {} gold!".format(random_gold))
+                player_gold += random_gold
+                secretPassage_counter += 1
+            elif (choice == "look" and secretPassage_counter > 0):
+                print("You look around but find nothing.")
+            elif (choice == "i"):
+                view_inventory()
+            else:
+                print("\nPlease enter a valid input!")
 
 def dragons_lair():
     global player_gold
@@ -1156,65 +1183,70 @@ def dragons_lair():
     global gameOver
     if(not dragon_death):
         print("\nYou exit the secret passage and enter a very large room. You are very deep underground as you cannot see the top of the ceiling but see a light very far up. You look across the huge room and see a dragon sleeping on his treasure. The secret passage to the North is the only logical way out.")
-
-        choice = 7
-        while(choice != "n" and choice != "s" and not gameOver):
-            choice = input("\n\tWill you go (N)orth or go (S)outh and fight the dragon to claim his treasure?").lower()
-            if (choice == "n"):
-                secret_passage()
-            elif(choice == "p"):
-                usePotion()
-            elif (choice == "lp"):
-                useLifePotion()
-            elif (choice == "fp"):
-                useFullPotion()
-            elif (choice == "help"):
-                help()
-            elif (choice == "s"):
-                print("\nYou sneak up to the dragon, thinking it has not taken notice of you. However, it has known you were there the whole time!")
-                time.sleep(3)
-                print("\nThe dragon wakes up and lunges at you. \"Vir krilon hi vopraan zey nol dii slumber! Rodraan wah dir bovitaan!\" He says in his own language, Dova. (This translated is \"How dare you wake me from my slumber! Prepare to die adventurer!\"")
-                time.sleep(7)
-                battle(player, dragon)
-                print("\nThe dragon falls down. \"You have bested me adventurer. Please, take what you want, I won't bother you anymore. Of interest to you is probably this Great Oak Key, 150 Gold and this Krambit. Take them, they are yours for defeating me.\"")
-                time.sleep(10)
-                krambit_inventory = True
-                greatOakKey_inventory = True
-                player_gold += 150
-                dragons_lair()
-            elif (choice == "i"):
-                view_inventory()
-            else:
-                print("\nPlease enter a valid input!")
+        if(gameOver):
+            raise SystemExit
+        elif(not gameOver):    
+            choice = 7
+            while(choice != "n" and choice != "s"):
+                choice = input("\n\tWill you go (N)orth or go (S)outh and fight the dragon to claim his treasure?").lower()
+                if (choice == "n"):
+                    secret_passage()
+                elif(choice == "p"):
+                    usePotion()
+                elif (choice == "lp"):
+                    useLifePotion()
+                elif (choice == "fp"):
+                    useFullPotion()
+                elif (choice == "help"):
+                    help()
+                elif (choice == "s"):
+                    print("\nYou sneak up to the dragon, thinking it has not taken notice of you. However, it has known you were there the whole time!")
+                    time.sleep(3)
+                    print("\nThe dragon wakes up and lunges at you. \"Vir krilon hi vopraan zey nol dii slumber! Rodraan wah dir bovitaan!\" He says in his own language, Dova. (This translated is \"How dare you wake me from my slumber! Prepare to die adventurer!\"")
+                    time.sleep(7)
+                    battle(player, dragon)
+                    print("\nThe dragon falls down. \"You have bested me adventurer. Please, take what you want, I won't bother you anymore. Of interest to you is probably this Great Oak Key, 150 Gold and this Krambit. Take them, they are yours for defeating me.\"")
+                    time.sleep(10)
+                    krambit_inventory = True
+                    greatOakKey_inventory = True
+                    player_gold += 150
+                    dragons_lair()
+                elif (choice == "i"):
+                    view_inventory()
+                else:
+                    print("\nPlease enter a valid input!")
     elif(dragon_death):
         print("\nYou exit the secret passage and enter a very large room. You are very deep underground as you cannot see the top of the ceiling but see a light very far up. The secret passage to the North is the only logical way out.")
         if(chance.chance(50)):
             print("\nA snake slithers up and attacks you!")
             time.sleep(2)
             battle(player, snake)
-        choice = 7
-        while(choice != "n" and not gameOver):
-            choice = input("\nWill you go (N)orth?").lower()
-            if (choice == "n"):
-                secret_passage()
-            elif (choice == "i"):
-                view_inventory()
-            elif (choice == "p"):
-                usePotion()
-            elif (choice == "lp"):
-                useLifePotion()
-            elif (choice == "fp"):
-                useFullPotion()
-            elif (choice == "help"):
-                help()
-            elif (choice == "look" and dragonsLair_counter == 0):
-                print("\nYou find 35 gold on the ground!")
-                player_gold += 35
-                dragonsLair_counter += 1
-            elif (choice == "look" and dragonsLair_counter > 0):
-                print("You look around but find nothing.")
-            else:
-                print("\nPlease enter a valid input!")
+        if(gameOver):
+            raise SystemExit
+        elif(not gameOver):    
+            choice = 7
+            while(choice != "n"):
+                choice = input("\nWill you go (N)orth?").lower()
+                if (choice == "n"):
+                    secret_passage()
+                elif (choice == "i"):
+                    view_inventory()
+                elif (choice == "p"):
+                    usePotion()
+                elif (choice == "lp"):
+                    useLifePotion()
+                elif (choice == "fp"):
+                    useFullPotion()
+                elif (choice == "help"):
+                    help()
+                elif (choice == "look" and dragonsLair_counter == 0):
+                    print("\nYou find 35 gold on the ground!")
+                    player_gold += 35
+                    dragonsLair_counter += 1
+                elif (choice == "look" and dragonsLair_counter > 0):
+                    print("You look around but find nothing.")
+                else:
+                    print("\nPlease enter a valid input!")
 
 def village():
     global player_gold
@@ -1253,30 +1285,32 @@ def village():
                 print("Please enter a valid input!")
     elif(counter >= 1):
         print("\nYou enter a small village. The people seem friendly, and all say \"hello\" to you, regardless of you being a stranger. You see a cemetary to the South, a church to the South East, the marketplace is to the East and the meadow to the West.")
-
-    choice = 7
-    while(choice != "s" and choice != "se" and choice != "s" and choice != "w" and not gameOver):
-        choice = input("\nWill you go (S)outh, (S)outh (E)ast, (E)ast or (W)est?").lower()
-        if (choice == "s"):
-            cemetary()
-        elif (choice == "se"):
-            church()
-        elif (choice == "e"):
-            marketplace()
-        elif (choice == "w"):
-            meadow()
-        elif (choice == "p"):
-            usePotion()
-        elif (choice == "lp"):
-            useLifePotion()
-        elif (choice == "fp"):
-            useFullPotion()
-        elif (choice == "help"):
-            help()
-        elif (choice == "i"):
-            view_inventory()
-        else:
-            print("\nPlease enter a valid input!")
+    if(gameOver):
+        raise SystemExit
+    elif(not gameOver):    
+        choice = 7
+        while(choice != "s" and choice != "se" and choice != "s" and choice != "w"):
+            choice = input("\nWill you go (S)outh, (S)outh (E)ast, (E)ast or (W)est?").lower()
+            if (choice == "s"):
+                cemetary()
+            elif (choice == "se"):
+                church()
+            elif (choice == "e"):
+                marketplace()
+            elif (choice == "w"):
+                meadow()
+            elif (choice == "p"):
+                usePotion()
+            elif (choice == "lp"):
+                useLifePotion()
+            elif (choice == "fp"):
+                useFullPotion()
+            elif (choice == "help"):
+                help()
+            elif (choice == "i"):
+                view_inventory()
+            else:
+                print("\nPlease enter a valid input!")
 
 def church():
     global player_gold
@@ -1320,24 +1354,26 @@ def church():
     elif(chance.chance(50)):
         print("\nA rat scurries across the floor and attacks you!")
         battle(player, rat)
-
-    choice = 7
-    while(choice != "n" and not gameOver):
-        choice = input("\nWill you go (N)orth?").lower()
-        if (choice == "n"):
-            village()
-        elif (choice == "p"):
-            usePotion()
-        elif (choice == "lp"):
-            useLifePotion()
-        elif (choice == "fp"):
-            useFullPotion()
-        elif (choice == "help"):
-            help()
-        elif (choice == "i"):
-            view_inventory()
-        else:
-            print("\nPlease enter a valid input!")
+    if(gameOver):
+        raise SystemExit
+    elif(not gameOver):        
+        choice = 7
+        while(choice != "n"):
+            choice = input("\nWill you go (N)orth?").lower()
+            if (choice == "n"):
+                village()
+            elif (choice == "p"):
+                usePotion()
+            elif (choice == "lp"):
+                useLifePotion()
+            elif (choice == "fp"):
+                useFullPotion()
+            elif (choice == "help"):
+                help()
+            elif (choice == "i"):
+                view_inventory()
+            else:
+                print("\nPlease enter a valid input!")
 
 def cemetary():
     global player_gold
@@ -1383,23 +1419,26 @@ def cemetary():
     elif (chance.chance(10)):
         print("\nYou hear shuffling behind you. You turn around and see a villager sneaking up behind you! He attacks!")
         battle(player, crazed_villager)
-    choice = 7
-    while(choice != "n" and not gameOver):
-        choice = input("\nWill you go (N)orth?").lower()
-        if (choice == "n"):
-            village()
-        elif (choice == "p"):
-            usePotion()
-        elif (choice == "lp"):
-            useLifePotion()
-        elif (choice == "fp"):
-            useFullPotion()
-        elif (choice == "help"):
-            help()
-        elif (choice == "i"):
-            view_inventory()
-        else:
-            print("\nPlease enter a valid input!")
+    if(gameOver):
+        raise SystemExit
+    elif(not gameOver):
+        choice = 7
+        while(choice != "n"):
+            choice = input("\nWill you go (N)orth?").lower()
+            if (choice == "n"):
+                village()
+            elif (choice == "p"):
+                usePotion()
+            elif (choice == "lp"):
+                useLifePotion()
+            elif (choice == "fp"):
+                useFullPotion()
+            elif (choice == "help"):
+                help()
+            elif (choice == "i"):
+                view_inventory()
+            else:
+                print("\nPlease enter a valid input!")
 
 def marketplace():
     global player_gold
@@ -1443,7 +1482,7 @@ def marketplace():
         time.sleep(2)
         battle(player, rat)
     choice = 7
-    while(choice != "n" and choice != "e" and choice != "s" and choice != "w" and not gameOver):
+    while(choice != "n" and choice != "e" and choice != "s" and choice != "w"):
         choice = input("\nWill you go (N)orth, (E)ast, (W)est or (S)outh?").lower()
         if (choice == "n"):
             blacksmith()
@@ -1667,9 +1706,9 @@ def shangri_la():
             time.sleep(12)
             game_end()
         else:
-            os.exit()
+            raise SystemExit
     else:
-        os.exit()
+        raise SystemExit
 
 def b_buy(): #To buy weapons from the blacksmith
     global player_gold
@@ -1789,6 +1828,7 @@ def s_buy(): #To buy items from the shop
 
 def battle(player, enemy): #Battle function
     global best_weapon
+    global gameOver
     flag = True
     damage = 0
     """Checks the inventory for the best weapon and applies that to the variable best_weapon"""
@@ -1859,6 +1899,7 @@ def battle(player, enemy): #Battle function
                                     player.hp -= enemy.damage
                                     print("{} hits you for {} damage! You fall to the ground.".format(enemy.name, enemy.damage))
                                     flag = False
+                                    gameOver = True
                                     death()
                                 if(not player.hp <= 0):
                                     player.hp -= enemy.damage #Enemy attacks (the amount of damage the enemy does is subtracted from the amount of hp the player has
@@ -1875,6 +1916,7 @@ def battle(player, enemy): #Battle function
                                 print("\nYour lame attempt to run from {} does not work. You trip over nothing and get eaten by {}!".format(enemy.name, enemy.name))
                                 time.sleep(2)
                                 flag = False
+                                gameOver = True
                                 death() #Calls the death function
                         elif (choice == "p"):
                             if(potion_inventory >= 1 and fullPotion_inventory >= 1):
@@ -1951,7 +1993,8 @@ def battle(player, enemy): #Battle function
                             print("\n{} hits you for {} damage! You have {} hp left!".format(enemy.name, enemy.damage, player.hp))
                         elif(player.hp <= 0):
                             print("\n{} hits you for {} damage! That is more than you can take!".format(enemy.name, enemy.damage))
-                            flag = False                            
+                            flag = False
+                            gameOver = True
                             death()
                 elif (choice == "p"):
                     usePotion()
@@ -2055,11 +2098,11 @@ def death():
     playAgain = input("\n\nWould you like to play again?(Y/N): ").lower()
     while(playAgain != "y" and playAgain != "n"):
         if (playAgain == "y"):
+            gameOver = False
             reload(Game) #Ask Mr. Smith about this and how to properly reload the game
         elif (playAgain == "n"):
             print("\nThanks for playing! Hope you enjoyed your time playing Hjalmion: The Rise Of Fencor. Please, play again sometime!")
-            gameOver = True
-            os.exit()
+            raise SystemExit
         else:
             print("\nPlease enter a valid input!")
 
