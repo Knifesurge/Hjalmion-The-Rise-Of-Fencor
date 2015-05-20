@@ -47,7 +47,7 @@ class GreatOakKey(KeyItems):
 class Note(KeyItems):
     def __init__(self):
         super().__init__(name="Note",
-                         description="A note from your father. Type in \"read note\" to read in any room.",
+                         description="A note from your father. He tells you where to find something that someone is missing. \"It is vitally important\" He explains.",
                          value=0)
         
 class JewelEgg(KeyItems):
