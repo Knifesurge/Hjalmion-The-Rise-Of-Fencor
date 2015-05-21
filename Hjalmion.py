@@ -2179,13 +2179,16 @@ def help():
 def find_potion():
     global potion_inventory
     global lifePotion_inventory
-    find_potion = random.randrange(1,11)
-    if(find_potion <= 2):
+    global fullPotion_inventory
+    if(chance.chance(50)):
         print("You find a Potion!")
         potion_inventory += 1
-    elif(find_potion == 10):
+    elif(chance.chance(5)):
         print("You find a Life Potion!")
         lifePotion_inventory += 1
+    elif(chance.chance(10)):
+        print("You find a Full Potion!")
+        fullPotion_inventory += 1
     else:
         print("You do not find anything.")
 
