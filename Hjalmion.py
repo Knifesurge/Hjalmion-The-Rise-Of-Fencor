@@ -102,6 +102,9 @@ skeletonCave_counter = 0
 cave_counter = 0
 secretPassage_counter = 0
 dragonsLair_counter = 0
+church_counter = 0
+cemetary_counter = 0
+market_counter = 0
 
 player_gold = 15 #Amount of gold the player has
 blacksmith_buy = {"\nSword|Cost: 15g":sword, "\nHeavy Sword|Cost: 50g":heavy_sword, "\nBow|Cost: 20g":bow, "\nCrossbow|35g":crossbow} #Everything that is in the blacksmith's shop to buy
@@ -1267,8 +1270,9 @@ def village():
     global note_inventory
     global jewelEgg_inventory
     global legendarySword_inventory
-    global triforce_inventry
+    global triforce_inventory
     global counter
+    global village_counter
     global gameOver
     if(counter == 0):
         print("\nYou enter a small village. The people seem friendly, and all say \"hello\" to you, regardless of you being a stranger. You see a cemetary to the South, a church to the South East, the marketplace is to the East and the meadow to the West. You see some gold on the ground.")
@@ -1305,6 +1309,12 @@ def village():
                 useLifePotion()
             elif (choice == "fp"):
                 useFullPotion()
+            elif (choice == "look" and village_counter == 0):
+                print("You look around...")
+                find_potion()
+                village_counter += 1
+            elif (choice == "look" and village_counter > 0):
+                print("You look around but find nothing")
             elif (choice == "help"):
                 help()
             elif (choice == "i"):
@@ -1333,6 +1343,7 @@ def church():
     global legendarySword_inventory
     global triforce_inventory
     global flag4
+    global church_counter
     global gameOver
     if(not note_inventory):
         print("\nYou enter the church. Pews are lined facing the front of the church, where Father Henry is motioning for you to come to him. \"Hello, my son.\" Father Henry says, \"Your father left a note with me to give to you. It is very important that you have it so, here.\"")
@@ -1370,6 +1381,11 @@ def church():
                 useFullPotion()
             elif (choice == "help"):
                 help()
+            elif (choice == "look" and church_counter == 0):
+                print("You find {} Gold!".format(random_gold))
+                church_counter += 1
+            elif (choice == "look" and church_counter > 0):
+                print("You look around but find nothing")
             elif (choice == "i"):
                 view_inventory()
             else:
@@ -1395,6 +1411,7 @@ def cemetary():
     global jewelEgg_inventory
     global legendarySword_inventory
     global triforce_inventory
+    global cemetary_counter
     global gameOver
     if(torch_inventory):
         print("\nYou open a black iron fence gate and walk into the cemetary. You see various different kinds of headstones with various markings on them, from \"RIP\" to loving quotes, and even one that says \"Here lie the party guy\". The village is to the North.")
@@ -1435,6 +1452,11 @@ def cemetary():
                 useFullPotion()
             elif (choice == "help"):
                 help()
+            elif (choice == "look" and cemetary_counter == 0):
+                print("You find {} Gold!".format(random_gold))
+                cemetary_counter += 1
+            elif (choice == "look" and cemetary_counter > 0):
+                print("You look around but find nothing")
             elif (choice == "i"):
                 view_inventory()
             else:
@@ -1461,6 +1483,7 @@ def marketplace():
     global legendarySword_inventory
     global triforce_inventory
     global flag3
+    global market_counter
     global gameOver
     if(flag3):
         print("\nYou walk into the marketplace, which is alive and buzzing with energy. You see many different stands, but the only ones of interest to you are the Blacksmith to the North, the shop to the East and a huge castle to the South. You see some gold on the ground.")
@@ -1500,6 +1523,12 @@ def marketplace():
             useFullPotion()
         elif (choice == "help"):
             help()
+        elif (choice == "look" and market_counter == 0):
+            print("You look around...")
+            find_potion()
+            market_counter += 1
+        elif (choice == "look" and market_counter > 0):
+            print("You look around but find nothing")
         elif (choice == "i"):
             view_inventory()
         else:
@@ -1622,6 +1651,7 @@ def castle():
     global legendarySword_inventory
     global triforce_inventory
     global random_gold
+    global castle_counter
     if(jewelEgg_inventory):
         print("\nYou enter a grand castle. You walk in and people start bowing. You had forgotten you were king! Someone walks up to you and asks if you had found an egg special to their family. You pull out the Jewel Egg you found at the Great Oak. \"Thats it!\" the person says as you hand it over. \"Here!\" they say, \"Take this sword my grandfather gave me, I have no use for it as it cannot be sharpened.\"")
         legendarySword_inventory = True
@@ -1643,9 +1673,11 @@ def castle():
             useFullPotion()
         elif (choice == "help"):
             help()
-        elif (choice == "look"):
+        elif (choice == "look" and castle_counter == 0):
+            print("You look around...")
             findPotion()
-            random_gold
+        elif (choice == "look" and castle_counter > 0):
+            print("You look around but find nothing")
         elif (choice == "i"):
             view_inventory
         else:
