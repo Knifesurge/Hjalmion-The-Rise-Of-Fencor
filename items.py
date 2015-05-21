@@ -47,7 +47,7 @@ class GreatOakKey(KeyItems):
 class Note(KeyItems):
     def __init__(self):
         super().__init__(name="Note",
-                         description="A note from your father. He tells you where to find something that someone is missing. \"It is vitally important\" He explains.",
+                         description="A note from your father. He hints about a Great Tree you where to find something that someone is missing. \"It is vitally important\" He explains.",
                          value=0)
         
 class JewelEgg(KeyItems):
@@ -140,13 +140,6 @@ class Rock(Weapon):
                          description="A sizeable rock that can easily smash someone's skull in.",
                          value=0,
                          damage=5)
-    def accuracy():
-        if (chance(95)):
-            damage = damage
-            return damage
-        else:
-            damage = 0
-            return damage
 
 class Dagger(Weapon):
     def __init__(self):
@@ -154,13 +147,6 @@ class Dagger(Weapon):
                        description="A shiny dagger with some rust. Somewhat more dangerous than a rock.",
                        value=10,
                        damage=10)
-    def accuracy():
-        if (chance(95)):
-            damage = damage
-            return damage
-        else:
-            damage = 0
-            return damage
 
 class Sword(Weapon):
     def __init__(self):
@@ -168,13 +154,6 @@ class Sword(Weapon):
                          description="An average sized sword. Deadly in the hands of a swordsman.",
                          value=15,
                          damage=20)
-    def accuracy():
-        if (chance(95)):
-            damage = damage
-            return damage
-        else:
-            damage = 0
-            return damage
 
 class HeavySword(Weapon):
     def __init__(self):
@@ -182,13 +161,6 @@ class HeavySword(Weapon):
                          description="A large sword that requires two hands to swing",
                          value=20,
                          damage=25)
-    def accuracy():
-        if (chance(80)):
-            damage = damage
-            return damage
-        else:
-            damage = 0
-            return damage
 
 class Bow(Weapon):
     def __init__(self):
@@ -196,13 +168,6 @@ class Bow(Weapon):
                          description="A huntsman's bow. Deadly at a range, useless at point blank.",
                          value=15,
                          damage=25)
-    def accuracy():
-        if (chance(85)):
-            damage = damage
-            return damage
-        else:
-            damage = 0
-            return damage
 
 class Crossbow(Weapon):
     def __init__(self):
@@ -210,13 +175,6 @@ class Crossbow(Weapon):
                          description="Two handed crossbow. Deadly at all ranges. More effective at a larger range than a huntsman's bow.",
                          value=20,
                          damage=30)
-    def accuracy():
-        if (chance(70)):
-            damage = damage
-            return damage
-        else:
-            damage = 0
-            return damage
 
 class Handcannon(Weapon):
     def __init__(self):
@@ -224,13 +182,6 @@ class Handcannon(Weapon):
                          description="A cannon that fits in your hand. Deadly. End. Of. Story.",
                          value=50,
                          damage=50)
-    def accuracy():
-        if (chance(75)):
-            damage = damage
-            return damage
-        else:
-            damage = 0
-            return damage
 
 class Krambit(Weapon):
     def __init__(self):
@@ -238,13 +189,6 @@ class Krambit(Weapon):
                          description="Small knife with a curved edge. Worth $262 with no skins. Lots of skins available. \"Such skins, very wow\"",
                          value=262,
                          damage=70)
-    def accuracy():
-        if (chance(99)):
-            damage = damage
-            return damage
-        else:
-            damage = 0
-            return damage
 
 class SwordOfDragox(SuperWeapon):
     def __init__(self):
@@ -255,13 +199,10 @@ class SwordOfDragox(SuperWeapon):
                        magic_dmg=50,
                        poison_dmg=0,
                        bleed_dmg=0)
-    def accuracy():
-        if (chance(75)):
-            damage = damage + magic_dmg
-            return damage
-        else:
-            damage = 0
-            return damage
+        
+    def total_damage(damage, magic_dmg):
+        damage = damage + magic_dmg
+        return damage
 
 class ScepterOfRomox(SuperWeapon):
     def __init__(self):
@@ -272,12 +213,9 @@ class ScepterOfRomox(SuperWeapon):
                          magic_dmg=0,
                          poison_dmg=150,
                          bleed_dmg=0)
-    def accuracy():
-        if (chance(60)):
+        
+        def total_damage(damage, poison_dmg):
             damage = damage + poison_dmg
-            return damage
-        else:
-            damage = 0
             return damage
 
 class UmariOfFencor(SuperWeapon):
@@ -289,10 +227,7 @@ class UmariOfFencor(SuperWeapon):
                          magic_dmg=0,
                          poison_dmg=0,
                          bleed_dmg=400)
-    def accuracy():
-        if (chance(50)):
+        
+        def total_damage(damage, bleed_dmg):
             damage = damage + bleed_dmg
-            return damage
-        else:
-            damage = 0
             return damage
