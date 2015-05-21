@@ -105,6 +105,7 @@ dragonsLair_counter = 0
 church_counter = 0
 cemetary_counter = 0
 market_counter = 0
+castle_counter = 0
 
 player_gold = 15 #Amount of gold the player has
 blacksmith_buy = {"\nSword|Cost: 15g":sword, "\nHeavy Sword|Cost: 50g":heavy_sword, "\nBow|Cost: 20g":bow, "\nCrossbow|35g":crossbow} #Everything that is in the blacksmith's shop to buy
