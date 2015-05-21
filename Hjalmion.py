@@ -109,7 +109,7 @@ castle_counter = 0
 
 player_gold = 15 #Amount of gold the player has
 blacksmith_buy = {"\nSword|Cost: 15g":sword, "\nHeavy Sword|Cost: 50g":heavy_sword, "\nBow|Cost: 20g":bow, "\nCrossbow|35g":crossbow} #Everything that is in the blacksmith's shop to buy
-shop_buy = {"\nPotion| 20g":potion, "\nLife Potion| 50g":life_potion, "\nFull Potion| 40g":full_potion, "\nTorch|Cost: 5g":torch} #Everything that is in the shop to buy
+shop_buy = {"\nPotion| 20g":potion, "\nLife Potion| 100g":life_potion, "\nFull Potion| 40g":full_potion, "\nTorch|Cost: 5g":torch} #Everything that is in the shop to buy
 def show_graphic():
 
     print("\n\n")
@@ -134,18 +134,18 @@ def show_graphic():
     input("\n\tPress enter: ")
 
 def intro():
-    #print("\n\nYou wake up in a meadow. You know nothing except your heritage: You are the son of Dragox, son of Romox.")
-    #time.sleep(4)
-    #print("\nYour father was a great king, the greatest of his generation. He ruled for 700 years.Your family has always been kings and queens of the land.")
-    #time.sleep(6)
-    #print("\nSince you were born 200 years into your father's rule; you know the land better than anyone else. The people know you and respect you.")
-    #time.sleep(5)
-    #print("\nWhen your father died you became king. You ruled for 2000 years, the longest anyone from your bloodline has ever ruled. Then, it happened.")
-    #time.sleep(5)
-    #print("\nThis is the story of what happened a mere 10,265,349 years ago...")
-    #time.sleep(3)
-    #print("Note: You can view your inventory at any time by typing \"i\" as a choice!As well, you can type \"look\" to look around a room to find items you couldn't originally see! For more help, type \"help\" while in a room!")
-    #input("\n\tPress enter: ")
+    print("\n\nYou wake up in a meadow. You know nothing except your heritage: You are the son of Dragox, son of Romox.")
+    time.sleep(4)
+    print("\nYour father was a great king, the greatest of his generation. He ruled for 700 years.Your family has always been kings and queens of the land.")
+    time.sleep(6)
+    print("\nSince you were born 200 years into your father's rule; you know the land better than anyone else. The people know you and respect you.")
+    time.sleep(5)
+    print("\nWhen your father died you became king. You ruled for 2000 years, the longest anyone from your bloodline has ever ruled. Then, it happened.")
+    time.sleep(5)
+    print("\nThis is the story of what happened a mere 10,265,349 years ago...")
+    time.sleep(3)
+    print("\nNote: You can view your inventory at any time by typing \"i\" as a choice!\n\nAs well, you can type \"look\" to look around a room to find items you couldn't originally see!\n\nFor more help, type \"help\" while in a room!")
+    input("\n\tPress enter: ")
     meadow()
 
 def meadow():
@@ -1572,6 +1572,8 @@ def blacksmith():
             useFullPotion()
         elif (choice == "help"):
             help()
+        elif (choice == "look"):
+            print("You look around but find nothing")
         elif (choice == "i"):
             view_inventory()
         else:
@@ -1626,6 +1628,8 @@ def shop():
             useLifePotion()
         elif (choice == "fp"):
             useFullPotion()
+        elif (choice == "look"):
+            print("You look around but find nothing")        
         elif (choice == "help"):
             help()
         else:
