@@ -2099,6 +2099,8 @@ def view_inventory(): #When called prints whatever is in the player's inventory
         print(triforce)
     print("\n\tGold:",player_gold)
     print("\nHP:", player.hp)
+    print("\nLevel:", player.level)
+    print("\nXp to next level:", player.xp_to_level)
 
 def usePotion():
     global potion_inventory
