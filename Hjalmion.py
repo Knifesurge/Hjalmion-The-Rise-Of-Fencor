@@ -1685,7 +1685,7 @@ def castle():
         elif (choice == "look" and castle_counter > 0):
             print("You look around but find nothing")
         elif (choice == "i"):
-            view_inventory
+            view_inventory()
         else:
             print("\nPlease enter a valid input!")
 
