@@ -136,7 +136,7 @@ def show_graphic():
 def intro():
     print("\n\nYou wake up in a meadow. You know nothing except your heritage: You are the son of Dragox, son of Romox.")
     time.sleep(4)
-    print("\nYour father was a great king, the greatest of his generation. He ruled for 700 years.Your family has always been kings and queens of the land.")
+    print("\nYour father was a great king, the greatest of his generation. He ruled for 700 years. Your family has always been kings and queens of the land.")
     time.sleep(6)
     print("\nSince you were born 200 years into your father's rule; you know the land better than anyone else. The people know you and respect you.")
     time.sleep(5)
@@ -191,12 +191,12 @@ def meadow():
             print("\nAre you sure? You will 110% need it in the future!")
             choice = 7
             while(choice != "y" and choice != "n"):
-                choice = input("Pick up the rock?").lower()
+                choice = input("\n\tPick up the rock?").lower()
                 if(choice == "y"):
-                    print("You pick up the rock")
+                    print("\nYou pick up the rock")
                     rock_inventory = True
                 elif(choice == "n"):
-                    print("Don't say I didn't warn you! These lands are dangerous lands...")
+                    print("\nDon't say I didn't warn you! These lands are dangerous lands...")
     choice = 7
     while(choice != "n" and choice != "nw" and choice != "e" and choice != "w" and choice != "s"):
         choice = input("\nRoom: Meadow\n\nWill you go (N)orth, (N)orth (W)est, (W)est, (E)ast, or (S)outh?").lower()
@@ -1679,8 +1679,6 @@ def castle():
         choice = input("\nRoom: Castle\n\nWould you like to leave and go (N)orth?").lower()
         if (choice == "n"):
             marketplace()
-        #elif (choice == "q"): #To view quests
-           #quests()
         elif (choice == "p"):
             usePotion()
         elif (choice == "lp"):
@@ -1878,6 +1876,9 @@ def s_buy(): #To buy items from the shop
 def battle(player, enemy): #Battle function
     global best_weapon
     global gameOver
+    global potion_inventory
+    global lifePotion_inventory
+    global fullPotion_inventory
     flag = True
     damage = 0
     """Checks the inventory for the best weapon and applies that to the variable best_weapon"""
@@ -1910,146 +1911,383 @@ def battle(player, enemy): #Battle function
 
     if (enemy.name != "Skeleton King" or enemy.name != "Dragox" or enemy.name != "Romox" or enemy.name != "Dragon" or enemy.name != "Fencor" or not skeletonCaveRoom_active): #Allows fleeing if the enemy is not a boss and the Player is not in the Skeleton Cave Boss Battle
         while(flag):
-                    choice = 7
-                    while (choice != "a" and choice != "f" and player.is_alive):
-                        choice = input("\n\nDo you want to (A)ttack, use a (P)otion or (F)lee?").lower()
-                        if (choice == "i"):
-                            view_inventory()
-                        if (choice == "a"):
-                            print("\nYou use {} against {}!".format(best_weapon.name, enemy.name))
-                            if (chance.chance(50)): #Adds the chance to do a critical hit
-                                damage = max_dmg
-                                enemy.hp -= damage
-                            else: #Otherwise do regular damage
-                                damage = best_weapon.damage
-                                enemy.hp -= best_weapon.damage
+            if(potion_inventory or lifePotion_inventory or fullPotion_inventory):
+                choice = 7
+                while (choice != "a" and choice != "f" and player.is_alive):
+                    choice = input("\n\nDo you want to (A)ttack, use a (P)otion or (F)lee?").lower()
+                    if (choice == "i"):
+                        view_inventory()
+                    if (choice == "a"):
+                        print("\nYou use {} against {}!".format(best_weapon.name, enemy.name))
+                        if (chance.chance(50)): #Adds the chance to do a critical hit
+                            damage = max_dmg
+                            enemy.hp -= damage
+                        else: #Otherwise do regular damage
+                            damage = best_weapon.damage
+                            enemy.hp -= best_weapon.damage
+                        time.sleep(2)
+                        if(not enemy.hp - damage < 0):
+                            enemy.hp -= damage
+                            print("\nYou do {} damage!".format(damage))
+                            print("\n{} HP is {}.".format(enemy.name, enemy.hp))
                             time.sleep(2)
-                            if(not enemy.hp - damage < 0):
-                                enemy.hp -= damage
-                                print("\nYou do {} damage!".format(damage))
-                                print("\n{} HP is {}.".format(enemy.name, enemy.hp))
-                                time.sleep(2)
-                            elif(enemy.hp < 0):
-                                print("\nYou do {} damage!".format(damage))
-                                print("\n{} Hp is 0.".format(enemy.name))
-                                time.sleep(2)
-                            if (not enemy.is_alive()): #Check to see if enemy is alive
-                                if(not player.xp_to_level == 0 and not (player.xp_to_level - enemy.xp) <= 0): #If the amount of xp needed to level up is not 0 and the amount of xp needed to level up - the amount of xp the enemy gives...
-                                    player.xp_to_level -= enemy.xp #Subtract enemy xp worth from the amount of xp needed to level up
-                                    player.xp += enemy.xp #Add enemy xp worth to amount of xp
-                                    print("\nYou gained {} xp! You have {} xp left to level up!".format(enemy.xp, player.xp_to_level))
-                                    flag = False
-                                elif (player.xp_to_level <= 0 or (player.xp_to_level - enemy.xp) < 0): #Check if the player has enough xp to level up
-                                    print("\nYou gained {} xp!".format(enemy.xp))
-                                    player.levelUp() #Call the level up function
-                                    flag = False
-                            elif (enemy.is_alive()): #If the enemy is still alive
-                                if(player.hp <= enemy.damage or player.hp - enemy.damage <= 0):
-                                    player.hp -= enemy.damage
-                                    print("{} hits you for {} damage! You fall to the ground.".format(enemy.name, enemy.damage))
-                                    flag = False
-                                    gameOver = True
-                                    death()
-                                if(not player.hp <= 0):
-                                    player.hp -= enemy.damage #Enemy attacks (the amount of damage the enemy does is subtracted from the amount of hp the player has
-                                    print("\n{} hits you for {} damage! You have {} hp left!".format(enemy.name, enemy.damage, player.hp))
-
-
-                        elif (choice == "f"):
-                            print("\nYou attempt to flee like the coward you are.")
-                            if(chance.chance(50)):
-                                print("\nYou successfully flee from the battle against {}.".format(enemy.name))
-                                time.sleep(2)
+                        elif(enemy.hp - damage >= 0):
+                            print("\nYou do {} damage!".format(damage))
+                            print("\n{} Hp is 0.".format(enemy.name))
+                            time.sleep(2)
+                        if (not enemy.is_alive()): #Check to see if enemy is alive
+                            if(not player.xp_to_level == 0 and not (player.xp_to_level - enemy.xp) <= 0): #If the amount of xp needed to level up is not 0 and the amount of xp needed to level up - the amount of xp the enemy gives...
+                                player.xp_to_level -= enemy.xp #Subtract enemy xp worth from the amount of xp needed to level up
+                                player.xp += enemy.xp #Add enemy xp worth to amount of xp
+                                print("\nYou gained {} xp! You have {} xp left to level up!".format(enemy.xp, player.xp_to_level))
                                 flag = False
-                            else:
-                                print("\nYour lame attempt to run from {} does not work. You trip over nothing and get eaten by {}!".format(enemy.name, enemy.name))
-                                time.sleep(2)
+                            elif (player.xp_to_level <= 0 or (player.xp_to_level - enemy.xp) < 0): #Check if the player has enough xp to level up
+                                print("\nYou gained {} xp!".format(enemy.xp))
+                                player.levelUp() #Call the level up function
+                                flag = False
+                        elif (enemy.is_alive()): #If the enemy is still alive
+                            if(player.hp <= enemy.damage or player.hp - enemy.damage <= 0):
+                                player.hp -= enemy.damage
+                                print("{} hits you for {} damage! You fall to the ground.".format(enemy.name, enemy.damage))
                                 flag = False
                                 gameOver = True
-                                death() #Calls the death function
-                        elif (choice == "p"):
-                            if(potion_inventory >= 1 and fullPotion_inventory >= 1):
-                                choice = 7
-                                while(choice != "p" and choice != "fp" and choice != "back"):
-                                    choice = input("Will you use a (P)otion or a (F)ull (P)otion? Type \"back\" to go back").lower()
-                                    if(choice == "p"):
-                                        usePotion()
-                                    elif(choice == "fp"):
-                                        useFullPotion()
-                                    elif(choice == "back"):
-                                        pass
-                                    else:
-                                        print("Please enter a valid input!")
-                            elif(potion_inventory == 0 and fullPotion_inventory >= 1):
-                                choice = 7
-                                while(choice != "fp" and choice != "back"):
-                                    choice = input("Will you use a (F)ull (P)otion? Type \"back\" to go back").lower()
-                                    if(choice == "fp"):
-                                        useFullPotion()
-                                    elif(choice == "back"):
-                                        pass
-                                    else:
-                                        print("Please enter a valid input!")
-                            elif(potion_inventory >= 1 and fullPotion_inventory == 0):
-                                choice = 7
-                                while(choice != "p" and choice != "back"):
-                                    choice = input("Will you use a (P)otion? Type \"back\" to go back").lower()
-                                    if(choice == "p"):
-                                        usePotion()
-                                    elif(choice == "back"):
-                                        pass
-                                    else:
-                                        print("Please choose a valid input!")
-                            elif(potion_inventory == 0 and fullPotion_inventory == 0):
-                                print("You do not have any Potions!")
-                        elif (choice == "lp"):
-                            useLifePotion()
-    elif(skeletonCaveRoom_active or enemy.name == "Skeleton King" or enemy.name == "Dragox" or enemy.name == "Romox" or enemy.name == "Dragon" or enemy.name == "Fencor"): #Removes option for fleeing if the player is battling in the Skeleton Cave or is battling a Boss
-        while(flag):
-            choice = 7
-            while (choice != "a" and player.is_alive):
-                choice = input("\n\nDo you want to (A)ttack or use a (P)otion?").lower()
-                if (choice == "a"):
-                    print("\nYou use {} against {}!".format(best_weapon.name, enemy.name))
-                    if (chance.chance(50)): #Adds the chance to do a critical hit
-                        damage = max_dmg
-                        enemy.hp -= damage
-                    else: #Otherwise do regular damage
-                        damage = best_weapon.damage                        
-                        enemy.hp -= damage
-                    time.sleep(2)
-                    if(not enemy.hp - damage < 0):
-                        enemy.hp -= damage
-                        print("\nYou do {} damage!".format(damage))
-                        print("\n{} HP is {}.".format(enemy.name, enemy.hp))
-                        time.sleep(2)
-                    elif(enemy.hp < 0):
-                        print("\nYou do {} damage!".format(damage))
-                        print("\n{} Hp is 0.".format(enemy.name))
-                        time.sleep(2)
-                    if (not enemy.is_alive()): #Check to see if enemy is dead 
-                        if(not player.xp_to_level == 0 and (player.xp_to_level - enemy.xp) != 0): #If the amount of xp needed to level up is not 0 and the amount of xp needed to level up - the amount of xp the enemy gives...
-                            player.xp_to_level -= enemy.xp #Subtract enemy xp worth from the amount of xp needed to level up
-                            player.xp += enemy.xp #Add enemy xp worth to amount of xp
-                            print("\nYou gained {} xp! You have {} xp left to level up!".format(enemy.xp, player.xp_to_level))
+                                death()
+                            if(not player.hp <= 0):
+                                player.hp -= enemy.damage #Enemy attacks (the amount of damage the enemy does is subtracted from the amount of hp the player has
+                                print("\n{} hits you for {} damage! You have {} hp left!".format(enemy.name, enemy.damage, player.hp))
+
+
+                    elif (choice == "f"):
+                        print("\nYou attempt to flee like the coward you are.")
+                        if(chance.chance(50)):
+                            print("\nYou successfully flee from the battle against {}.".format(enemy.name))
+                            time.sleep(2)
                             flag = False
-                        elif (player.xp_to_level == 0 and (player.xp_to_level - enemy.xp) < 0): #Check if the player has enough xp to level up
-                            print("\nYou gained {} xp!".format(enemy.xp))
-                            player.levelUp() #Call the level up function
-                    elif (enemy.is_alive()): #If the enemy is still alive
-                        if(not player.hp <= 0):
-                            player.hp -= enemy.damage #Enemy attacks (the amount of damage the enemy does is subtracted from the amount of hp the player has
-                            print("\n{} hits you for {} damage! You have {} hp left!".format(enemy.name, enemy.damage, player.hp))
-                        elif(player.hp <= 0):
-                            print("\n{} hits you for {} damage! That is more than you can take!".format(enemy.name, enemy.damage))
+                        else:
+                            print("\nYour lame attempt to run from {} does not work. You trip over nothing and get eaten by {}!".format(enemy.name, enemy.name))
+                            time.sleep(2)
                             flag = False
                             gameOver = True
-                            death()
-                elif (choice == "p"):
-                    usePotion()
-                elif (choice == "lp"):
-                    useLifePotion()
+                            death() #Calls the death function
+                    elif (choice == "p"): #Below are all of the possible combinations of the potions you can have at any given point
+                        if(potion_inventory >= 1 and fullPotion_inventory >= 1 and lifePotion_inventory >= 1):
+                            choice = 7
+                            while(choice != "p" and choice != "fp" and choice != "lp" and choice != "back"):
+                                choice = input("Will you use a (P)otion, a (F)ull (P)otion or a (L)ife (P)otion? Type \"back\" to go back").lower()
+                                if(choice == "p"):
+                                    usePotion()
+                                elif(choice == "fp"):
+                                    useFullPotion()
+                                elif(choice == "lp"):
+                                    useLifePotion()
+                                elif(choice == "back"):
+                                    pass
+                                else:
+                                    print("Please enter a valid input!")
+                        elif(potion_inventory == 0 and fullPotion_inventory >= 1 and lifePotion_inventory >= 1):
+                            choice = 7
+                            while(choice != "fp" and choice != "back" and choice != "lp"):
+                                choice = input("Will you use a (F)ull (P)otion or a (L)ife (P)otion? Type \"back\" to go back").lower()
+                                if(choice == "fp"):
+                                    useFullPotion()
+                                elif(choice == "lp"):
+                                    useLifePotion()
+                                elif(choice == "back"):
+                                    pass
+                                else:
+                                    print("Please enter a valid input!")
+                        elif(potion_inventory >= 1 and fullPotion_inventory == 0 and fullPotion_inventory >= 1):
+                            choice = 7
+                            while(choice != "p" and choice != "lp" and choice != "back"):
+                                choice = input("Will you use a (P)otion or a (F)ull (P)otion? Type \"back\" to go back").lower()
+                                if(choice == "p"):
+                                    usePotion()
+                                elif(choice == "lp"):
+                                    useLifePotion()
+                                elif(choice == "back"):
+                                    pass
+                                else:
+                                    print("Please choose a valid input!")
+                        elif(potion_inventory == 0 and fullPotion_inventory == 0 and fullPotion_inventory >= 1):
+                            choice = 7
+                            while(choice != "lp" and choice != "back"):
+                                choice = input("Will you use a (L)ife (P)otion? Type \"back\" to go back").lower()
+                                if(choice == "lp"):
+                                    useLifePotion()
+                                elif(choice == "back"):
+                                    pass
+                                else:
+                                    print("Please choose a valid input!")
+                        elif(potion_inventory >= 1 and fullPotion_inventory == 0 and fullPotion_inventory == 0):
+                            choice = 7
+                            while(choice != "p" and choice != "back"):
+                                choice = input("Will you use a (P)otion? Type \"back\" to go back").lower()
+                                if(choice == "p"):
+                                    usePotion()
+                                elif(choice == "back"):
+                                    pass
+                                else:
+                                    print("Please choose a valid input!")
+                        elif(potion_inventory >= 1 and fullPotion_inventory >= 1 and fullPotion_inventory == 0):
+                            choice = 7
+                            while(choice != "p" and choice != "fp" and choice != "back"):
+                                choice = input("Will you use a (P)otion or a (F)ull (P)otion? Type \"back\" to go back").lower()
+                                if(choice == "p"):
+                                    usePotion()
+                                elif(choice == "fp"):
+                                    useFullPotion()
+                                elif(choice == "back"):
+                                    pass
+                                else:
+                                    print("Please choose a valid input!")
+                        elif(potion_inventory == 0 and fullPotion_inventory >= 1 and fullPotion_inventory == 0):
+                            choice = 7
+                            while(choice != "fp" and choice != "back"):
+                                choice = input("Will you use a (F)ull (P)otion? Type \"back\" to go back").lower()
+                                if(choice == "fp"):
+                                    useFullPotion()
+                                elif(choice == "back"):
+                                    pass
+                                else:
+                                    print("Please choose a valid input!")                    
+                        
+                        elif(potion_inventory == 0 and fullPotion_inventory == 0 and lifePotion_inventory == 0):
+                            print("You do not have any Potions!")
+                    elif (choice == "lp"):
+                        useLifePotion()
+            elif(not potion_inventory and not lifePotion_inventory and not fullPotion_inventory):
+                choice = 7
+                while (choice != "a" and choice != "f" and player.is_alive):
+                    choice = input("\n\nDo you want to (A)ttack or (F)lee?").lower()
+                    if (choice == "i"):
+                        view_inventory()
+                    if (choice == "a"):
+                        print("\nYou use {} against {}!".format(best_weapon.name, enemy.name))
+                        if (chance.chance(50)): #Adds the chance to do a critical hit
+                            damage = max_dmg
+                            enemy.hp -= damage
+                        else: #Otherwise do regular damage
+                            damage = best_weapon.damage
+                            enemy.hp -= best_weapon.damage
+                        time.sleep(2)
+                        if(not enemy.hp - damage < 0):
+                            enemy.hp -= damage
+                            print("\nYou do {} damage!".format(damage))
+                            print("\n{} HP is {}.".format(enemy.name, enemy.hp))
+                            time.sleep(2)
+                        elif(enemy.hp - damage >= 0):
+                            print("\nYou do {} damage!".format(damage))
+                            print("\n{} Hp is 0.".format(enemy.name))
+                            time.sleep(2)
+                        if (not enemy.is_alive()): #Check to see if enemy is alive
+                            if(not player.xp_to_level == 0 and not (player.xp_to_level - enemy.xp) <= 0): #If the amount of xp needed to level up is not 0 and the amount of xp needed to level up - the amount of xp the enemy gives...
+                                player.xp_to_level -= enemy.xp #Subtract enemy xp worth from the amount of xp needed to level up
+                                player.xp += enemy.xp #Add enemy xp worth to amount of xp
+                                print("\nYou gained {} xp! You have {} xp left to level up!".format(enemy.xp, player.xp_to_level))
+                                flag = False
+                            elif (player.xp_to_level <= 0 or (player.xp_to_level - enemy.xp) < 0): #Check if the player has enough xp to level up
+                                print("\nYou gained {} xp!".format(enemy.xp))
+                                player.levelUp() #Call the level up function
+                                flag = False
+                        elif (enemy.is_alive()): #If the enemy is still alive
+                            if(player.hp <= enemy.damage or player.hp - enemy.damage <= 0):
+                                player.hp -= enemy.damage
+                                print("{} hits you for {} damage! You fall to the ground.".format(enemy.name, enemy.damage))
+                                flag = False
+                                gameOver = True
+                                death()
+                            if(not player.hp <= 0):
+                                player.hp -= enemy.damage #Enemy attacks (the amount of damage the enemy does is subtracted from the amount of hp the player has
+                                print("\n{} hits you for {} damage! You have {} hp left!".format(enemy.name, enemy.damage, player.hp))
 
+
+                    elif (choice == "f"):
+                        print("\nYou attempt to flee like the coward you are.")
+                        if(chance.chance(50)):
+                            print("\nYou successfully flee from the battle against {}.".format(enemy.name))
+                            time.sleep(2)
+                            flag = False
+                        else:
+                            print("\nYour lame attempt to run from {} does not work. You trip over nothing and get eaten by {}!".format(enemy.name, enemy.name))
+                            time.sleep(2)
+                            flag = False
+                            gameOver = True
+                            death() #Calls the death function
+                            
+    elif(skeletonCaveRoom_active or enemy.name == "Skeleton King" or enemy.name == "Dragox" or enemy.name == "Romox" or enemy.name == "Dragon" or enemy.name == "Fencor"): #Removes option for fleeing if the player is battling in the Skeleton Cave or is battling a Boss
+        while(flag):
+            if(potion_inventory or fullPotion_inventory or lifePotion_inventory):
+                choice = 7
+                while (choice != "a" and player.is_alive):
+                    choice = input("\n\nDo you want to (A)ttack or use a (P)otion?").lower()
+                    if (choice == "a"):
+                        print("\nYou use {} against {}!".format(best_weapon.name, enemy.name))
+                        if (chance.chance(50)): #Adds the chance to do a critical hit
+                            damage = max_dmg
+                            enemy.hp -= damage
+                        else: #Otherwise do regular damage
+                            damage = best_weapon.damage                        
+                            enemy.hp -= damage
+                        time.sleep(2)
+                        if(not enemy.hp - damage < 0):
+                            enemy.hp -= damage
+                            print("\nYou do {} damage!".format(damage))
+                            print("\n{} HP is {}.".format(enemy.name, enemy.hp))
+                            time.sleep(2)
+                        elif(enemy.hp - damage >= 0):
+                            print("\nYou do {} damage!".format(damage))
+                            print("\n{} Hp is 0.".format(enemy.name))
+                            time.sleep(2)
+                        if (not enemy.is_alive()): #Check to see if enemy is dead 
+                            if(not player.xp_to_level == 0 and (player.xp_to_level - enemy.xp) != 0): #If the amount of xp needed to level up is not 0 and the amount of xp needed to level up - the amount of xp the enemy gives...
+                                player.xp_to_level -= enemy.xp #Subtract enemy xp worth from the amount of xp needed to level up
+                                player.xp += enemy.xp #Add enemy xp worth to amount of xp
+                                print("\nYou gained {} xp! You have {} xp left to level up!".format(enemy.xp, player.xp_to_level))
+                                flag = False
+                            elif (player.xp_to_level == 0 and (player.xp_to_level - enemy.xp) < 0): #Check if the player has enough xp to level up
+                                print("\nYou gained {} xp!".format(enemy.xp))
+                                player.levelUp() #Call the level up function
+                        elif (enemy.is_alive()): #If the enemy is still alive
+                            if(not player.hp <= 0):
+                                player.hp -= enemy.damage #Enemy attacks (the amount of damage the enemy does is subtracted from the amount of hp the player has
+                                print("\n{} hits you for {} damage! You have {} hp left!".format(enemy.name, enemy.damage, player.hp))
+                            elif(player.hp <= 0):
+                                print("\n{} hits you for {} damage! That is more than you can take!".format(enemy.name, enemy.damage))
+                                flag = False
+                                gameOver = True
+                                death()
+                            elif (choice == "p"): #Below are all of the possible combinations of the potions you can have at any given point
+                                if(potion_inventory >= 1 and fullPotion_inventory >= 1 and lifePotion_inventory >= 1):
+                                    choice = 7
+                                    while(choice != "p" and choice != "fp" and choice != "lp" and choice != "back"):
+                                        choice = input("Will you use a (P)otion, a (F)ull (P)otion or a (L)ife (P)otion? Type \"back\" to go back").lower()
+                                        if(choice == "p"):
+                                            usePotion()
+                                        elif(choice == "fp"):
+                                            useFullPotion()
+                                        elif(choice == "lp"):
+                                            useLifePotion()
+                                        elif(choice == "back"):
+                                            pass
+                                        else:
+                                            print("Please enter a valid input!")
+                                elif(potion_inventory == 0 and fullPotion_inventory >= 1 and lifePotion_inventory >= 1):
+                                    choice = 7
+                                    while(choice != "fp" and choice != "back" and choice != "lp"):
+                                        choice = input("Will you use a (F)ull (P)otion or a (L)ife (P)otion? Type \"back\" to go back").lower()
+                                        if(choice == "fp"):
+                                            useFullPotion()
+                                        elif(choice == "lp"):
+                                            useLifePotion()
+                                        elif(choice == "back"):
+                                            pass
+                                        else:
+                                            print("Please enter a valid input!")
+                                elif(potion_inventory >= 1 and fullPotion_inventory == 0 and fullPotion_inventory >= 1):
+                                    choice = 7
+                                    while(choice != "p" and choice != "lp" and choice != "back"):
+                                        choice = input("Will you use a (P)otion or a (F)ull (P)otion? Type \"back\" to go back").lower()
+                                        if(choice == "p"):
+                                            usePotion()
+                                        elif(choice == "lp"):
+                                            useLifePotion()
+                                        elif(choice == "back"):
+                                            pass
+                                        else:
+                                            print("Please choose a valid input!")
+                                elif(potion_inventory == 0 and fullPotion_inventory == 0 and fullPotion_inventory >= 1):
+                                    choice = 7
+                                    while(choice != "lp" and choice != "back"):
+                                        choice = input("Will you use a (L)ife (P)otion? Type \"back\" to go back").lower()
+                                        if(choice == "lp"):
+                                            useLifePotion()
+                                        elif(choice == "back"):
+                                            pass
+                                        else:
+                                            print("Please choose a valid input!")
+                                elif(potion_inventory >= 1 and fullPotion_inventory == 0 and fullPotion_inventory == 0):
+                                    choice = 7
+                                    while(choice != "p" and choice != "back"):
+                                        choice = input("Will you use a (P)otion? Type \"back\" to go back").lower()
+                                        if(choice == "p"):
+                                            usePotion()
+                                        elif(choice == "back"):
+                                            pass
+                                        else:
+                                            print("Please choose a valid input!")
+                                elif(potion_inventory >= 1 and fullPotion_inventory >= 1 and fullPotion_inventory == 0):
+                                    choice = 7
+                                    while(choice != "p" and choice != "fp" and choice != "back"):
+                                        choice = input("Will you use a (P)otion or a (F)ull (P)otion? Type \"back\" to go back").lower()
+                                        if(choice == "p"):
+                                            usePotion()
+                                        elif(choice == "fp"):
+                                            useFullPotion()
+                                        elif(choice == "back"):
+                                            pass
+                                        else:
+                                            print("Please choose a valid input!")
+                                elif(potion_inventory == 0 and fullPotion_inventory >= 1 and fullPotion_inventory == 0):
+                                    choice = 7
+                                    while(choice != "fp" and choice != "back"):
+                                        choice = input("Will you use a (F)ull (P)otion? Type \"back\" to go back").lower()
+                                        if(choice == "fp"):
+                                            useFullPotion()
+                                        elif(choice == "back"):
+                                            pass
+                                        else:
+                                            print("Please choose a valid input!")                    
+                                
+                                elif(potion_inventory == 0 and fullPotion_inventory == 0 and lifePotion_inventory == 0):
+                                    print("You do not have any Potions!")
+                            elif (choice == "lp"):
+                                useLifePotion()
+                                
+            elif(not potion_inventory and not lifePotion_inventory and not fullPotion_inventory):
+                choice = 7
+                while (choice != "a" and player.is_alive):
+                    choice = input("\n\nDo you want to (A)ttack?").lower()
+                    if (choice == "i"):
+                        view_inventory()
+                    if (choice == "a"):
+                        print("\nYou use {} against {}!".format(best_weapon.name, enemy.name))
+                        if (chance.chance(50)): #Adds the chance to do a critical hit
+                            damage = max_dmg
+                            enemy.hp -= damage
+                        else: #Otherwise do regular damage
+                            damage = best_weapon.damage
+                            enemy.hp -= best_weapon.damage
+                        time.sleep(2)
+                        if(not enemy.hp - damage < 0):
+                            enemy.hp -= damage
+                            print("\nYou do {} damage!".format(damage))
+                            print("\n{} HP is {}.".format(enemy.name, enemy.hp))
+                            time.sleep(2)
+                        elif(enemy.hp - damage >= 0):
+                            print("\nYou do {} damage!".format(damage))
+                            print("\n{} Hp is 0.".format(enemy.name))
+                            time.sleep(2)
+                        if (not enemy.is_alive()): #Check to see if enemy is alive
+                            if(not player.xp_to_level == 0 and not (player.xp_to_level - enemy.xp) <= 0): #If the amount of xp needed to level up is not 0 and the amount of xp needed to level up - the amount of xp the enemy gives...
+                                player.xp_to_level -= enemy.xp #Subtract enemy xp worth from the amount of xp needed to level up
+                                player.xp += enemy.xp #Add enemy xp worth to amount of xp
+                                print("\nYou gained {} xp! You have {} xp left to level up!".format(enemy.xp, player.xp_to_level))
+                                flag = False
+                            elif (player.xp_to_level <= 0 or (player.xp_to_level - enemy.xp) < 0): #Check if the player has enough xp to level up
+                                print("\nYou gained {} xp!".format(enemy.xp))
+                                player.levelUp() #Call the level up function
+                                flag = False
+                        elif (enemy.is_alive()): #If the enemy is still alive
+                            if(player.hp <= enemy.damage or player.hp - enemy.damage <= 0):
+                                player.hp -= enemy.damage
+                                print("{} hits you for {} damage! You fall to the ground.".format(enemy.name, enemy.damage))
+                                flag = False
+                                gameOver = True
+                                death()
+                            if(not player.hp <= 0):
+                                player.hp -= enemy.damage #Enemy attacks (the amount of damage the enemy does is subtracted from the amount of hp the player has
+                                print("\n{} hits you for {} damage! You have {} hp left!".format(enemy.name, enemy.damage, player.hp))
+        
 def view_inventory(): #When called prints whatever is in the player's inventory
     if(umari_inventory):
         print(fencor_umari)
@@ -2110,7 +2348,7 @@ def view_inventory(): #When called prints whatever is in the player's inventory
     print("\n\tGold:",player_gold)
     print("\nHP:", player.hp)
     print("\nLevel:", player.level)
-    print("\nXp to next level:", player.xp_to_level)
+    print("\nXp to next level:", player.xp)
 
 def usePotion():
     global potion_inventory
