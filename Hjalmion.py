@@ -732,10 +732,10 @@ def skeleton_cave():
                     time.sleep(3)
                     skeletonKing_death = True
                     book_inventory = True
-            elif (choice == "i"):
-                view_inventory()
-            else:
-                print("\nPlease enter a valid input!")
+                elif (choice == "i"):
+                    view_inventory()
+                else:
+                    print("\nPlease enter a valid input!")
 
 def cliffside():
     global player_gold
