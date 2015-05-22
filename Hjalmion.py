@@ -1661,7 +1661,8 @@ def castle():
         print("\nYou enter a grand castle. You walk in and people start bowing. You had forgotten you were king! Someone walks up to you and asks if you had found an egg special to their family. You pull out the Jewel Egg you found at the Great Oak. \"Thats it!\" the person says as you hand it over. \"Here!\" they say, \"Take this sword my grandfather gave me, I have no use for it as it cannot be sharpened.\"")
         legendarySword_inventory = True
         jewelEgg_inventory = False
-    print("\nYou enter a grand castle. You walk in and people start bowing. You had forgotten that you were king! Someone walks up to you and says you need to take care of some business before you can retake the throne. The marketplace is to the North.")
+    elif(not jewelEgg_inventory):
+        print("\nYou enter a grand castle. You walk in and people start bowing. You had forgotten that you were king! Someone walks up to you and says you need to take care of some business before you can retake the throne. The marketplace is to the North.")
 
     choice = 7
     while(choice != "n" and choice != "q"):
