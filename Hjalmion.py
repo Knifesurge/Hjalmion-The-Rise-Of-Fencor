@@ -665,9 +665,9 @@ def skeleton_cave():
     if(gameOver):
         raise SystemExit
     elif(not gameOver):
-        choice = 7
-        while(choice != "s"):
-            if(skeletonKing_death):
+        if(skeletonKing_death):
+            choice = 7
+            while(choice != "s"):
                 choice = input("\nRoom: Skeleton Cave\n\nWill you go (S)outh?").lower()
                 if (choice == "s"):
                     dungeon()
@@ -699,41 +699,43 @@ def skeleton_cave():
                             skeleton_counter += 3
                         elif(choice == "n"):
                             print("\nNot sure why but you do not pick up the gold!")
-    elif(not skeletonKing_death):
-        choice = input("\nRoom: Skeleton Cave\n\nWill you go (S)outh or go (N)orth and face the Skeleton King?").lower()
-        if (choice == "s"):
-            dungeon()
-        elif (choice == "p"):
-            usePotion()
-        elif (choice == "lp"):
-            useLifePotion()
-        elif (choice == "fp"):
-            useFullPotion()
-        elif (choice == "help"):
-            help()
-        elif (choice == "n"):
-            print("\n\"So, you think you can face me?\" The Skeleton King says. \"Well first you must prove yourself a worthy opponent!\"")
-            time.sleep(4)
-            print("\n\"First you must defeat my minions!\" the Skeleton King says.")
-            time.sleep(3)
-            battle(player, skeleton)
-            print("\n\"That was my weakest minion adventurer! Let's see how you face against my archers!\"")
-            time.sleep(4)
-            battle(player, skeleton_archer)
-            print("\n\"They are still nothing compared to my next minions!")
-            time.sleep(3)
-            battle(player, skeleton_knight)
-            print("\n\"Adventurer, you have crossed a line. Let's see how you fare against me! The Skeleton King!!\"")
-            time.sleep(3)
-            battle(player, skeleton_king)
-            print("\n\"Ugh!\" The Skeleton King says. \"How are you so strong! I thought I could defeat you as I am the most powerful skeleton in all of the land. Alas, you have bested me. Here, take this book. You will need it on your adventure.\"The Skeleton King says as he lies on the ground and dies.")
-            time.sleep(3)
-            skeletonKing_death = True
-            book_inventory = True
-    elif (choice == "i"):
-        view_inventory()
-    else:
-        print("\nPlease enter a valid input!")
+        elif(not skeletonKing_death):
+            choice = 7
+            while(choice != "s" and choice != "n"):
+                choice = input("\nRoom: Skeleton Cave\n\nWill you go (S)outh or go (N)orth and face the Skeleton King?").lower()
+                if (choice == "s"):
+                    dungeon()
+                elif (choice == "p"):
+                    usePotion()
+                elif (choice == "lp"):
+                    useLifePotion()
+                elif (choice == "fp"):
+                    useFullPotion()
+                elif (choice == "help"):
+                    help()
+                elif (choice == "n"):
+                    print("\n\"So, you think you can face me?\" The Skeleton King says. \"Well first you must prove yourself a worthy opponent!\"")
+                    time.sleep(4)
+                    print("\n\"First you must defeat my minions!\" the Skeleton King says.")
+                    time.sleep(3)
+                    battle(player, skeleton)
+                    print("\n\"That was my weakest minion adventurer! Let's see how you face against my archers!\"")
+                    time.sleep(4)
+                    battle(player, skeleton_archer)
+                    print("\n\"They are still nothing compared to my next minions!")
+                    time.sleep(3)
+                    battle(player, skeleton_knight)
+                    print("\n\"Adventurer, you have crossed a line. Let's see how you fare against me! The Skeleton King!!\"")
+                    time.sleep(3)
+                    battle(player, skeleton_king)
+                    print("\n\"Ugh!\" The Skeleton King says. \"How are you so strong! I thought I could defeat you as I am the most powerful skeleton in all of the land. Alas, you have bested me. Here, take this book. You will need it on your adventure.\"The Skeleton King says as he lies on the ground and dies.")
+                    time.sleep(3)
+                    skeletonKing_death = True
+                    book_inventory = True
+            elif (choice == "i"):
+                view_inventory()
+            else:
+                print("\nPlease enter a valid input!")
 
 def cliffside():
     global player_gold
