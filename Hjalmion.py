@@ -191,7 +191,7 @@ def meadow():
             print("\nYou do not pick up the rock")
     choice = 7
     while(choice != "n" and choice != "nw" and choice != "e" and choice != "w" and choice != "s"):
-        choice = input("\nWill you go (N)orth, (N)orth (W)est, (W)est, (E)ast, or (S)outh?").lower()
+        choice = input("\nRoom: Meadow\n\nWill you go (N)orth, (N)orth (W)est, (W)est, (E)ast, or (S)outh?").lower()
         if (choice == "n"):
             cliffside()
         elif (choice == "nw"):
@@ -247,13 +247,13 @@ def great_oak():
     global gameOver
     if (greatOakKey_inventory):
         print("\nYou walk up to the Great Oak. It hums with energy.")
-        time.sleep(2)
+        time.sleep(3)
         print("\nYou notice a small, key shaped hole that you did not notice before. You go up to it and slide the key into the hole.")
-        time.sleep(2)
+        time.sleep(3)
         print("\nIt unlocks and the Great Oak opens. You walk inside and walk down a spiral staircase.")
-        time.sleep(2)
+        time.sleep(3)
         print("\nAt the bottom there is a long hallway with a pedestal at the end. You walk down and look at the pedestal.")
-        time.sleep(2)
+        time.sleep(3)
         print("\nOn the pedestal is the legendary TriForce!")
         choice = 7
         while (choice != "y" and choice != "n"):
@@ -286,7 +286,7 @@ def great_oak():
         elif(not gameOver):  
             choice = 7
             while(choice != "e"):
-                choice = input("\nWill you go to the (E)ast?").lower()
+                choice = input("\nRoom: Great Oak\n\nWill you go to the (E)ast?").lower()
                 if (choice == "e"):
                     meadow()
                 elif (choice == "i"):
@@ -362,7 +362,7 @@ def house():
         elif(not gameOver):                    
             choice = 7
             while(choice != "e" and choice != "s"):
-                choice = input("\nWill you go (E)ast or (S)outh?").lower()
+                choice = input("\nRoom: House\n\nWill you go (E)ast or (S)outh?").lower()
                 if (choice == "e"):
                     cellar()
                 elif (choice == "s"):
@@ -441,7 +441,7 @@ def house():
     elif(not gameOver):        
         choice = 7
         while(choice != "e" and choice != "s"):
-            choice = input("\nWill you go (E)ast or (S)outh?").lower()
+            choice = input("\nRoom: House\n\nWill you go (E)ast or (S)outh?").lower()
             if (choice == "e"):
                 cellar()
             elif (choice == "s"):
@@ -548,7 +548,7 @@ def cellar():
     elif(not gameOver):        
         choice = 7
         while(choice != "w" and choice != "se"):
-            choice = input("\nWill you go (W)est or (S)outh (E)ast?").lower()
+            choice = input("\nRoom: Cellar\n\nWill you go (W)est or (S)outh (E)ast?").lower()
             if (choice == "w"):
                 house()
             elif (choice == "se"):
@@ -612,7 +612,7 @@ def dungeon():
     elif(not gameOver):    
         choice = 7
         while(choice != "n" and choice != "nw"):
-            choice = input("\nWill you go (N)orth (W)est or (N)orth?").lower()
+            choice = input("\nRoom: Dungeon\n\nWill you go (N)orth (W)est or (N)orth?").lower()
             if (choice == "nw"):
                 cellar()
             elif (choice == "n"):
@@ -668,7 +668,7 @@ def skeleton_cave():
         choice = 7
         while(choice != "s"):
             if(skeletonKing_death):
-                choice = input("\nWill you go (S)outh?").lower()
+                choice = input("\nRoom: Skeleton Cave\n\nWill you go (S)outh?").lower()
                 if (choice == "s"):
                     dungeon()
                 elif (choice == "p"):
@@ -700,7 +700,7 @@ def skeleton_cave():
                         elif(choice == "n"):
                             print("\nNot sure why but you do not pick up the gold!")
     elif(not skeletonKing_death):
-        choice = input("\nWill you go (S)outh or go (N)orth and face the Skeleton King?").lower()
+        choice = input("\nRoom: Skeleton Cave\n\nWill you go (S)outh or go (N)orth and face the Skeleton King?").lower()
         if (choice == "s"):
             dungeon()
         elif (choice == "p"):
@@ -771,7 +771,7 @@ def cliffside():
     elif(not gameOver):
         choice = 7
         while(choice != "w" and choice != "s"):
-            choice = input("\nWill you go (W)est or (S)outh?").lower()
+            choice = input("\nRoom: Cliffside\n\nWill you go (W)est or (S)outh?").lower()
             if (choice == "w"):
                 dead_end_valley()
             elif (choice == "s"):
@@ -876,7 +876,7 @@ def dead_end_valley():
     elif(not gameOver):        
         choice = 7
         while(choice != "e"):
-            choice = input("\nWill you go (E)ast?").lower()
+            choice = input("\nRoom: Dead-End Valley\n\nWill you go (E)ast?").lower()
             if (choice == "e"):
                 cliffside()
             elif (choice == "p"):
@@ -948,7 +948,7 @@ def forest():
     elif(not gameOver):        
         choice = 7
         while(choice != "n" and choice != "w"):
-            choice = input("\nWill you go (N)orth or (W)est?").lower()
+            choice = input("\nRoom: Forest\n\nWill you go (N)orth or (W)est?").lower()
             if (choice == "n"):
                 meadow()
             elif (choice == "w"):
@@ -1020,7 +1020,7 @@ def cave():
         elif(not gameOver):            
             choice = 7
             while(choice != "e"):
-                choice = input("\nWill you go(E)ast?").lower()
+                choice = input("\nRoom: Cave\n\nWill you go(E)ast?").lower()
                 if (choice == "e"):
                     forest()
                 elif (choice == "p"):
@@ -1066,7 +1066,7 @@ def cave():
         elif(not gameOver):            
             choice = 7
             while(choice != "s" and choice != "e"):
-                choice = input("\nWill you go(S)outh or (E)ast?").lower()
+                choice = input("\nRoom: Cave\n\nWill you go(S)outh or (E)ast?").lower()
                 if (choice == "s"):
                     secret_passage()
                 elif (choice == "e"):
@@ -1091,7 +1091,7 @@ def cave():
             elif(not gameOver):            
                 choice = 7
                 while(choice != "e"):
-                    choice = input("\nWill you go(E)ast?").lower()
+                    choice = input("\Room: Cave\n\nWill you go(E)ast?").lower()
                     if (choice == "e"):
                         forest()
                     elif (choice == "p"):
@@ -1138,7 +1138,7 @@ def secret_passage():
     elif(not gameOver):        
         choice = 7
         while(choice != "n" and choice != "s"):
-            choice = input("\nWill you go (N)orth or (S)outh?").lower()
+            choice = input("\nRoom: Secret Passage\n\nWill you go (N)orth or (S)outh?").lower()
             if (choice == "n"):
                 cave()
             elif (choice == "s"):
@@ -1192,7 +1192,7 @@ def dragons_lair():
         elif(not gameOver):    
             choice = 7
             while(choice != "n" and choice != "s"):
-                choice = input("\n\tWill you go (N)orth or go (S)outh and fight the dragon to claim his treasure?").lower()
+                choice = input("\nRoom: Dragon's Lair\n\n\tWill you go (N)orth or go (S)outh and fight the dragon to claim his treasure?").lower()
                 if (choice == "n"):
                     secret_passage()
                 elif(choice == "p"):
@@ -1230,7 +1230,7 @@ def dragons_lair():
         elif(not gameOver):    
             choice = 7
             while(choice != "n"):
-                choice = input("\nWill you go (N)orth?").lower()
+                choice = input("\nRoom: Dragon's Lair\n\nWill you go (N)orth?").lower()
                 if (choice == "n"):
                     secret_passage()
                 elif (choice == "i"):
@@ -1295,7 +1295,7 @@ def village():
     elif(not gameOver):    
         choice = 7
         while(choice != "s" and choice != "se" and choice != "s" and choice != "w"):
-            choice = input("\nWill you go (S)outh, (S)outh (E)ast, (E)ast or (W)est?").lower()
+            choice = input("\nRoom: Village\n\nWill you go (S)outh, (S)outh (E)ast, (E)ast or (W)est?").lower()
             if (choice == "s"):
                 cemetary()
             elif (choice == "se"):
@@ -1371,7 +1371,7 @@ def church():
     elif(not gameOver):        
         choice = 7
         while(choice != "n"):
-            choice = input("\nWill you go (N)orth?").lower()
+            choice = input("\nRoom: Church\n\nWill you go (N)orth?").lower()
             if (choice == "n"):
                 village()
             elif (choice == "p"):
@@ -1442,7 +1442,7 @@ def cemetary():
     elif(not gameOver):
         choice = 7
         while(choice != "n"):
-            choice = input("\nWill you go (N)orth?").lower()
+            choice = input("\nRoom: Cemetary\n\nWill you go (N)orth?").lower()
             if (choice == "n"):
                 village()
             elif (choice == "p"):
@@ -1507,7 +1507,7 @@ def marketplace():
         battle(player, rat)
     choice = 7
     while(choice != "n" and choice != "e" and choice != "s" and choice != "w"):
-        choice = input("\nWill you go (N)orth, (E)ast, (W)est or (S)outh?").lower()
+        choice = input("\nRoom: Marketplace\n\nWill you go (N)orth, (E)ast, (W)est or (S)outh?").lower()
         if (choice == "n"):
             blacksmith()
         elif (choice == "e"):
@@ -1559,7 +1559,7 @@ def blacksmith():
 
     choice = 7
     while(choice != "s" and choice != "b"):
-        choice = input("\nWill you (B)uy something, (Sell) something or leave and go (S)outh?").lower()
+        choice = input("\nRoom: Blacksmith\n\nWill you (B)uy something, (Sell) something or leave and go (S)outh?").lower()
         if (choice == "s"):
             marketplace()
         elif (choice == "b"): #To buy stuff
@@ -1605,7 +1605,7 @@ def shop():
 
     choice = 7
     while(choice != "s" and choice != "b" and choice != "p" and choice != "lp"):
-        choice = input("\nWill you (B)uy something or leave and go (S)outh?").lower()
+        choice = input("\nRoom: Shop\n\nWill you (B)uy something or leave and go (S)outh?").lower()
         if (choice == "s"):
             marketplace()
         elif (choice == "b"): #To buy stuff
@@ -1665,7 +1665,7 @@ def castle():
 
     choice = 7
     while(choice != "n" and choice != "q"):
-        choice = input("\nWould you like to leave and go (N)orth?").lower()
+        choice = input("\nRoom: Castle\n\nWould you like to leave and go (N)orth?").lower()
         if (choice == "n"):
             marketplace()
         #elif (choice == "q"): #To view quests
@@ -1680,7 +1680,7 @@ def castle():
             help()
         elif (choice == "look" and castle_counter == 0):
             print("You look around...")
-            findPotion()
+            find_potion()
         elif (choice == "look" and castle_counter > 0):
             print("You look around but find nothing")
         elif (choice == "i"):
@@ -1702,6 +1702,7 @@ def shangri_la():
     global dagger_inventory
     global rock_inventory
     global gameOver
+    print("\n\n\n\t\tYou have entered Shangri-La...")
     print("\nYou walk through and see an amazing view. You are standing at the start of a long winding path lined with beautiful cherry blossom trees.")
     time.sleep(3)
     print("\nYou hear birds chirping as you walk down the path...")
@@ -2096,6 +2097,7 @@ def view_inventory(): #When called prints whatever is in the player's inventory
     if(triforce_inventory):
         print(triforce)
     print("\n\tGold:",player_gold)
+    print("\nHP:", player.hp)
 
 def usePotion():
     global potion_inventory
