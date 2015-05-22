@@ -188,7 +188,15 @@ def meadow():
             print("\nYou pick up the rock")
             rock_inventory = True
         elif (choice == "n"):
-            print("\nYou do not pick up the rock")
+            print("\nAre you sure? You will 110% need it in the future!")
+            choice = 7
+            while(choice != "y" and choice != "n"):
+                choice = input("Pick up the rock?").lower()
+                if(choice == "y"):
+                    print("You pick up the rock")
+                    rock_inventory = True
+                elif(choice == "n"):
+                    print("Don't say I didn't warn you! These lands are dangerous lands...")
     choice = 7
     while(choice != "n" and choice != "nw" and choice != "e" and choice != "w" and choice != "s"):
         choice = input("\nRoom: Meadow\n\nWill you go (N)orth, (N)orth (W)est, (W)est, (E)ast, or (S)outh?").lower()
