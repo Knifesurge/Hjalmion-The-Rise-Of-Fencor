@@ -1,7 +1,7 @@
 #Nick Mills
 """Hjalmion: The Rise of Fencor"""
 import time, random #Imports libraries for use
-import chance, enemies, items, player, save, load #Imports other modules used to run the game
+import chance, enemies, items, player #Imports other modules used to run the game
 
 #Create the Player object and all of the Enemies *Most Common to Least Common*
 player = player.Player() #Creates the Player object
@@ -108,8 +108,11 @@ market_counter = 0
 castle_counter = 0
 
 player_gold = 15 #Amount of gold the player has
+active_room = None
 blacksmith_buy = {"\nSword|Cost: 15g":sword, "\nHeavy Sword|Cost: 50g":heavy_sword, "\nBow|Cost: 20g":bow, "\nCrossbow|35g":crossbow} #Everything that is in the blacksmith's shop to buy
+
 shop_buy = {"\nPotion| 20g":potion, "\nLife Potion| 100g":life_potion, "\nFull Potion| 40g":full_potion, "\nTorch|Cost: 5g":torch} #Everything that is in the shop to buy
+
 def show_graphic():
 
     print("\n\n")
@@ -144,7 +147,7 @@ def intro():
     time.sleep(5)
     print("\nThis is the story of what happened a mere 10,265,349 years ago...")
     time.sleep(3)
-    print("\nNote: You can view your inventory at any time by typing \"i\" as a choice!\n\nAs well, you can type \"look\" to look around a room to find items you couldn't originally see!\n\nFor more help, type \"help\" while in a room!")
+    print("\nNote: You can view your inventory at any time by typing \"i\" as a choice!\n\nAlso, type \"save\" to save your game while in a room, and \"load\" to load your game!\n\nAs well, you can type \"look\" to look around a room to find items you couldn't originally see!\n\nFor more help, type \"help\" while in a room! ")
     input("\n\tPress enter: ")
     meadow()
 
@@ -173,10 +176,12 @@ def meadow():
     global random_gold
     global meadow_counter
     global gameOver
+    global active_room
+    active_room = "meadow"
     if (not rock_inventory):
         print("\nYou are in a beautiful meadow. You see a deer leap through the grass in the distance. You see a house to the North West, a forest to the South, the Great Oak to the West, a small village with a castle in the East, and a cliffside to the North. You see a rock on the ground.")
     elif (rock_inventory):
-        print("\nYou are in a beautiful meadow. You see a deer leap through the grass in the distance. You see a house to the North West, a forest to the South, the Great Oak to the West, a small village with a castle in the East, and a cliffside to the North.")
+        print("\nYou are in a beautiful meadow. You see a deer leap through the grass in the distance.\nYou see a house to the North West, a forest to the South, the Great Oak to the West, a small village with a castle in the East,\nand a cliffside to the North.")
     if (chance.chance(50) and rock_inventory):
         print("\nA snake comes out and attacks you!")
         battle(player, snake)
@@ -224,6 +229,10 @@ def meadow():
             useFullPotion()
         elif (choice == "help"):
             help()
+        elif (choice == "save"):
+            save_game()
+        elif (choice == "load"):
+            load_game()
         elif (choice == "i"):
             view_inventory()
         else:
@@ -253,6 +262,8 @@ def great_oak():
     global random_gold
     global greatOak_counter
     global gameOver
+    global active_room
+    active_room = "great oak"
     if (greatOakKey_inventory):
         print("\nYou walk up to the Great Oak. It hums with energy.")
         time.sleep(3)
@@ -305,6 +316,10 @@ def great_oak():
                     useLifePotion()
                 elif (choice == "help"):
                     help()
+                elif (choice == "save"):
+                    save_game()
+                elif (choice == "load"):
+                    load_game()
                 elif (choice == "fp"):
                     useFullPotion()
                 elif (choice == "look" and note_inventory):
@@ -319,9 +334,12 @@ def great_oak():
                             print("\nYou do not take the egg.")
                         else:
                             print("\nPlease enter a valid input!")
-                elif (choice == "look"and greatOak_counter == 0):
+                elif (choice == "look" and greatOak_counter == 0):
                     print("You look around...")
                     find_potion()
+                    greatOak_counter += 1
+                elif (choice == "look" and greatOak_counter > 0):
+                    print("You look around but find nothing.")
                 else:
                     print("\nPlease enter a valid input!")
 
@@ -348,6 +366,8 @@ def house():
     global triforce_inventory
     global flag1
     global gameOver
+    global active_room
+    active_room = "house"
     if(flag1):
         print("\nYou enter a small house. It is falling apart. You look around and see a small hatch to the East. You assume it leads to a cellar. There is a meadow to the South. You see some gold on the ground.")
         choice = 7
@@ -381,6 +401,10 @@ def house():
                     useLifePotion()
                 elif (choice == "help"):
                     help()
+                elif (choice == "save"):
+                    save_game()
+                elif (choice == "load"):
+                    load_game()
                 elif (choice == "fp"):
                     useFullPotion()
                 elif (choice == "i"):
@@ -460,6 +484,10 @@ def house():
                 useLifePotion()
             elif (choice == "help"):
                 help()
+            elif (choice == "save"):
+                save_game()
+            elif (choice == "load"):
+                load_game()
             elif (choice == "i"):
                 view_inventory()
             elif (choice == "fp"):
@@ -537,6 +565,8 @@ def cellar():
     global triforce_inventory
     global cellar_counter
     global gameOver
+    global active_rooom
+    active_room = "cellar"
     if (cellarKey_inventory):
         print("\nYou enter a small dark room. You cannot see much. There are some stairs to the West leading up. You see a hole to the South East. It is big enough to climb through.")
     else:
@@ -567,6 +597,10 @@ def cellar():
                 useLifePotion()
             elif (choice == "help"):
                 help()
+            elif (choice == "save"):
+                save_game()
+            elif (choice == "load"):
+                load_game()
             elif (choice == "fp"):
                 useFullPotion()
             elif (choice == "look" and cellar_counter == 0):
@@ -602,6 +636,8 @@ def dungeon():
     global triforce_inventory
     global dungeon_counter
     global gameOver
+    global active_room
+    active_room = "dungeon"
     if (torch_inventory):
         print("\nYou are in a large dungeon. You see bones scattered around the room carelessly. You should be careful. There is a small hole to the North West and a large hatch to the North.")
     elif (not torch_inventory):
@@ -633,6 +669,10 @@ def dungeon():
                 useFullPotion()
             elif (choice == "help"):
                 help()
+            elif (choice == "save"):
+                save_game()
+            elif (choice == "load"):
+                load_game()
             elif (choice == "look" and dungeon_counter == 0):
                 print("You look around and find {} gold!".format(random_gold))
                 player_gold += random_gold
@@ -668,6 +708,8 @@ def skeleton_cave():
     global skeletonCaveRoom_active
     global skeletonCave_counter
     global gameOver
+    global active_room
+    active_room = "skeleton cave"
     skeletonCaveRoom_active = True
     print("\nYou walk in and see a throne straight ahead on the opposite of the room. It is filled with the Skeleton King. Skeleton soldiers are lined facing the middle of the room. They notice you. There is a hatch to the South.")
     if(gameOver):
@@ -687,12 +729,16 @@ def skeleton_cave():
                     useFullPotion()
                 elif (choice == "help"):
                     help()
-                elif(choice == "look" and skeletonCave_counter == 0 or skeletonCave_counter == 3 or skeletonCave_counter == 1 and not skeletonCave_counter > 3):
+                elif (choice == "save"):
+                    save_game()
+                elif (choice == "load"):
+                    load_game()
+                elif(choice == "look" and skeletonCave_counter == 0):
                     print("\nYou look around and see some items on the ground.")
                     choice = 7
                     while(choice != "y" and choice != "n"):
-                        choice = input("\n\tYou see a handcannon on the ground. Will you pick it up?").lower()
-                        if(choice == "y" and skeletonCave_counter == 0 or skeletonCave_counter == 3):
+                        choice = input("\n\tYou see a handcannon on the ground. Will you pick it up?(Y/N) ").lower()
+                        if(choice == "y"):
                             print("\nYou pick up the handcannon.")
                             handcannon_inventory = True
                             skeletonCave_counter += 1
@@ -700,11 +746,11 @@ def skeleton_cave():
                             print("\nYou do not pick up the handcannon.")
                     choice = 7
                     while(choice != "y" and choice != "n"):
-                        choice = input("\n\tYou see some gold on the ground. Will you pick it up?").lower()
-                        if(choice == "y" and skeletonCave_counter == 0 or skeletonCave_counter == 1):
+                        choice = input("\n\tYou see some gold on the ground. Will you pick it up?(Y/N) ").lower()
+                        if(choice == "y"):
                             print("\nYou pick up the 50 Gold!")
                             player_gold += 50
-                            skeleton_counter += 3
+                            skeletonCave_counter += 1
                         elif(choice == "n"):
                             print("\nNot sure why but you do not pick up the gold!")
         elif(not skeletonKing_death):
@@ -721,6 +767,10 @@ def skeleton_cave():
                     useFullPotion()
                 elif (choice == "help"):
                     help()
+                elif (choice == "save"):
+                    save_game()
+                elif (choice == "load"):
+                    load_game()
                 elif (choice == "n"):
                     print("\n\"So, you think you can face me?\" The Skeleton King says. \"Well first you must prove yourself a worthy opponent!\"")
                     time.sleep(4)
@@ -740,6 +790,7 @@ def skeleton_cave():
                     time.sleep(3)
                     skeletonKing_death = True
                     book_inventory = True
+                    dungeon()
                 elif (choice == "i"):
                     view_inventory()
                 else:
@@ -767,6 +818,8 @@ def cliffside():
     global triforce_inventory
     global cliffside_counter
     global gameOver
+    global active_room
+    active_room = "cliffside"
 
     print("\nYou walk up to a cliffside. There is a sheer drop right in front of you. There is a small path leading to a valley in the West and a meadow to the South.")
 
@@ -794,6 +847,10 @@ def cliffside():
                 useFullPotion()
             elif (choice == "help"):
                 help()
+            elif (choice == "save"):
+                save_game()
+            elif (choice == "load"):
+                load_game()
             elif (choice == "look" and cliffside_counter == 0):
                 print("You look around...")
                 find_potion()
@@ -828,6 +885,8 @@ def dead_end_valley():
     global flag5
     global deadEndValley_counter
     global gameOver
+    global active_room
+    active_room = "dead end valley"
     if(triforce_inventory and legendarySword_inventory):
         print("You enter a small valley. You see a sign reading \"Dead-End Valley\'. There is a path leading East. You notice something at the end of the valley.")
         choice = 7
@@ -861,7 +920,12 @@ def dead_end_valley():
                                         while(choice != "y" and choice != "n"):
                                             choice = input("Enter Shangri-La?").lower()
                                             if(choice == "y"):
-                                                shangri_la()
+                                                choice = input("Save first?(Y/N) ").lower()
+                                                if(choice == "y"):
+                                                    save_game()
+                                                    shangri_la()
+                                                elif(choice == "n"):
+                                                    shangri_la()
                                             else:
                                                 dead_end_valley()
 
@@ -899,6 +963,10 @@ def dead_end_valley():
                 useFullPotion()
             elif (choice == "help"):
                 help()
+            elif (choice == "save"):
+                save_game()
+            elif (choice == "load"):
+                load_game()
             elif (choice == "look" and deadEndValley_counter == 0):
                 print("You look around...")
                 find_potion()
@@ -933,6 +1001,8 @@ def forest():
     global flag
     global forest_counter
     global gameOver
+    global active_room
+    active_room = "forest"
     if(flag):
         print("\nYou enter a dense forest. You hear a growling in the distance. You wander around and see a cave to the West. There is a meadow to the North. You see some gold on the ground!")
         choice = 7
@@ -971,6 +1041,10 @@ def forest():
                 useFullPotion()
             elif (choice == "help"):
                 help()
+            elif (choice == "save"):
+                save_game()
+            elif (choice == "load"):
+                load_game()
             elif (choice == "look" and forest_counter == 0):
                 print("You look around...")
                 find_potion()
@@ -1005,6 +1079,8 @@ def cave():
     global flag2
     global cave_counter
     global gameOver
+    global active_room
+    active_room = "cave"
     if(flag2 and not book_inventory):
         print("\nYou enter a large cave. You see spider webs in the corners. Bats fly over your head. Stagalimites cover the ceiling. There is the forest is to the East. You see some gold on the ground!")
         choice = 7
@@ -1041,6 +1117,10 @@ def cave():
                     useFullPotion()
                 elif (choice == "help"):
                     help()
+                elif (choice == "save"):
+                    save_game()
+                elif (choice == "load"):
+                    load_game()
                 elif (choice == "look" and cave_counter == 0):
                     print("You look around and find {} gold!".format(random_gold))
                     player_gold += random_gold
@@ -1089,6 +1169,10 @@ def cave():
                     useFullPotion()
                 elif (choice == "help"):
                     help()
+                elif (choice == "save"):
+                    save_game()
+                elif (choice == "load"):
+                    load_game()
                 elif (choice == "i"):
                     view_inventory()
                 else:
@@ -1112,6 +1196,10 @@ def cave():
                         useFullPotion()
                     elif (choice == "help"):
                         help()
+                    elif (choice == "save"):
+                        save_game()
+                    elif (choice == "load"):
+                        load_game()
                     elif (choice == "i"):
                         view_inventory()
                     else:
@@ -1138,6 +1226,8 @@ def secret_passage():
     global triforce_inventory
     global secretPassage_counter
     global gameOver
+    global active_room
+    active_room = "secret passage"
     if(book_inventory):
         print("\nYou crawl into a small tunnel. It is big enough to turn around in. There is a cave to the North and you see a light in the South.")
     else:
@@ -1161,6 +1251,10 @@ def secret_passage():
                 useFullPotion()
             elif (choice == "help"):
                 help()
+            elif (choice == "save"):
+                save_game()
+            elif (choice == "load"):
+                load_game()
             elif (choice == "look" and secretPassage_counter == 0):
                 print("You look around and find {} gold!".format(random_gold))
                 player_gold += random_gold
@@ -1195,6 +1289,8 @@ def dragons_lair():
     global dragon_death
     global dragonsLair_counter
     global gameOver
+    global active_room
+    active_room = "dragons lair"
     if(not dragon_death):
         print("\nYou exit the secret passage and enter a very large room. You are very deep underground as you cannot see the top of the ceiling but see a light very far up. You look across the huge room and see a dragon sleeping on his treasure. The secret passage to the North is the only logical way out.")
         if(gameOver):
@@ -1213,6 +1309,10 @@ def dragons_lair():
                     useFullPotion()
                 elif (choice == "help"):
                     help()
+                elif (choice == "save"):
+                    save_game()
+                elif (choice == "load"):
+                    load_game()
                 elif (choice == "s"):
                     print("\nYou sneak up to the dragon, thinking it has not taken notice of you. However, it has known you were there the whole time!")
                     time.sleep(3)
@@ -1253,6 +1353,10 @@ def dragons_lair():
                     useFullPotion()
                 elif (choice == "help"):
                     help()
+                elif (choice == "save"):
+                    save_game()
+                elif (choice == "load"):
+                    load_game()
                 elif (choice == "look" and dragonsLair_counter == 0):
                     print("\nYou find 35 gold on the ground!")
                     player_gold += 35
@@ -1285,6 +1389,8 @@ def village():
     global counter
     global village_counter
     global gameOver
+    global active_room
+    active_room = "village"
     if(counter == 0):
         print("\nYou enter a small village. The people seem friendly, and all say \"hello\" to you, regardless of you being a stranger. You see a cemetary to the South, a church to the South East, the marketplace is to the East and the meadow to the West. You see some gold on the ground.")
         choice = 7
@@ -1328,6 +1434,10 @@ def village():
                 print("You look around but find nothing")
             elif (choice == "help"):
                 help()
+            elif (choice == "save"):
+                save_game()
+            elif (choice == "load"):
+                load_game()
             elif (choice == "i"):
                 view_inventory()
             else:
@@ -1356,6 +1466,8 @@ def church():
     global flag4
     global church_counter
     global gameOver
+    global active_room
+    active_room = "church"
     if(not note_inventory):
         print("\nYou enter the church. Pews are lined facing the front of the church, where Father Henry is motioning for you to come to him. \"Hello, my son.\" Father Henry says, \"Your father left a note with me to give to you. It is very important that you have it so, here.\"")
         note_inventory = True
@@ -1392,6 +1504,10 @@ def church():
                 useFullPotion()
             elif (choice == "help"):
                 help()
+            elif (choice == "save"):
+                save_game()
+            elif (choice == "load"):
+                load_game()
             elif (choice == "look" and church_counter == 0):
                 print("You find {} Gold!".format(random_gold))
                 church_counter += 1
@@ -1424,6 +1540,8 @@ def cemetary():
     global triforce_inventory
     global cemetary_counter
     global gameOver
+    global active_room
+    active_room = "cemetary"
     if(torch_inventory):
         print("\nYou open a black iron fence gate and walk into the cemetary. You see various different kinds of headstones with various markings on them, from \"RIP\" to loving quotes, and even one that says \"Here lie the party guy\". The village is to the North.")
     elif(not torch_inventory):
@@ -1463,6 +1581,10 @@ def cemetary():
                 useFullPotion()
             elif (choice == "help"):
                 help()
+            elif (choice == "save"):
+                save_game()
+            elif (choice == "load"):
+                load_game()
             elif (choice == "look" and cemetary_counter == 0):
                 print("You find {} Gold!".format(random_gold))
                 cemetary_counter += 1
@@ -1496,6 +1618,8 @@ def marketplace():
     global flag3
     global market_counter
     global gameOver
+    global active_room
+    active_room = "marketplace"
     if(flag3):
         print("\nYou walk into the marketplace, which is alive and buzzing with energy. You see many different stands, but the only ones of interest to you are the Blacksmith to the North, the shop to the East and a huge castle to the South. You see some gold on the ground.")
         choice = 7
@@ -1512,7 +1636,7 @@ def marketplace():
     else:
         print("\nYou walk into the marketplace, which is alive and buzzing with energy. You see many different stands, but the only ones of interest to you are the Blacksmith to the North, the shop to the East and a huge castle to the South.")
     if(chance.chance(50)):
-        print("A rat comes up and attacks you!")
+        print("\nA rat comes up and attacks you!")
         time.sleep(2)
         battle(player, rat)
     choice = 7
@@ -1534,6 +1658,10 @@ def marketplace():
             useFullPotion()
         elif (choice == "help"):
             help()
+        elif (choice == "save"):
+            save_game()
+        elif (choice == "load"):
+            load_game()
         elif (choice == "look" and market_counter == 0):
             print("You look around...")
             find_potion()
@@ -1565,11 +1693,13 @@ def blacksmith():
     global jewelEgg_inventory
     global legendarySword_inventory
     global triforce_inventory
+    global active_room
+    active_room = "blacksmith"
     print("\nYou walk into the blacksmith. Literally. He puts down what he is doing and asks what you want. You can buy and sell weapons. The marketplace is to the South.")
 
     choice = 7
     while(choice != "s" and choice != "b"):
-        choice = input("\nRoom: Blacksmith\n\nWill you (B)uy something, (Sell) something or leave and go (S)outh?").lower()
+        choice = input("\nRoom: Blacksmith\n\nWill you (B)uy something or leave and go (S)outh?").lower()
         if (choice == "s"):
             marketplace()
         elif (choice == "b"): #To buy stuff
@@ -1582,6 +1712,10 @@ def blacksmith():
             useFullPotion()
         elif (choice == "help"):
             help()
+        elif (choice == "save"):
+            save_game()
+        elif (choice == "load"):
+            load_game()
         elif (choice == "look"):
             print("You look around but find nothing")
         elif (choice == "i"):
@@ -1611,6 +1745,8 @@ def shop():
     global triforce_inventory
     global potion_inventory
     global lifePotion_inventory
+    global active_room
+    active_room = "shop"
     print("\nYou enter the shop. The storekeeper warmly welcomes you. You look around and see items lining the shelves. There are other shoppers in here, buying various items. The shopkeeper asks if you will buy anything or are willing to sell some stuff. The marketplace is to the South.")
 
     choice = 7
@@ -1620,16 +1756,6 @@ def shop():
             marketplace()
         elif (choice == "b"): #To buy stuff
             s_buy()
-            choice = 7
-            while (choice != "y" and choice != "n"):
-                choice = input("\nWill you buy anything else?")
-                if (choice == "y"):
-                    s_buy()
-                elif (choice == "n"):
-                    print("\nHave a good day!")
-                    shop()
-                else:
-                    print("\nPlease enter a valid input!")
         elif (choice == "i"):
             view_inventory()
         elif (choice == "p"):
@@ -1638,6 +1764,10 @@ def shop():
             useLifePotion()
         elif (choice == "fp"):
             useFullPotion()
+        elif (choice == "save"):
+            save_game()
+        elif (choice == "load"):
+            load_game()
         elif (choice == "look"):
             print("You look around but find nothing")        
         elif (choice == "help"):
@@ -1667,6 +1797,8 @@ def castle():
     global triforce_inventory
     global random_gold
     global castle_counter
+    global active_room
+    active_room = "castle"
     if(jewelEgg_inventory):
         print("\nYou enter a grand castle. You walk in and people start bowing. You had forgotten you were king! Someone walks up to you and asks if you had found an egg special to their family. You pull out the Jewel Egg you found at the Great Oak. \"Thats it!\" the person says as you hand it over. \"Here!\" they say, \"Take this sword my grandfather gave me, I have no use for it as it cannot be sharpened.\"")
         legendarySword_inventory = True
@@ -1687,9 +1819,14 @@ def castle():
             useFullPotion()
         elif (choice == "help"):
             help()
+        elif (choice == "save"):
+            save_game()
+        elif (choice == "load"):
+            load_game()
         elif (choice == "look" and castle_counter == 0):
             print("You look around...")
             find_potion()
+            castle_counter += 1
         elif (choice == "look" and castle_counter > 0):
             print("You look around but find nothing")
         elif (choice == "i"):
@@ -1711,6 +1848,8 @@ def shangri_la():
     global dagger_inventory
     global rock_inventory
     global gameOver
+    global active_room
+    active_room = "shangri-la"
     print("\n\n\n\t\tYou have entered Shangri-La...")
     print("\nYou walk through and see an amazing view. You are standing at the start of a long winding path lined with beautiful cherry blossom trees.")
     time.sleep(3)
@@ -1728,17 +1867,34 @@ def shangri_la():
     time.sleep(10)
     print("\n\"Father?\" You say, stunned. \"That is right,\" Dragox says. \"I am your father, and I am prepared to keep you from your destiny, just like my father did! It is tradition. Only the best warriors fufill their destiny! Lets see if you have what it takes!\"")
     input("\n\nThis is the endgame! Beat Dragox, Romox and your evil uncle Fencor to fufill your destiny! Press Enter! ")
-    battle(player, dragox)
-    print("\n\"Good. Good! You are stronger than we thought. But I am a mere weakling compared to my father! He is your next opponent! Take my sword, as you have earned it!\"")
-    dSword_inventory = True
-    time.sleep(5)
-    if(not gameOver):
+    active_room = "dragox battle"
+    def dragox_battle():
+        battle(player, dragox)
+        print("\n\"Good. Good! You are stronger than we thought. But I am a mere weakling compared to my father! He is your next opponent! Take my sword, as you have earned it!\"")
+        dSword_inventory = True
+        time.sleep(5)
+        if(not gameOver):
+            active_room = "romox battle"
+            choice = input("\nSave your game?(Y/N) ").lower()
+            if(choice == "y"):
+                save_game()
+        elif(gameOver):
+            raise SystemExit
+    def romox_battle():
         battle(player, romox)
         print("\"Very good. Very good! Keep going! You now must defeat Fencor, your uncle! Take my Scepter, it is your only chance against the Great Fencor!\"")
         scepter_inventory = True
         time.sleep(5)
         if(not gameOver):
-            battle(player, fencor)
+            active_room = "fencor battle"
+            choice = input("\nSave your game?(Y/N) ").lower()
+            if(choice == "y"):
+                save_game()   
+        elif(gameOver):
+            raise SystemExit
+    def fencor_battle():
+        battle(player, fencor)
+        if(not gameOver):
             print("\n\"You have bested me nephew.\" Fencor says. \"Take my Umari, as a gift of things to come...\"")
             time.sleep(3)
             print("\n\"So, it is true...\" Dragox says. \"You are the person the legend talks of.\" \"What legend?\" You say.")
@@ -1752,11 +1908,9 @@ def shangri_la():
             print("\nYou walk past the three thrones and up to the portal. You turn around to look at your family. \"Will I see any of you again?\" You ask. \"No, you will not\" Romox replies, \"As we are just an image, a physical being of the past, in our future.\" You look back at the portal, sigh, stand up straight, and walk through...")
             time.sleep(12)
             game_end()
-        else:
+        elif(gameOver):
             raise SystemExit
-    else:
-        raise SystemExit
-
+            
 def b_buy(): #To buy weapons from the blacksmith
     global player_gold
     global umari_inventory
@@ -1774,8 +1928,8 @@ def b_buy(): #To buy weapons from the blacksmith
         if (blacksmith_buy[key]):
             print(key)
     choice = 7
-    while(choice != "sword" and choice != "heavy_sword" and choice != "bow" and choice != "crossbow"):
-        choice = str(input("\nWhat would you like to buy?(Type the name of the object (if it has spaces use \"_\" in place of the space) or \"back\" to exit): ")).lower()
+    while(choice != "back"):
+        choice = str(input("\nWhat would you like to buy?(Type the name of the object or \"back\" to exit): ")).lower()
         if (choice == "sword"):
             if (player_gold < 15):
                 print("\nYou do not have enough gold to buy that item!")
@@ -1785,7 +1939,7 @@ def b_buy(): #To buy weapons from the blacksmith
                 player_gold -= 15
             else:
                 print("\nPlease enter a valid option")
-        if (choice == "heavy_sword"):
+        if (choice == "heavy sword"):
             if (player_gold < 50):
                 print("\nYou do not have enough gold to buy that item!")
             elif (player_gold >= 50):
@@ -1828,7 +1982,7 @@ def s_buy(): #To buy items from the shop
         if (shop_buy[key]):
             print(key)
     choice = 7
-    while(choice != "potion" and choice != "life potion" and choice != "torch"):
+    while(choice != "back"):
         choice = str(input("\nWhat would you like to buy?(Type the name of the object or \"back\" to exit): ")).lower()
         if (choice == "i"):
             view_inventory()
@@ -1879,8 +2033,11 @@ def battle(player, enemy): #Battle function
     global potion_inventory
     global lifePotion_inventory
     global fullPotion_inventory
+    global player_gold
+    global random_gold
     flag = True
     damage = 0
+    enemy.hp = enemy.max_hp
     """Checks the inventory for the best weapon and applies that to the variable best_weapon"""
     if(umari_inventory):
         best_weapon = fencor_umari
@@ -1907,32 +2064,28 @@ def battle(player, enemy): #Battle function
     else:
         print("\n\tYou do not have a weapon. You do not know how to fist fight so {} attacks you and kills you. Game over!".format(enemy.name))
         death()
-    max_dmg = best_weapon.damage + int(best_weapon.damage)*1.5 #Specify how much damage a critical hit is
+    max_dmg = best_weapon.damage + int(best_weapon.damage)*2 #Specify how much damage a critical hit is
 
     if (enemy.name != "Skeleton King" or enemy.name != "Dragox" or enemy.name != "Romox" or enemy.name != "Dragon" or enemy.name != "Fencor" or not skeletonCaveRoom_active): #Allows fleeing if the enemy is not a boss and the Player is not in the Skeleton Cave Boss Battle
         while(flag):
             if(potion_inventory or lifePotion_inventory or fullPotion_inventory):
                 choice = 7
                 while (choice != "a" and choice != "f" and player.is_alive):
-                    choice = input("\n\nDo you want to (A)ttack, use a (P)otion or (F)lee?").lower()
+                    choice = input("\n\nDo you want to (A)ttack, use a (P)otion or (F)lee?(Enemy Hp: {}) ".format(enemy.hp)).lower()
                     if (choice == "i"):
                         view_inventory()
                     if (choice == "a"):
-                        print("\nYou use {} against {}!".format(best_weapon.name, enemy.name))
                         if (chance.chance(50)): #Adds the chance to do a critical hit
                             damage = max_dmg
-                            enemy.hp -= damage
                         else: #Otherwise do regular damage
                             damage = best_weapon.damage
-                            enemy.hp -= best_weapon.damage
-                        time.sleep(2)
+                        print("\nYou do {} damage with {} against {}!".format(damage, best_weapon.name, enemy.name))
                         if(not enemy.hp - damage < 0):
                             enemy.hp -= damage
-                            print("\nYou do {} damage!".format(damage))
                             print("\n{} HP is {}.".format(enemy.name, enemy.hp))
                             time.sleep(2)
-                        elif(enemy.hp - damage >= 0):
-                            print("\nYou do {} damage!".format(damage))
+                        elif((enemy.hp - damage) <= 0):
+                            enemy.hp -= damage
                             print("\n{} Hp is 0.".format(enemy.name))
                             time.sleep(2)
                         if (not enemy.is_alive()): #Check to see if enemy is alive
@@ -1940,10 +2093,20 @@ def battle(player, enemy): #Battle function
                                 player.xp_to_level -= enemy.xp #Subtract enemy xp worth from the amount of xp needed to level up
                                 player.xp += enemy.xp #Add enemy xp worth to amount of xp
                                 print("\nYou gained {} xp! You have {} xp left to level up!".format(enemy.xp, player.xp_to_level))
+                                if(chance.chance(50)):
+                                    print("{} dropped {} Gold!".format(enemy.name, int(random_gold) * 2))
+                                    player_gold += random_gold
+                                else:
+                                    print("{} dropped {} Gold!".format(enemy.name, random_gold))
+                                    player_gold += random_gold
                                 flag = False
                             elif (player.xp_to_level <= 0 or (player.xp_to_level - enemy.xp) < 0): #Check if the player has enough xp to level up
                                 print("\nYou gained {} xp!".format(enemy.xp))
                                 player.levelUp() #Call the level up function
+                                if(chance.chance(50)):
+                                    print("{} dropped {} Gold!".format(enemy.name, int(random_gold) * 2))
+                                else:
+                                    print("{} dropped {} Gold!".format(enemy.name, random_gold))
                                 flag = False
                         elif (enemy.is_alive()): #If the enemy is still alive
                             if(player.hp <= enemy.damage or player.hp - enemy.damage <= 0):
@@ -2053,30 +2216,25 @@ def battle(player, enemy): #Battle function
                         
                         elif(potion_inventory == 0 and fullPotion_inventory == 0 and lifePotion_inventory == 0):
                             print("You do not have any Potions!")
-                    elif (choice == "lp"):
-                        useLifePotion()
+                            
             elif(not potion_inventory and not lifePotion_inventory and not fullPotion_inventory):
                 choice = 7
                 while (choice != "a" and choice != "f" and player.is_alive):
-                    choice = input("\n\nDo you want to (A)ttack or (F)lee?").lower()
+                    choice = input("\n\nDo you want to (A)ttack or (F)lee?(Enemy Hp: {}) ".format(enemy.hp)).lower()
                     if (choice == "i"):
                         view_inventory()
                     if (choice == "a"):
-                        print("\nYou use {} against {}!".format(best_weapon.name, enemy.name))
                         if (chance.chance(50)): #Adds the chance to do a critical hit
                             damage = max_dmg
-                            enemy.hp -= damage
                         else: #Otherwise do regular damage
                             damage = best_weapon.damage
-                            enemy.hp -= best_weapon.damage
-                        time.sleep(2)
-                        if(not enemy.hp - damage < 0):
+                        print("\nYou do {} damage with {} against {}!".format(damage, best_weapon.name, enemy.name))
+                        if(not(enemy.hp - damage) < 0):
                             enemy.hp -= damage
-                            print("\nYou do {} damage!".format(damage))
                             print("\n{} HP is {}.".format(enemy.name, enemy.hp))
                             time.sleep(2)
-                        elif(enemy.hp - damage >= 0):
-                            print("\nYou do {} damage!".format(damage))
+                        elif((enemy.hp - damage) <= 0):
+                            enemy.hp -= damage
                             print("\n{} Hp is 0.".format(enemy.name))
                             time.sleep(2)
                         if (not enemy.is_alive()): #Check to see if enemy is alive
@@ -2084,10 +2242,20 @@ def battle(player, enemy): #Battle function
                                 player.xp_to_level -= enemy.xp #Subtract enemy xp worth from the amount of xp needed to level up
                                 player.xp += enemy.xp #Add enemy xp worth to amount of xp
                                 print("\nYou gained {} xp! You have {} xp left to level up!".format(enemy.xp, player.xp_to_level))
+                                if(chance.chance(50)):
+                                    print("{} dropped {} Gold!".format(enemy.name, int(random_gold) * 2))
+                                    player_gold += random_gold
+                                else:
+                                    print("{} dropped {} Gold!".format(enemy.name, random_gold))
+                                    player_gold += random_gold
                                 flag = False
                             elif (player.xp_to_level <= 0 or (player.xp_to_level - enemy.xp) < 0): #Check if the player has enough xp to level up
                                 print("\nYou gained {} xp!".format(enemy.xp))
                                 player.levelUp() #Call the level up function
+                                if(chance.chance(50)):
+                                    print("{} dropped {} Gold!".format(enemy.name, int(random_gold) * 2))
+                                else:
+                                    print("{} dropped {} Gold!".format(enemy.name, random_gold))
                                 flag = False
                         elif (enemy.is_alive()): #If the enemy is still alive
                             if(player.hp <= enemy.damage or player.hp - enemy.damage <= 0):
@@ -2119,23 +2287,20 @@ def battle(player, enemy): #Battle function
             if(potion_inventory or fullPotion_inventory or lifePotion_inventory):
                 choice = 7
                 while (choice != "a" and player.is_alive):
-                    choice = input("\n\nDo you want to (A)ttack or use a (P)otion?").lower()
+                    choice = input("\n\nDo you want to (A)ttack or use a (P)otion?(Enemy Hp: {}) ".format(enemy.hp)).lower()
                     if (choice == "a"):
-                        print("\nYou use {} against {}!".format(best_weapon.name, enemy.name))
                         if (chance.chance(50)): #Adds the chance to do a critical hit
                             damage = max_dmg
-                            enemy.hp -= damage
                         else: #Otherwise do regular damage
-                            damage = best_weapon.damage                        
-                            enemy.hp -= damage
+                            damage = best_weapon.damage
+                        print("\nYou do {} damage with {} against {}!".format(damage, best_weapon.name, enemy.name))
                         time.sleep(2)
-                        if(not enemy.hp - damage < 0):
+                        if(not(enemy.hp - damage) < 0):
                             enemy.hp -= damage
-                            print("\nYou do {} damage!".format(damage))
                             print("\n{} HP is {}.".format(enemy.name, enemy.hp))
                             time.sleep(2)
-                        elif(enemy.hp - damage >= 0):
-                            print("\nYou do {} damage!".format(damage))
+                        elif((enemy.hp - damage) <= 0):
+                            enemy.hp -= damage
                             print("\n{} Hp is 0.".format(enemy.name))
                             time.sleep(2)
                         if (not enemy.is_alive()): #Check to see if enemy is dead 
@@ -2143,6 +2308,12 @@ def battle(player, enemy): #Battle function
                                 player.xp_to_level -= enemy.xp #Subtract enemy xp worth from the amount of xp needed to level up
                                 player.xp += enemy.xp #Add enemy xp worth to amount of xp
                                 print("\nYou gained {} xp! You have {} xp left to level up!".format(enemy.xp, player.xp_to_level))
+                                if(chance.chance(50)):
+                                    print("{} dropped {} Gold!".format(enemy.name, int(random_gold) * 2))
+                                    player_gold += random_gold
+                                else:
+                                    print("{} dropped {} Gold!".format(enemy.name, random_gold))
+                                    player_gold += random_gold
                                 flag = False
                             elif (player.xp_to_level == 0 and (player.xp_to_level - enemy.xp) < 0): #Check if the player has enough xp to level up
                                 print("\nYou gained {} xp!".format(enemy.xp))
@@ -2236,8 +2407,7 @@ def battle(player, enemy): #Battle function
                                         elif(choice == "back"):
                                             pass
                                         else:
-                                            print("Please choose a valid input!")                    
-                                
+                                            print("Please choose a valid input!")
                                 elif(potion_inventory == 0 and fullPotion_inventory == 0 and lifePotion_inventory == 0):
                                     print("You do not have any Potions!")
                             elif (choice == "lp"):
@@ -2246,25 +2416,22 @@ def battle(player, enemy): #Battle function
             elif(not potion_inventory and not lifePotion_inventory and not fullPotion_inventory):
                 choice = 7
                 while (choice != "a" and player.is_alive):
-                    choice = input("\n\nDo you want to (A)ttack?").lower()
+                    choice = input("\n\nDo you want to (A)ttack?(Enemy Hp: {}) ".format(enemy.hp)).lower()
                     if (choice == "i"):
                         view_inventory()
                     if (choice == "a"):
-                        print("\nYou use {} against {}!".format(best_weapon.name, enemy.name))
                         if (chance.chance(50)): #Adds the chance to do a critical hit
                             damage = max_dmg
-                            enemy.hp -= damage
                         else: #Otherwise do regular damage
                             damage = best_weapon.damage
-                            enemy.hp -= best_weapon.damage
+                        print("\nYou do {} damage with {} against {}!".format(damage, best_weapon.name, enemy.name))
                         time.sleep(2)
-                        if(not enemy.hp - damage < 0):
+                        if(not(enemy.hp - damage) < 0):
                             enemy.hp -= damage
-                            print("\nYou do {} damage!".format(damage))
                             print("\n{} HP is {}.".format(enemy.name, enemy.hp))
                             time.sleep(2)
-                        elif(enemy.hp - damage >= 0):
-                            print("\nYou do {} damage!".format(damage))
+                        elif((enemy.hp - damage) <= 0):
+                            enemy.hp -= damage
                             print("\n{} Hp is 0.".format(enemy.name))
                             time.sleep(2)
                         if (not enemy.is_alive()): #Check to see if enemy is alive
@@ -2272,10 +2439,22 @@ def battle(player, enemy): #Battle function
                                 player.xp_to_level -= enemy.xp #Subtract enemy xp worth from the amount of xp needed to level up
                                 player.xp += enemy.xp #Add enemy xp worth to amount of xp
                                 print("\nYou gained {} xp! You have {} xp left to level up!".format(enemy.xp, player.xp_to_level))
+                                if(chance.chance(50)):
+                                    print("{} dropped {} Gold!".format(enemy.name, int(random_gold) * 2))
+                                    player_gold += random_gold
+                                else:
+                                    print("{} dropped {} Gold!".format(enemy.name, random_gold))
+                                    player_gold += random_gold
                                 flag = False
                             elif (player.xp_to_level <= 0 or (player.xp_to_level - enemy.xp) < 0): #Check if the player has enough xp to level up
                                 print("\nYou gained {} xp!".format(enemy.xp))
                                 player.levelUp() #Call the level up function
+                                if(chance.chance(50)):
+                                    print("{} dropped {} Gold!".format(enemy.name, int(random_gold) * 2))
+                                    player_gold += random_gold
+                                else:
+                                    print("{} dropped {} Gold!".format(enemy.name, random_gold))
+                                    player_gold += random_gold
                                 flag = False
                         elif (enemy.is_alive()): #If the enemy is still alive
                             if(player.hp <= enemy.damage or player.hp - enemy.damage <= 0):
@@ -2348,7 +2527,8 @@ def view_inventory(): #When called prints whatever is in the player's inventory
     print("\n\tGold:",player_gold)
     print("\nHP:", player.hp)
     print("\nLevel:", player.level)
-    print("\nXp to next level:", player.xp)
+    print("\nXp:", player.xp)
+    print("\nXp to next level:", player.xp_to_level)
 
 def usePotion():
     global potion_inventory
@@ -2385,11 +2565,11 @@ def death():
     global gameOver
     print("\n\n\tYou have died..")
     time.sleep(4)
-    playAgain = input("\n\nWould you like to play again?(Y/N): ").lower()
+    playAgain = input("\n\nWould you like to load your game?(Y/N): ").lower()
     while(playAgain != "y" and playAgain != "n"):
         if (playAgain == "y"):
             gameOver = False
-            reload(Game) #Ask Mr. Smith about this and how to properly reload the game
+            load_game()
         elif (playAgain == "n"):
             print("\nThanks for playing! Hope you enjoyed your time playing Hjalmion: The Rise Of Fencor. Please, play again sometime!")
             raise SystemExit
@@ -2452,3 +2632,305 @@ def find_potion():
 
 def game_end():
     print("\n\n\n\n\nYou have (surprisingly) reached the end of Hjalmion: The Rise Of Fencor! Thank you so much for playing. I am thinking of making a sequel in the future (whenever that may be), so look for it! This game was coded, thought of, and spearheaded by Nick Mills. He was 16 when he finished this. Thank you goes out to Mr. Smith for teaching me Python, Nate Grobe for all of the funny moments, Tim Boyadjian for introducing me to programming, and last but not least, the Internet, for helping me to solve my problems! I spent about a day in total working on this. It was fun, frustrating, and rewarding. This has definitely been a good experience. Thank you for sharing it with me!")
+    
+def save_game(): #Saves the current game state to be loaded from a file later
+    import pickle
+    
+    #All variables that could have been changed during the course of play
+    global player
+    global player_gold
+    global skeletonKing_death
+    global dragon_death
+    global player_gold
+    global umari_inventory
+    global scepter_inventory
+    global dSword_inventory
+    global krambit_inventory
+    global handcannon_inventory
+    global crossbow_inventory
+    global bow_inventory
+    global heavySword_inventory
+    global sword_inventory
+    global dagger_inventory
+    global rock_inventory
+    global cellarKey_inventory
+    global torch_inventory
+    global book_inventory
+    global greatOakKey_inventory
+    global note_inventory
+    global jewelEgg_inventory
+    global legendarySword_inventory
+    global triforce_inventory
+    global potion_inventory
+    global lifePotion_inventory
+    global fullPotion_inventory    
+    global counter
+    global flag
+    global flag1
+    global flag2
+    global flag3
+    global flag4
+    global flag5
+    global gameOver 
+    global meadow_counter
+    global deadEndValley_counter
+    global dungeon_counter
+    global village_counter
+    global forest_counter
+    global cliffside_counter
+    global greatOak_counter
+    global cellar_counter
+    global skeletonCave_counter
+    global cave_counter
+    global secretPassage_counter
+    global dragonsLair_counter
+    global church_counte
+    global cemetary_counter
+    global market_counter
+    global castle_counter
+    global active_room
+    ##The following is used for testing purposes
+    #print(player)
+    #print(player_gold)
+    #print(skeletonKing_death)
+    #print(dragon_death)
+    #print(umari_inventory)
+    #print(scepter_inventory)
+    #print(dSword_inventory)
+    #print(krambit_inventory)
+    #print(handcannon_inventory)
+    #print(crossbow_inventory)
+    #print(bow_inventory)
+    #print(heavySword_inventory)
+    #print(sword_inventory)
+    #print(dagger_inventory)
+    #print(rock_inventory)
+    
+    with open("saves\save1.pkl", "wb") as outfile:
+        pickle.dump(player, outfile)
+        pickle.dump(player_gold, outfile)
+        pickle.dump(skeletonKing_death, outfile)
+        pickle.dump(dragon_death, outfile)
+        pickle.dump(umari_inventory, outfile)
+        pickle.dump(scepter_inventory, outfile)
+        pickle.dump(dSword_inventory, outfile)
+        pickle.dump(krambit_inventory, outfile)
+        pickle.dump(handcannon_inventory, outfile)
+        pickle.dump(crossbow_inventory, outfile)
+        pickle.dump(bow_inventory, outfile)
+        pickle.dump(heavySword_inventory, outfile)
+        pickle.dump(sword_inventory, outfile)
+        pickle.dump(dagger_inventory, outfile)
+        pickle.dump(rock_inventory, outfile)
+        pickle.dump(cellarKey_inventory, outfile)
+        pickle.dump(torch_inventory, outfile)
+        pickle.dump(book_inventory, outfile)
+        pickle.dump(greatOakKey_inventory, outfile)
+        pickle.dump(note_inventory, outfile)
+        pickle.dump(jewelEgg_inventory, outfile)
+        pickle.dump(legendarySword_inventory, outfile)
+        pickle.dump(triforce_inventory, outfile)
+        pickle.dump(potion_inventory, outfile)
+        pickle.dump(lifePotion_inventory, outfile)
+        pickle.dump(fullPotion_inventory, outfile)
+        pickle.dump(counter, outfile)
+        pickle.dump(flag, outfile)
+        pickle.dump(flag1, outfile)
+        pickle.dump(flag2, outfile)
+        pickle.dump(flag3, outfile)
+        pickle.dump(flag4, outfile)
+        pickle.dump(flag5, outfile)
+        pickle.dump(gameOver, outfile)
+        pickle.dump(meadow_counter, outfile)
+        pickle.dump(deadEndValley_counter, outfile)
+        pickle.dump(dungeon_counter, outfile)
+        pickle.dump(village_counter, outfile)
+        pickle.dump(forest_counter, outfile)
+        pickle.dump(cliffside_counter, outfile)
+        pickle.dump(greatOak_counter, outfile)
+        pickle.dump(cellar_counter, outfile)
+        pickle.dump(skeletonCave_counter, outfile)
+        pickle.dump(cave_counter, outfile)
+        pickle.dump(secretPassage_counter, outfile)
+        pickle.dump(dragonsLair_counter, outfile)
+        pickle.dump(church_counter, outfile)
+        pickle.dump(cemetary_counter, outfile)
+        pickle.dump(market_counter, outfile)
+        pickle.dump(castle_counter, outfile)
+        pickle.dump(active_room, outfile)
+    print("\n\tGame Saved...")
+    
+def load_game():
+    import pickle
+        
+    #All variables that could have been changed during the course of play
+    global player
+    global player_gold
+    global skeletonKing_death
+    global dragon_death
+    global player_gold
+    global umari_inventory
+    global scepter_inventory
+    global dSword_inventory
+    global krambit_inventory
+    global handcannon_inventory
+    global crossbow_inventory
+    global bow_inventory
+    global heavySword_inventory
+    global sword_inventory
+    global dagger_inventory
+    global rock_inventory
+    global cellarKey_inventory
+    global torch_inventory
+    global book_inventory
+    global greatOakKey_inventory
+    global note_inventory
+    global jewelEgg_inventory
+    global legendarySword_inventory
+    global triforce_inventory
+    global potion_inventory
+    global lifePotion_inventory
+    global fullPotion_inventory    
+    global counter
+    global flag
+    global flag1
+    global flag2
+    global flag3
+    global flag4
+    global flag5
+    global gameOver 
+    global meadow_counter
+    global deadEndValley_counter
+    global dungeon_counter
+    global village_counter
+    global forest_counter
+    global cliffside_counter
+    global greatOak_counter
+    global cellar_counter
+    global skeletonCave_counter
+    global cave_counter
+    global secretPassage_counter
+    global dragonsLair_counter
+    global church_counte
+    global cemetary_counter
+    global market_counter
+    global castle_counter
+    global active_room
+    
+    with open("saves\save1.pkl", "rb") as infile:
+        """WARNING!! DO NOT CHANGE THE ORDER OF THESE VARIABLES AS IT LOADS EACH VARIABLE IN THE ORDER THEY WERE DUMPED!"""
+        player = pickle.load(infile)
+        player_gold = pickle.load(infile)
+        skeletonKing_death = pickle.load(infile)
+        dragon_death = pickle.load(infile)
+        umari_inventory = pickle.load(infile)
+        scepter_inventory = pickle.load(infile)
+        dSword_inventory = pickle.load(infile)
+        krambit_inventory = pickle.load(infile)
+        handcannon_inventory = pickle.load(infile)
+        crossbow_inventory = pickle.load(infile)
+        bow_inventory = pickle.load(infile)
+        heavySword_inventory = pickle.load(infile)
+        sword_inventory = pickle.load(infile)
+        dagger_inventory = pickle.load(infile)
+        rock_inventory = pickle.load(infile)
+        cellarKey_inventory = pickle.load(infile)
+        torch_inventory = pickle.load(infile)
+        book_inventory = pickle.load(infile)
+        greatOakKey_inventory = pickle.load(infile)
+        note_inventory = pickle.load(infile)
+        jewelEgg_inventory = pickle.load(infile)
+        legendarySword_inventory = pickle.load(infile)
+        triforce_inventory = pickle.load(infile)
+        potion_inventory = pickle.load(infile)
+        lifePotion_inventory = pickle.load(infile)
+        fullPotion_inventory = pickle.load(infile)
+        counter = pickle.load(infile)
+        flag = pickle.load(infile)
+        flag1 = pickle.load(infile)
+        flag2 = pickle.load(infile)
+        flag3 = pickle.load(infile)
+        flag4 = pickle.load(infile)
+        flag5 = pickle.load(infile)
+        gameOver = pickle.load(infile)
+        meadow_counter = pickle.load(infile)
+        deadEndValley_counter = pickle.load(infile)
+        dungeon_counter = pickle.load(infile)
+        village_counter = pickle.load(infile)
+        forest_counter = pickle.load(infile)
+        cliffside_counter = pickle.load(infile)
+        greatOak_counter = pickle.load(infile)
+        cellar_counter = pickle.load(infile)
+        skeletonCave_counter = pickle.load(infile)
+        cave_counter = pickle.load(infile)
+        secretPassage_counter = pickle.load(infile)
+        dragonsLair_counter = pickle.load(infile)
+        church_counter = pickle.load(infile)
+        cemetary_counter = pickle.load(infile)
+        market_counter = pickle.load(infile)
+        castle_counter = pickle.load(infile)
+        active_room = pickle.load(infile)
+        print("\n\tGame Loaded...")
+        #Puts Player back into the room they saved in
+        if(active_room == "meadow"):
+            meadow()
+        if(active_room == "great oak"):
+            great_oak()
+        if(active_room == "cliffside"):
+            cliffside()
+        if(active_room == "dead end valley"):
+            dead_end_valley()
+        if(active_room == "forest"):
+            forest()
+        if(active_room == "cave"):
+            cave()
+        if(active_room == "secret passage"):
+            secret_passage()
+        if(active_room == "dragons lair"):
+            dragons_lair()
+        if(active_room == "house"):
+            house()
+        if(active_room == "cellar"):
+            cellar()
+        if(active_room == "dungeon"):
+            dungeon()
+        if(active_room == "skeleton cave"):
+            skeleton_cave()
+        if(active_room == "village"):
+            village()
+        if(active_room == "cemetary"):
+            cemetary()
+        if(active_room == "church"):
+            church()
+        if(active_room == "marketplace"):
+            marketplace()
+        if(active_room == "blacksmith"):
+            blacksmith()
+        if(active_room == "shop"):
+            shop()
+        if(active_room == "castle"):
+            castle()
+        if(active_room == "shangri-la"):
+            if(dragox_death):
+                romox_battle()
+            elif(romox_death):
+                fencor_battle()
+            else:
+                shangri_la()
+        
+        ##The following is used for testing purposes
+        #print(player)
+        #print(player_gold)
+        #print(skeletonKing_death)
+        #print(dragon_death)
+        #print(umari_inventory)
+        #print(scepter_inventory)
+        #print(dSword_inventory)
+        #print(krambit_inventory)
+        #print(handcannon_inventory)
+        #print(crossbow_inventory)
+        #print(bow_inventory)
+        #print(heavySword_inventory)
+        #print(sword_inventory)
+        #print(dagger_inventory)
+        #print(rock_inventory)     
