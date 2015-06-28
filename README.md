@@ -1,4 +1,4 @@
 # Hjalmion-The-Rise-Of-Fencor
 My repository for my self made text-based adventure game, Hjalmion: The Rise Of Fencor, made in Python 3.X
 
-I made this game by myself (well, I had input from other people but I am the only one as of me creating this repository that has actually coded any of it. Feel free to send some ideas in and if I like them I'll add them. Let's make this a well known game! 
+This game has been coded by by me, Knifesurge. If you have any requests on new things to put in or possibly enhancing existing code, please let me know! I am always available at carlos94563@gmail.com! 
