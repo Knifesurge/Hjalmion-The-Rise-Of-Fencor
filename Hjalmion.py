@@ -70,7 +70,7 @@ triforce_inventory = False
 
 #Create all the Items in the game
 potion = items.Potion()
-potion_inventory = 0 #Keeps track of how many Potions the player has
+potion_inventory = 1 #Keeps track of how many Potions the player has
 life_potion = items.LifePotion()
 lifePotion_inventory = 0 #Keeps track of how many Life Potions the player has
 full_potion = items.FullPotion()
@@ -2071,7 +2071,7 @@ def battle(player, enemy): #Battle function
             if(potion_inventory or lifePotion_inventory or fullPotion_inventory):
                 choice = 7
                 while (choice != "a" and choice != "f" and player.is_alive):
-                    choice = input("\n\nDo you want to (A)ttack, use a (P)otion or (F)lee?(Enemy Hp: {}) ".format(enemy.hp)).lower()
+                    choice = input("\n\nDo you want to (A)ttack, use a (P)otion or (F)lee?(Enemy Hp: {})(Player HP: {}) ".format(enemy.hp, player.hp)).lower()
                     if (choice == "i"):
                         view_inventory()
                     if (choice == "a"):
@@ -2220,7 +2220,7 @@ def battle(player, enemy): #Battle function
             elif(not potion_inventory and not lifePotion_inventory and not fullPotion_inventory):
                 choice = 7
                 while (choice != "a" and choice != "f" and player.is_alive):
-                    choice = input("\n\nDo you want to (A)ttack or (F)lee?(Enemy Hp: {}) ".format(enemy.hp)).lower()
+                    choice = input("\n\nDo you want to (A)ttack or (F)lee?(Enemy Hp: {})(Player HP: {}) ".format(enemy.hp, player.hp)).lower()
                     if (choice == "i"):
                         view_inventory()
                     if (choice == "a"):
@@ -2287,7 +2287,7 @@ def battle(player, enemy): #Battle function
             if(potion_inventory or fullPotion_inventory or lifePotion_inventory):
                 choice = 7
                 while (choice != "a" and player.is_alive):
-                    choice = input("\n\nDo you want to (A)ttack or use a (P)otion?(Enemy Hp: {}) ".format(enemy.hp)).lower()
+                    choice = input("\n\nDo you want to (A)ttack or use a (P)otion?(Enemy Hp: {})(Player HP: {}) ".format(enemy.hp, player.hp)).lower()
                     if (choice == "a"):
                         if (chance.chance(50)): #Adds the chance to do a critical hit
                             damage = max_dmg
@@ -2416,7 +2416,7 @@ def battle(player, enemy): #Battle function
             elif(not potion_inventory and not lifePotion_inventory and not fullPotion_inventory):
                 choice = 7
                 while (choice != "a" and player.is_alive):
-                    choice = input("\n\nDo you want to (A)ttack?(Enemy Hp: {}) ".format(enemy.hp)).lower()
+                    choice = input("\n\nDo you want to (A)ttack?(Enemy Hp: {})(Player HP: {}) ".format(enemy.hp, player.hp)).lower()
                     if (choice == "i"):
                         view_inventory()
                     if (choice == "a"):
