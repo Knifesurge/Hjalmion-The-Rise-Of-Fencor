@@ -23,7 +23,9 @@ zombie = enemies.Zombie()
 dragon = enemies.Dragon()
 dragon_death = False
 dragox = enemies.Dragox()
+dragox_death = False
 romox = enemies.Romox()
+romox_death = False
 fencor = enemies.Fencor()
 
 #Create all Weapons *Highest Damage to Lowest Damage*
@@ -2467,6 +2469,15 @@ def battle(player, enemy): #Battle function
                                 player.hp -= enemy.damage #Enemy attacks (the amount of damage the enemy does is subtracted from the amount of hp the player has
                                 print("\n{} hits you for {} damage! You have {} hp left!".format(enemy.name, enemy.damage, player.hp))
         
+def romox_battle():
+    pass
+
+def dragox_battle():
+    pass
+
+def fencor_battle():
+    pass
+
 def view_inventory(): #When called prints whatever is in the player's inventory
     if(umari_inventory):
         print(fencor_umari)
@@ -2765,6 +2776,8 @@ def load_game():
         
     #All variables that could have been changed during the course of play
     global player
+    global dragox_death
+    global romox_death
     global player_gold
     global skeletonKing_death
     global dragon_death
