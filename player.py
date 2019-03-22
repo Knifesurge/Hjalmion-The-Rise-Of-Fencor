@@ -1,6 +1,6 @@
 #Nick Mills
 
-class player():
+class Player():
     def __init__(self, hp, max_hp, level, xp, xp_to_level, victory):
         self.hp = hp
         self.max_hp = max_hp
