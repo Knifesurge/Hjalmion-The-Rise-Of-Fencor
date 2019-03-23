@@ -5,7 +5,7 @@ This game has been coded by me, Knifesurge. If you have any requests on new thin
 
 # Updates
 ## (2019-03-22)
-I have decided to do something new with this project since it has been sitting idle for the last ~~ ~3 ~~ __5__ years.
+I have decided to do something new with this project since it has been sitting idle for the last ~~3~~ __5__ years.
 
 I am going to be rewriting the vast majority of the codebase. This should help clean up the project and reduce the amount of lines the main file (Hjalmion.py) has (currently almost 3k lines!).
 
