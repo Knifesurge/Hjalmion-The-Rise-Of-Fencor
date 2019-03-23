@@ -8,28 +8,28 @@ from chance import chance
 from enemies import *
 from items import *
 from player import Player
+from Room import Rooms
 
 class Hjalmion():
     def __init__(self):
         """ Room creation """
-        rooms = {}
+        self.rooms = Rooms()
 
         """ Player and Enemy creation """
-        player = Player(100, 100, 1, 0, 100)
-        enemies = {} # Dictionary of enemies
+        self.player = Player(100, 100, 1, 0, 100)
+        self.enemies = {} # Dictionary of enemies
 
         # CREATE ENEMIES
 
         """ Item creation """
-        items = {}
+        self.items = {}
 
         # CREATE ITEMS
 
         # CREATE KEYITEMS
 
 
-
-    def show_graphic():
+    def show_graphic(self):
 
         print("\n\n")
         print("                                  ]=|==||==|=[")
@@ -52,7 +52,7 @@ class Hjalmion():
         print("\nWelcome to Hjalmion: The Rise of Fencor...")
         input("\n\tPress enter: ")
 
-    def intro():
+    def intro(self):
         print("\n\nYou wake up in a meadow. You know nothing except your heritage: You are the son of Dragox, son of Romox.")
         time.sleep(4)
         print("\nYour father was a great king, the greatest of his generation. He ruled for 700 years. Your family has always been kings and queens of the land.")

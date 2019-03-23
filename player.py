@@ -1,4 +1,6 @@
-#Nick Mills
+# Nick Mills
+# Created:
+# Updated: 2019-03-22
 
 class Player():
     def __init__(self, hp, max_hp, level, xp, xp_to_level):

@@ -1,4 +1,6 @@
 #Nick Mills
+# Created: 2015-05-18
+# Updated: 2015-10-13
 """Hjalmion: The Rise of Fencor"""
 import time, random #Imports libraries for use
 import chance, enemies, items, player #Imports other modules used to run the game
@@ -79,7 +81,7 @@ fullPotion_inventory = 0 #Keeps track of how many Full Potions the player has
 #Other variables
 skeletonCaveRoom_active = False
 best_weapon = None
-counter = 0 #Used for Village to make sure the Player can pick up the gold only once
+village_gold = 0 #Used for Village to make sure the Player can pick up the gold only once
 flag = True #Used for Forest
 flag1 = True #Used for House
 flag2 = True #Used for Cave
@@ -1386,12 +1388,12 @@ def village():
     global jewelEgg_inventory
     global legendarySword_inventory
     global triforce_inventory
-    global counter
+    global village_gold
     global village_counter
     global gameOver
     global active_room
     active_room = "village"
-    if(counter == 0):
+    if(village_gold == 0):
         print("\nYou enter a small village. The people seem friendly, and all say \"hello\" to you, regardless of you being a stranger. You see a cemetary to the South, a church to the South East, the marketplace is to the East and the meadow to the West. You see some gold on the ground.")
         choice = 7
         while(choice != "y" and choice != "n"):
@@ -1399,12 +1401,12 @@ def village():
             if(choice == "y"):
                 print("You pick up the 10 Gold!")
                 player_gold += 10
-                counter += 1
+                village_gold += 1
             elif(choice == "n"):
                 print("Not sure why, but you do not pick up the gold!")
             else:
                 print("Please enter a valid input!")
-    elif(counter >= 1):
+    elif(village_gold >= 1):
         print("\nYou enter a small village. The people seem friendly, and all say \"hello\" to you, regardless of you being a stranger. You see a cemetary to the South, a church to the South East, the marketplace is to the East and the meadow to the West.")
     if(gameOver):
         raise SystemExit
@@ -2664,7 +2666,7 @@ def save_game(): #Saves the current game state to be loaded from a file later
     global potion_inventory
     global lifePotion_inventory
     global fullPotion_inventory    
-    global counter
+    global village_gold
     global flag
     global flag1
     global flag2
@@ -2733,7 +2735,7 @@ def save_game(): #Saves the current game state to be loaded from a file later
         pickle.dump(potion_inventory, outfile)
         pickle.dump(lifePotion_inventory, outfile)
         pickle.dump(fullPotion_inventory, outfile)
-        pickle.dump(counter, outfile)
+        pickle.dump(village_gold, outfile)
         pickle.dump(flag, outfile)
         pickle.dump(flag1, outfile)
         pickle.dump(flag2, outfile)
@@ -2791,7 +2793,7 @@ def load_game():
     global potion_inventory
     global lifePotion_inventory
     global fullPotion_inventory    
-    global counter
+    global village_gold
     global flag
     global flag1
     global flag2
@@ -2845,7 +2847,7 @@ def load_game():
         potion_inventory = pickle.load(infile)
         lifePotion_inventory = pickle.load(infile)
         fullPotion_inventory = pickle.load(infile)
-        counter = pickle.load(infile)
+        village_gold = pickle.load(infile)
         flag = pickle.load(infile)
         flag1 = pickle.load(infile)
         flag2 = pickle.load(infile)

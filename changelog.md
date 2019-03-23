@@ -7,6 +7,8 @@
 6. Added some helper methods to retrieve now 'private' attributes
 7. Exp needed to advance to next level now doubles each level
 8. Started fleshing out `Hjalmion_new.py`
-9. Added `Room.py` to describe the rooms in the game. Will be implemented as a Linked List, with N,E,S,W pointers to its adjacent rooms, effectively creating a map of the game world.
+9. Added `Rooms.py` to describe the rooms in the game. ~~Will be implemented as a Linked List~~ Does not make sense to use a linked list structure. Each room has N,NE,E,SE,S,SW,W,NW pointers to its adjacent rooms, effectively creating a map of the game world. One note however, is that it will not be possible to easily iterate through the list. One way to traverse is by historical addition to the list. That is, `Rooms` maintains a list (which acts like a set) of it's nodes in the order at which they are added, which allows it to be traversed in some way. 
 10. Rooms now hold what enemies are inside of the room. Added helper methods to get the list of Enemies themselves, as well as pick a random Enemy from the list.
 11. Rooms when printed now show what Rooms are adjacent to it, and which direction.
+12. Added a `Utils` module that holds various functions to read and write data from JSON files.
+13. Added *Created:* amd *Updated:* Comments at the head of each file in order to help track which files are new (part of the rewrite) and which are the original files (anything pre-2019)

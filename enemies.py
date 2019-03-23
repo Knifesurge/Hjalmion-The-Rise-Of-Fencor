@@ -1,4 +1,6 @@
 #Nick Mills
+# Created: 2015-05-18
+# Updated: 2015-10-13
 
 import random, chance, items
 
