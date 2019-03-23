@@ -1,0 +1,146 @@
+[
+    {
+        "name": "Rat",
+        "max_health": "5",
+        "base_dmg": "5",
+        "crit_mult": "1",
+        "xp_worth": "5",
+        "boss": "N"
+    },
+    {
+        "name": "Snake",
+        "max_health": "5",
+        "base_dmg": "5",
+        "crit_mult": "1",
+        "xp_worth": "5",
+        "boss": "N"
+    },
+    {
+        "name": "Bird",
+        "max_health": "12",
+        "base_dmg": "6",
+        "crit_mult": "1",
+        "xp_worth": "7",
+        "boss": "N"
+    },
+    {
+        "name": "Spider",
+        "max_health": "10",
+        "base_dmg": "5",
+        "crit_mult": "1",
+        "xp_worth": "10",
+        "boss": "N"
+    },
+    {
+        "name": "Giant Spider",
+        "max_health": "20",
+        "base_dmg": "10",
+        "crit_mult": "1",
+        "xp_worth": "25",
+        "boss": "N"
+    },
+    {
+        "name": "Skeleton",
+        "max_health": "50",
+        "base_dmg": "10",
+        "crit_mult": "1",
+        "xp_worth": "50",
+        "boss": "N"
+    },
+    {
+        "name": "Skeleton Archer",
+        "max_health": "45",
+        "base_dmg": "15",
+        "crit_mult": "1",
+        "xp_worth": "55",
+        "boss": "N"
+    },
+    {
+        "name": "Skeleton Knight",
+        "max_health": "90",
+        "base_dmg": "30",
+        "crit_mult": "1",
+        "xp_worth": "75",
+        "boss": "N"
+    },
+    {
+        "name": "Skeleton King",
+        "max_health": "200",
+        "base_dmg": "50",
+        "crit_mult": "1.5",
+        "xp_worth": "500",
+        "boss": "Y"
+    },
+    {
+        "name": "Wolf",
+        "max_health": "30",
+        "base_dmg": "10",
+        "crit_mult": "1",
+        "xp_worth": "20",
+        "boss": "N"
+    },
+    {
+        "name": "Dire Wolf",
+        "max_health": "50",
+        "base_dmg": "20",
+        "crit_mult": "1",
+        "xp_worth": "50",
+        "boss": "N"
+    },
+    {
+        "name": "Rabid Bunny",
+        "max_health": "10",
+        "base_dmg": "10",
+        "crit_mult": "1",
+        "xp_worth": "10",
+        "boss": "N"
+    },
+    {
+        "name": "Crazed Villager",
+        "max_health": "50",
+        "base_dmg": "10",
+        "crit_mult": "1",
+        "xp_worth": "30",
+        "boss": "N"
+    },
+    {
+        "name": "Zombie",
+        "max_health": "40",
+        "base_dmg": "30",
+        "crit_mult": "1",
+        "xp_worth": "40",
+        "boss": "N"
+    },
+    {
+        "name": "Dragon",
+        "max_health": "300",
+        "base_dmg": "70",
+        "crit_mult": "1.75",
+        "xp_worth": "700",
+        "boss": "Y"
+    },
+    {
+        "name": "Dragox",
+        "max_health": "500",
+        "base_dmg": "100",
+        "crit_mult": "2",
+        "xp_worth": "1000",
+        "boss": "Y"
+    },
+    {
+        "name": "Romox",
+        "max_health": "1500",
+        "base_dmg": "200",
+        "crit_mult": "2.5",
+        "xp_worth": "1000",
+        "boss": "Y"
+    },
+    {
+        "name": "Fencor",
+        "max_health": "2000",
+        "base_dmg": "500",
+        "crit_mult": "3",
+        "xp_worth": "2500",
+        "boss": "Y"
+    },
+]

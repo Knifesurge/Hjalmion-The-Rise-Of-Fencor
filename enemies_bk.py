@@ -17,7 +17,7 @@ class Enemy():
         return self.hp > 0
 
     @staticmethod
-    def create_from_filedata() -> list:
+    def create_from_filedata() -> list(Enemy):
         """
         ---------------------------------------------
         Creates a list of Enemies from the cached filedata 
@@ -30,14 +30,12 @@ class Enemy():
             enemies - list of Enemies created from cached 
                       filedata (list of Enemy)
         """
-        data = Utils.get_data()
-        enemies = []
+        data = Utils.getData()
         for d in data:
             # List is full of dicts
             for e, v in d.items():
                 # Now looping over dict items
-                name = ""
-        return enemies
+                
 
 class Boss(Enemy):
     """Base class for all Bosses"""
