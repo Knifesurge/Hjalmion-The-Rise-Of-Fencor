@@ -2,7 +2,11 @@
 # Created: 2015-05-18
 # Updated: 2015-05-21
 
-import random, enemies, chance, player
+import random
+
+from Player import Player
+from Chance import chance
+from Enemy import Enemy
 
 class Item():
     """Base class for all Items"""

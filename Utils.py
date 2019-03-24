@@ -26,8 +26,8 @@ class Utils():
         loaded = False
         with open(filename, 'r') as f:
             contents = json.load(f)
-            if contents not in data:
-                data.append(contents)
+            if contents not in Utils.data:
+                Utils.data.append(contents)
                 loaded = True
         return loaded
 
@@ -43,8 +43,9 @@ class Utils():
         Returns:
             data - A set of loaded file data (dict)
         """
-        return data
+        return Utils.data
 
+    @staticmethod
     def clear_data() -> None:
         """
         ---------------------------------------------
@@ -55,5 +56,5 @@ class Utils():
         Returns:
             None
         """
-        data.clear()
+        Utils.data.clear()
         return

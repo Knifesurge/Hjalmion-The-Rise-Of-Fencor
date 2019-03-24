@@ -1,20 +1,57 @@
 #Nick Mills
 # Created: 2015-05-18
-# Updated: 2015-10-13
+# Updated: 2019-03-23
 
-import random, chance, items, Utils
+import random
+from Chance import chance
+from Utils import Utils
 
 class Enemy():
     """Base class for all Enemies"""
-    def __init__(self, name, hp, max_hp, damage, xp):
+    def __init__(self, name:str, hp:int, \
+        dmg:int, crit:float, xp:int, boss:bool):
         self.name = name
-        self.hp = hp
-        self.max_hp = max_hp
-        self.damage = damage
+        self.max_hp = hp
+        self.hp = self.max_hp
+        self.damage = dmg
+        self.crit_mult = crit
         self.xp = xp
+        self.boss = boss
 
     def is_alive(self):
         return self.hp > 0
+
+    def __str__(self):
+        return """Name: {}
+        HP: {}/{}
+        Base Dmg: {}
+        Crit Mult: {}
+        XP Worth: {}
+        Boss? {}""".format(self.name, self.hp,\
+            self.max_hp, self.damage, self.crit_mult,\
+            self.xp, self.boss)
+
+    def attack(self, other):
+        """
+        Attacks another entity. This function directly
+        modifies the other entity's health.
+        Use dmg, crit = enemy.attack(other)
+        Parameters:
+            other - The entity to attack
+        Returns:
+            damage - The damage dealt to the entity (float)
+            crit - Whether the attack dealth crit dmg (bool)
+        """
+        if self.crit_mult != 1:
+            if chance(20):
+                crit = True
+                damage = self.damage * self.crit_mult
+            crit = False
+        else:
+            crit = False
+            damage = self.damage
+        other.deal_damage(damage)
+        return damage, crit
 
     @staticmethod
     def create_from_filedata() -> list:
@@ -33,18 +70,29 @@ class Enemy():
         data = Utils.get_data()
         enemies = []
         for d in data:
-            # List is full of dicts
-            for e, v in d.items():
-                # Now looping over dict items
-                name = ""
+            # data is a list of dicts
+            #print("D: {}".format(type(d)))
+            for l in d:
+                # l is each dict in data
+                #print("L: {}".format(type(l)))
+                #print(l)
+                #print("Vals: {}".format(l.values()))
+                name = l['name']
+                health = int(l['max_health'])
+                dmg = int(l['base_dmg'])
+                crit = float(l['crit_mult'])
+                xp = int(l['xp_worth'])
+                boss = "Yes" if l['boss'] == "Y" else "No"
+                enemy = Enemy(name, health, dmg, \
+                    crit, xp, boss)
+                enemies.append(enemy)
         return enemies
 
 class Boss(Enemy):
     """Base class for all Bosses"""
     def critical_attack(self):
         critdmg = self.damage * 2
-        chance()
-        if (chance <= 70):
+        if (chance.chance(70)):
             return("{} hit you for a critical of {} damage!".format(self.name, self.critdmg))
         else:
             return("{} tried to critical hit you for {} damage, but failed".format(self.name, self.critdmg))

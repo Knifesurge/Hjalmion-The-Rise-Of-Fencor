@@ -14,3 +14,8 @@
 13. Added *Created:* amd *Updated:* Comments at the head of each file in order to help track which files are new (part of the rewrite) and which are the original files (anything pre-2019)
 14. Added a `data` folder that will hold all the json files for the game.
 15. Created a `Enemies.json` file that holds all of the Enemies currently in the game. The layout in the file is the current standard for how to lay out the file and each Enemy's values.
+
+# 2019-03-23:
+1. Finished `Enemy#create_from_filedata`. Correctly creates enemies based on filedata.
+2. Moved `Tests.py` to the main folder (instead of inside a tests folder) to test various aspects of the rewrite. Also added to .gitignore
+3. Renamed `enemies.py` to `Enemy.py`. Used same format for `chance`, `items`, and `player`.
