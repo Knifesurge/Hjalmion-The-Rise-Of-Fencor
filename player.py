@@ -21,7 +21,7 @@ class Player():
     def inventory(self):
         return self.__inventory
 
-    def levelUp(self):
+    def level_up(self):
             self.__level += 1
             self.__hp = 100
             self.__max_hp = self.__hp * 1.10

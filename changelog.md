@@ -19,3 +19,9 @@
 1. Finished `Enemy#create_from_filedata`. Correctly creates enemies based on filedata.
 2. Moved `Tests.py` to the main folder (instead of inside a tests folder) to test various aspects of the rewrite. Also added to .gitignore
 3. Renamed `enemies.py` to `Enemy.py`. Used same format for `chance`, `items`, and `player`.
+
+# 2019-03-24
+1. Finished `Item#create_from_filedata`. Correctly creates items based on filedata.
+2. Removed all `Item` definitions. Items created from filedata and used from lists inside the `Hjalmion` class.
+3. Added __all__ Items to `Items.json`.
+4. `Tests.py` now loads and prints enemies and items from filedata.

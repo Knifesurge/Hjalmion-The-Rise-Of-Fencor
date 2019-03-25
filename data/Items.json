@@ -1,0 +1,142 @@
+[
+    {
+        "Weapons": [
+            {
+                "name": "Rock",
+                "description": "A sizeable rock that can easily smash someone's skull in.",
+                "value": 0,
+                "damage": 5
+            },
+            {
+                "name": "Dagger",
+                "description": "A shiny dagger with some rust. Somewhat more dangerous than a rock.",
+                "value": 10,
+                "damage": 10
+            },
+            {
+                "name": "Sword",
+                "description": "An average sized sword. Deadly in the hands of a swordsman.",
+                "value": 15,
+                "damage": 20
+            },
+            {
+                "name": "Heavy Sword",
+                "description": "A large sword that requires two hands to swing",
+                "value": 20,
+                "damage": 25
+            },
+            {
+                "name": "Bow",
+                "description": "A huntsman's bow. Deadly at a range, useless at point blank.",
+                "value": 15,
+                "damage": 25
+            },
+            {
+                "name": "Crossbow",
+                "description": "Two handed crossbow. Deadly at all ranges. More effective at a larger range than a huntsman's bow.",
+                "value": 20,
+                "damage": 30
+            },
+            {
+                "name": "Handcannon",
+                "description": "A cannon that fits in your hand. Deadly. End. Of. Story.",
+                "value": 50,
+                "damage": 50
+            },
+            {
+                "name": "Krambit",
+                "description": "Small knife with a curved edge. Worth $262 with no skins. Lots of skins available. \"Such skins, very wow\"",
+                "value": 262,
+                "damage": 70
+            }
+        ],
+        "Super Weapons": [
+            {
+                "name": "Sword of Dragox",
+                "description": "The sword of your father, Dragox. It hums with a mystical energy.",
+                "value": 1000,
+                "damage": 100,
+                "bonus_damage": 50
+            },
+            {
+                "name": "Scepter of Romox",
+                "description": "The scepter of your father's father, Romox. Drips with poison.",
+                "value": 2500,
+                "damage": 200,
+                "bonus_damage": 150
+            },
+            {
+                "name": "Umari of Fencor",
+                "description": "The umari of your uncle, Fencor. It is a whip with small daggers at the ends that is covered in blood. Hard to master.",
+                "value": 10000,
+                "damage": 500,
+                "bonus_damage": 400
+            }
+        ],
+        "Healers": [
+            {
+                "name": "Potion",
+                "description": "A red potion that heals 50 hp. Single-Use only.",
+                "value": 15,
+                "healing": 50,
+                "life_increase": 0
+            },
+            {
+                "name": "Full Potion",
+                "description": "A orange potion that heals you to max hp! Single-Use only.",
+                "value": 40,
+                "healing": 0,
+                "life_increase": 0
+            },
+            {
+                "name": "Life Potion",
+                "description": "A potion with a gold color. Increases HP by 100.",
+                "value": 50,
+                "healing": 0,
+                "life_increase": 100
+            }
+        ],
+        "Key Items": [
+            {
+                "name": "Cellar Key",
+                "description": "A small key to unlock a cellar.",
+                "value": 0
+            },
+            {
+                "name": "Torch",
+                "description": "A torch that lets you see in the dark. Somehow does not burn out.",
+                "value": 0
+            },
+            {
+                "name": "Book",
+                "description": "A book named \"The History of the Skeleton King\". Of no use to you.",
+                "value": 0
+            },
+            {
+                "name": "Great Oak Key",
+                "description": "A large diamond key that has a picture of the Great Oak on it.",
+                "value": 0
+            },
+            {
+                "name": "Note",
+                "description": "A note from your father. He hints about a Great Tree you where to find something that someone is missing. \"It is vitally important\" He explains.",
+                "value": 0
+            },
+            {
+                "name": "Jewel Egg",
+                "description": "A jewel-encrested egg. Surprisingly heavy for how small it is.",
+                "value": 0
+            },
+            {
+                "name": "Legendary Sword",
+                "description": "The sword of legend. Legend has it that when put through something into a hidden key hole, the passage to Shangri-La will be opened",
+                "value": 0
+            },
+            {
+                "name": "TriForce",
+                "description": "A triangle seperated by smaller triangles. The triangle in the middle is missing however, so there is a hole in it.",
+                "value": 0
+            }
+        ]
+    }
+]

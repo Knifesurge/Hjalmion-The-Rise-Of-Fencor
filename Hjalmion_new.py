@@ -4,20 +4,27 @@
 """ Hjalmion: The Rise of Fencor """
 import time, random
 
-from chance import chance
-from enemies import *
-from items import *
-from player import Player
+from Chance import chance
+from Enemy import Enemy
+from Item import Item
+from Player import Player
 from Room import Rooms
+from Utils import Utils
 
 class Hjalmion():
+    DATA_REL_PATH = 'data/'
+    ENEMY_REL_PATH = DATA_REL_PATH + 'Enemies.json'
+    ITEM_REL_PATH = DATA_REL_PATH + 'Items.json'
+    ROOM_REL_PATH = DATA_REL_PATH + 'Rooms.json'
+
     def __init__(self):
         """ Room creation """
         self.rooms = Rooms()
-
+        
         """ Player and Enemy creation """
         self.player = Player(100, 100, 1, 0, 100)
-        self.enemies = {} # Dictionary of enemies
+        Utils.read_json(self.ENEMY_REL_PATH)
+        self.enemies = Enemy.create_from_filedata()
 
         # CREATE ENEMIES
 

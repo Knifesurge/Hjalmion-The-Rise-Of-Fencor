@@ -1,6 +1,6 @@
 #Nick Mills
 # Created: 2015-05-18
-# Updated: 2019-03-23
+# Updated: 2019-03-24
 
 import random
 from Chance import chance
@@ -19,6 +19,17 @@ class Enemy():
         self.boss = boss
 
     def is_alive(self):
+        """
+        Returns whether this entity has more than 
+        0 health
+        Use: alive = enemy.is_alive()
+
+        Parameters:
+            None
+        Returns:
+            alive - Whether this entity has more than 
+                    0 health (bool)
+        """
         return self.hp > 0
 
     def __str__(self):
@@ -33,14 +44,17 @@ class Enemy():
 
     def attack(self, other):
         """
+        ---------------------------------------------
         Attacks another entity. This function directly
         modifies the other entity's health.
         Use dmg, crit = enemy.attack(other)
+        ---------------------------------------------
         Parameters:
             other - The entity to attack
         Returns:
             damage - The damage dealt to the entity (float)
             crit - Whether the attack dealth crit dmg (bool)
+        ---------------------------------------------
         """
         if self.crit_mult != 1:
             if chance(20):
@@ -66,33 +80,37 @@ class Enemy():
         Returns:
             enemies - list of Enemies created from cached 
                       filedata (list of Enemy)
+        ---------------------------------------------
         """
         data = Utils.get_data()
         enemies = []
-        for d in data:
+        for i in range(len(data)):
             # data is a list of dicts
             #print("D: {}".format(type(d)))
-            for l in d:
-                # l is each dict in data
-                #print("L: {}".format(type(l)))
-                #print(l)
-                #print("Vals: {}".format(l.values()))
-                name = l['name']
-                health = int(l['max_health'])
-                dmg = int(l['base_dmg'])
-                crit = float(l['crit_mult'])
-                xp = int(l['xp_worth'])
-                boss = "Yes" if l['boss'] == "Y" else "No"
-                enemy = Enemy(name, health, dmg, \
-                    crit, xp, boss)
-                enemies.append(enemy)
+            _dict = data[i]
+            if _dict is not None:
+                for j in range(len(_dict)):
+                        # l is each dict in data
+                        l = _dict[j]
+                        #print("L: {}".format(type(l)))
+                        #print(l)
+                        #print("Vals: {}".format(l.values()))
+                        name = l['name']
+                        health = l['max_health']
+                        dmg = l['base_dmg']
+                        crit = float(l['crit_mult'])
+                        xp = l['xp_worth']
+                        boss = l['boss'] == 'Y'
+                        enemy = Enemy(name, health, dmg, \
+                            crit, xp, boss)
+                        enemies.append(enemy)
         return enemies
 
 class Boss(Enemy):
     """Base class for all Bosses"""
     def critical_attack(self):
         critdmg = self.damage * 2
-        if (chance.chance(70)):
+        if (chance(70)):
             return("{} hit you for a critical of {} damage!".format(self.name, self.critdmg))
         else:
             return("{} tried to critical hit you for {} damage, but failed".format(self.name, self.critdmg))

@@ -14,7 +14,9 @@ class Utils():
     def read_json(filename : str) -> bool:
         """
         ---------------------------------------------
-        Reads JSON data from a file.
+        Reads JSON data from a file. Separate calls 
+        to this function add None to the end of the 
+        data to allow separation of the loaded data.
         Use: loaded = read_json(filename)
         ---------------------------------------------
         Parameters:
@@ -22,6 +24,7 @@ class Utils():
         Returns:
             loaded - Whether the file data was successfully inserted
                     into the data cache (bool)
+        ---------------------------------------------
         """
         loaded = False
         with open(filename, 'r') as f:
@@ -29,6 +32,7 @@ class Utils():
             if contents not in Utils.data:
                 Utils.data.append(contents)
                 loaded = True
+                Utils.data.append(None)
         return loaded
 
     @staticmethod
@@ -42,6 +46,7 @@ class Utils():
             None
         Returns:
             data - A set of loaded file data (dict)
+        ---------------------------------------------
         """
         return Utils.data
 
@@ -55,6 +60,7 @@ class Utils():
             None
         Returns:
             None
+        ---------------------------------------------
         """
         Utils.data.clear()
         return
