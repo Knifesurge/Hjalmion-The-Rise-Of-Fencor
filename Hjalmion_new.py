@@ -26,16 +26,16 @@ class Hjalmion():
         Utils.read_json(self.ENEMY_REL_PATH)
         self.enemies = Enemy.create_from_filedata()
 
-        # CREATE ENEMIES
-
         """ Item creation """
-        self.items = {}
-
+        Utils.read_json(self.ITEM_REL_PATH)
+        self.items = Item.create_from_filedata()
         # CREATE ITEMS
 
-        # CREATE KEYITEMS
+    def get_enemy(self, name : str) -> Enemy:
+        """
+        """
 
-
+        return self.enemies[name]
     def show_graphic(self):
 
         print("\n\n")

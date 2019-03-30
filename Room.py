@@ -6,11 +6,14 @@ from random import randint
 
 class _Room():
     def __init__(self, name="Unnamed Room",\
-        description="No description given",enemies=[],\
-        adj={}):
+        description="No description given",dependencies=[],\
+        enemies=[],adj={}):
         self.__description = description
+        self.__dependencies = dependencies
         self.__enemies = enemies
-        keys = adj.keys()
+        # Dict of adjacent rooms
+        adjacent_rooms = adj['adjacent']
+        keys = adjacent_rooms.keys()
         self.__north = adj['n'] if 'n' in keys else None
         self.__south = adj['s'] if 's' in keys else None
         self.__east = adj['e'] if 'e' in keys else None
@@ -43,6 +46,7 @@ class _Room():
         {}\t{}
         {}\t{}""".format(self.__description, self.__north, \
             self.__east, self.__west, self.__south)
+
 class Rooms():
     def __init__(self):
         self.__first = None
@@ -54,8 +58,7 @@ class Rooms():
         """
         """
         new_node = _Room(data['name'], data['desc'], \
-                data['enem'], data['N'], data['S'], data['E'], \
-                data['W'])
+                data['enem'], data['rooms'])
         if self.__first is None:
             self.__first = new_node
             self.__last = new_node

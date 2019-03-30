@@ -25,3 +25,14 @@
 2. Removed all `Item` definitions. Items created from filedata and used from lists inside the `Hjalmion` class.
 3. Added __all__ Items to `Items.json`.
 4. `Tests.py` now loads and prints enemies and items from filedata.
+
+# 2019-03-27
+1. `Utils#read_json` appends `None` to the end of the data cache after reading a file to separate the data. Added this in a previous update but forgot to mention it.
+2. Added `Rooms.json` and the general format that the Rooms will follow.
+3. Adjusted some of the `_Room` constructor code to follow the `Rooms.json` format.
+4. Fixed `Rooms#insert` after changing the `_Room` constructor parameters.
+
+# 2019-03-29
+1. Started adding the `Room` definitions into `Rooms.json`.
+2. Added `Ideas.txt` to track ideas and possible TODOs.
+3. Added *dependencies* to the `Room` definitions. This will be a `list` of `Items` or `Conditions` in order to *access* the `Room` or to get a different *description*.

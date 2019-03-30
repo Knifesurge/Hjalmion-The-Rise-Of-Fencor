@@ -1,0 +1,404 @@
+[
+    {
+        "name": "Meadow",
+        "dependencies": {
+            "items": [],
+            "bool": {"dragon": "dead"}
+        },
+        "description": "",
+        "enemies": [
+
+        ],
+        "adjacent": {
+            "n": "",
+            "s": "",
+            "e": "",
+            "w": "",
+            "ne": "",
+            "se": "",
+            "sw": "",
+            "nw": ""
+        }
+    },
+    {
+        "name": "Great Oak",
+        "description": "",
+        "dependencies": [
+
+        ],
+        "enemies": [
+
+        ],
+        "adjacent": {
+            "n": "",
+            "s": "",
+            "e": "",
+            "w": "",
+            "ne": "",
+            "se": "",
+            "sw": "",
+            "nw": ""
+        }
+    },
+    {
+        "name": "House",
+        "description": "",
+        "dependencies": [
+
+        ],
+        "enemies": [
+
+        ],
+        "adjacent": {
+            "n": "",
+            "s": "",
+            "e": "",
+            "w": "",
+            "ne": "",
+            "se": "",
+            "sw": "",
+            "nw": ""
+        }
+    },
+    {
+        "name": "Cellar",
+        "description": "",
+        "dependencies": [
+
+        ],
+        "enemies": [
+
+        ],
+        "adjacent": {
+            "n": "",
+            "s": "",
+            "e": "",
+            "w": "",
+            "ne": "",
+            "se": "",
+            "sw": "",
+            "nw": ""
+        }
+    },
+    {
+        "name": "Dungeon",
+        "description": "",
+        "dependencies": [
+
+        ],
+        "enemies": [
+
+        ],
+        "adjacent": {
+            "n": "",
+            "s": "",
+            "e": "",
+            "w": "",
+            "ne": "",
+            "se": "",
+            "sw": "",
+            "nw": ""
+        }
+    },
+    {
+        "name": "Skeleton Cave",
+        "description": "",
+        "dependencies": [
+
+        ],
+        "enemies": [
+
+        ],
+        "adjacent": {
+            "n": "",
+            "s": "",
+            "e": "",
+            "w": "",
+            "ne": "",
+            "se": "",
+            "sw": "",
+            "nw": ""
+        }
+    },
+    {
+        "name": "Cliffside",
+        "description": "",
+        "dependencies": [
+
+        ],
+        "enemies": [
+
+        ],
+        "adjacent": {
+            "n": "",
+            "s": "",
+            "e": "",
+            "w": "",
+            "ne": "",
+            "se": "",
+            "sw": "",
+            "nw": ""
+        }
+    },
+    {
+        "name": "Dead End Valley",
+        "description": "",
+        "dependencies": [
+
+        ],
+        "enemies": [
+
+        ],
+        "adjacent": {
+            "n": "",
+            "s": "",
+            "e": "",
+            "w": "",
+            "ne": "",
+            "se": "",
+            "sw": "",
+            "nw": ""
+        }
+    },
+    {
+        "name": "Forest",
+        "description": "",
+        "dependencies": [
+
+        ],
+        "enemies": [
+
+        ],
+        "adjacent": {
+            "n": "",
+            "s": "",
+            "e": "",
+            "w": "",
+            "ne": "",
+            "se": "",
+            "sw": "",
+            "nw": ""
+        }
+    },
+    {
+        "name": "Cave",
+        "description": "",
+        "dependencies": [
+
+        ],
+        "enemies": [
+
+        ],
+        "adjacent": {
+            "n": "",
+            "s": "",
+            "e": "",
+            "w": "",
+            "ne": "",
+            "se": "",
+            "sw": "",
+            "nw": ""
+        }
+    },
+    {
+        "name": "Secret Passage",
+        "description": "",
+        "dependencies": [
+
+        ],
+        "enemies": [
+
+        ],
+        "adjacent": {
+            "n": "",
+            "s": "",
+            "e": "",
+            "w": "",
+            "ne": "",
+            "se": "",
+            "sw": "",
+            "nw": ""
+        }
+    },
+    {
+        "name": "Dragon's Lair",
+        "description": "",
+        "dependencies": [
+
+        ],
+        "enemies": [
+
+        ],
+        "adjacent": {
+            "n": "",
+            "s": "",
+            "e": "",
+            "w": "",
+            "ne": "",
+            "se": "",
+            "sw": "",
+            "nw": ""
+        }
+    },
+    {
+        "name": "Village",
+        "description": "",
+        "dependencies": [
+
+        ],
+        "enemies": [
+
+        ],
+        "adjacent": {
+            "n": "",
+            "s": "",
+            "e": "",
+            "w": "",
+            "ne": "",
+            "se": "",
+            "sw": "",
+            "nw": ""
+        }
+    },
+    {
+        "name": "Church",
+        "description": "",
+        "dependencies": [
+
+        ],
+        "enemies": [
+
+        ],
+        "adjacent": {
+            "n": "",
+            "s": "",
+            "e": "",
+            "w": "",
+            "ne": "",
+            "se": "",
+            "sw": "",
+            "nw": ""
+        }
+    },
+    {
+        "name": "Cemetary",
+        "description": "",
+        "dependencies": [
+
+        ],
+        "enemies": [
+
+        ],
+        "adjacent": {
+            "n": "",
+            "s": "",
+            "e": "",
+            "w": "",
+            "ne": "",
+            "se": "",
+            "sw": "",
+            "nw": ""
+        }
+    },
+    {
+        "name": "Marketplace",
+        "description": "",
+        "dependencies": [
+
+        ],
+        "enemies": [
+
+        ],
+        "adjacent": {
+            "n": "",
+            "s": "",
+            "e": "",
+            "w": "",
+            "ne": "",
+            "se": "",
+            "sw": "",
+            "nw": ""
+        }
+    },
+    {
+        "name": "Blacksmith",
+        "description": "",
+        "dependencies": [
+
+        ],
+        "enemies": [
+
+        ],
+        "adjacent": {
+            "n": "",
+            "s": "",
+            "e": "",
+            "w": "",
+            "ne": "",
+            "se": "",
+            "sw": "",
+            "nw": ""
+        }
+    },
+    {
+        "name": "Shop",
+        "description": "",
+        "dependencies": [
+
+        ],
+        "enemies": [
+
+        ],
+        "adjacent": {
+            "n": "",
+            "s": "",
+            "e": "",
+            "w": "",
+            "ne": "",
+            "se": "",
+            "sw": "",
+            "nw": ""
+        }
+    },
+    {
+        "name": "Castle",
+        "description": "",
+        "dependencies": [
+
+        ],
+        "enemies": [
+
+        ],
+        "adjacent": {
+            "n": "",
+            "s": "",
+            "e": "",
+            "w": "",
+            "ne": "",
+            "se": "",
+            "sw": "",
+            "nw": ""
+        }
+    },
+    {
+        "name": "Shangri-La",
+        "description": "",
+        "dependencies": {
+            "items": [],
+            "bool": []
+        },
+        "enemies": [
+
+        ],
+        "adjacent": {
+            "n": "",
+            "s": "",
+            "e": "",
+            "w": "",
+            "ne": "",
+            "se": "",
+            "sw": "",
+            "nw": ""
+        }
+    }
+]
