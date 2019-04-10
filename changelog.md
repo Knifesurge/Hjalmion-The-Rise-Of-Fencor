@@ -36,3 +36,13 @@
 1. Started adding the `Room` definitions into `Rooms.json`.
 2. Added `Ideas.txt` to track ideas and possible TODOs.
 3. Added *dependencies* to the `Room` definitions. This will be a `list` of `Items` or `Conditions` in order to *access* the `Room` or to get a different *description*.
+
+# 2019-04-10
+1. Removed `victory` variable from `Player` since its not used.
+2. Room movement will be handled by the `Player` class via a method named `move_room(dir:str)`. `Player#move_room` takes a char (str) as an argument, `dir`, representing the direction the Player should move. If a `Room` doesn't exist in that direction, `False` is returned and the `Player` is not moved.
+3. `Rooms` is no longer a `Linked List` under the hood; it doesn't need it. Now just maintains a Python `List` of `Rooms`.
+4. `Room` now properly prints its adjacent `Rooms` in its `__str__` method.
+5. Added a `get_room_in_dir` method to `Room`, which gets an adjacent `Room` in a specified `dir` (str). If an invalid direction is provided, just returns itself.
+6. ~~Cleaned up `Room#north`, `Room#south`, etc. Since in `_Room#__init__` it only adds rooms if they are not empty in `Rooms.json`, there is no need to check if it exists in `Room#__adj`, since it most certainly does.~~ Still needs it.
+7. `Room#this` created as a helper function to `Room#get_room_in_dir` since it returns a function call.
+8. Made a `docs` folder to hold related documentation for the `JSON` files for `Rooms`, `Enemies`, and `Items`.

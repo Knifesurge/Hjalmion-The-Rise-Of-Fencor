@@ -1,38 +1,39 @@
 [
     {
         "name": "Meadow",
+        "description": "You are in a beautiful meadow. You see a deer leap through the grass in the distance.\nYou see a house to the North West, a forest to the South, the Great Oak to the West, a small village with a castle in the East,\nand a cliffside to the North.",
         "dependencies": {
             "items": [],
-            "bool": {"dragon": "dead"}
+            "enemies": []
         },
-        "description": "",
-        "enemies": [
-
-        ],
+        "enemies": ["Snake"],
         "adjacent": {
-            "n": "",
-            "s": "",
-            "e": "",
-            "w": "",
+            "n": "Cliffside",
+            "s": "Forest",
+            "e": "Village",
+            "w": "Great Oak",
             "ne": "",
             "se": "",
             "sw": "",
-            "nw": ""
+            "nw": "House"
         }
     },
     {
         "name": "Great Oak",
         "description": "",
-        "dependencies": [
-
-        ],
-        "enemies": [
-
-        ],
+        "items": {
+            "Jewel Egg": "None",
+            "Tri-Force": "Great Oak Key"
+        },
+        "dependencies": {
+            "items": [],
+            "enemies": []
+        },
+        "enemies": ["Snake", "Bird"],
         "adjacent": {
             "n": "",
             "s": "",
-            "e": "",
+            "e": "Meadow",
             "w": "",
             "ne": "",
             "se": "",

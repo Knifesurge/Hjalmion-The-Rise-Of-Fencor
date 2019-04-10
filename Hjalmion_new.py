@@ -29,7 +29,11 @@ class Hjalmion():
         """ Item creation """
         Utils.read_json(self.ITEM_REL_PATH)
         self.items = Item.create_from_filedata()
-        # CREATE ITEMS
+
+        """ Room creation """
+        Utils.read_json(self.ITEM_REL_PATH)
+        self.rooms = Rooms()
+        Rooms.create_from_filedata(self.rooms)
 
     def get_enemy(self, name : str) -> Enemy:
         """
