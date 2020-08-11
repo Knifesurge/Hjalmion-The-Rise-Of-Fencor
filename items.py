@@ -78,17 +78,17 @@ class Healer(Item):
     def ___str___(self):
         return "\n{}\n=====\n{}\nValue: {}\nHealth Gained: {}\nLife Increase: {}".format(self.name, self.description, self.value, self.healing, self.life_increase)
 
-    def heal(player, healing):
+    def heal(self, player, healing):
         player.hp += healing
         return player.hp
 
-    def increase_life(player, life_increase):
+    def increase_life(self, player, life_increase):
         player.hp = player.max_hp
         player.max_hp += life_increase
         player.hp = player.max_hp
         return player.hp, player.max_hp
     
-    def full_restore(player):
+    def full_restore(self, player):
         player.hp = player.max_hp
         return player.hp, player.max_hp
     
@@ -200,7 +200,7 @@ class SwordOfDragox(SuperWeapon):
                        poison_dmg=0,
                        bleed_dmg=0)
         
-    def total_damage(damage, magic_dmg):
+    def total_damage(self, damage, magic_dmg):
         damage = damage + magic_dmg
         return damage
 
