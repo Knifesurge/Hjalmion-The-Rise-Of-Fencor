@@ -1,8 +1,6 @@
 #Nick Mills
-# Created: 2015-05-18
-# Updated: 2015-10-13
 
-import random, chance, items, Utils
+import random, chance, items
 
 class Enemy():
     """Base class for all Enemies"""
@@ -15,27 +13,6 @@ class Enemy():
 
     def is_alive(self):
         return self.hp > 0
-
-    @staticmethod
-    def create_from_filedata() -> list(Enemy):
-        """
-        ---------------------------------------------
-        Creates a list of Enemies from the cached filedata 
-        that was previously read.
-        Use: enemies = Enemy.create_from_filedata()
-        ---------------------------------------------
-        Parameters:
-            None
-        Returns:
-            enemies - list of Enemies created from cached 
-                      filedata (list of Enemy)
-        """
-        data = Utils.getData()
-        for d in data:
-            # List is full of dicts
-            for e, v in d.items():
-                # Now looping over dict items
-                
 
 class Boss(Enemy):
     """Base class for all Bosses"""
