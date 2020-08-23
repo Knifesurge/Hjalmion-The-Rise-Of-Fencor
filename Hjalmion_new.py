@@ -40,6 +40,7 @@ class Hjalmion():
         """
 
         return self.enemies[name]
+
     def show_graphic(self):
 
         print("\n\n")
